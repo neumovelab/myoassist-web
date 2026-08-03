@@ -23,8 +23,14 @@ a:hover {
     color: #0f3f42 !important;
 }
 
-/* Custom search result icon color (chain link icon) */
+/* Anchor-heading link icon (chain-link shown next to headings) */
 .main-content .anchor-heading svg {
+    color: #155257 !important;
+}
+
+/* Search-result document icon (dropdown results) — was inheriting just-the-docs' default
+   purple link color; match it to the theme. */
+.search-result-icon {
     color: #155257 !important;
 }
 

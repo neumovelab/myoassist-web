@@ -1,0 +1,6 @@
+// MyoAssist custom color scheme (referenced by `color_scheme: myoassist_custom` in _config.yml).
+// This file was missing, so just-the-docs fell back to its default (purple) link color and that
+// purple leaked into theme elements that inherit $link-color (e.g. the search-result document
+// icon). Overriding $link-color to the MyoAssist teal fixes it at the root; it applies as a delta
+// on top of the light scheme, so all other colors keep their just-the-docs light-scheme defaults.
+$link-color: #155257;
