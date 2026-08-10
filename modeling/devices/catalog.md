@@ -21,7 +21,7 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
   <div class="device-card">
     <img class="device-img" src="../../assets/devices/anatomics_leg.png" alt="Anatomics_L1 on a myoLeg model">
     <div class="device-meta">
-      <h3><code>Anatomics_L1</code> <img class="device-logo" src="../../assets/devices/ucla_logo.png" alt="UCLA"></h3>
+      <h3><code>Anatomics_L1</code> <img class="device-logo logo-sm" src="../../assets/devices/ucla_logo.png" alt="UCLA"></h3>
       <p class="device-type">Ankle exoskeleton</p>
       <p>Bilateral instrumented soles with a passive right shank and foot frame.</p>
     </div>
@@ -69,7 +69,7 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
   <div class="device-card">
     <img class="device-img" src="../../assets/devices/openexo_leg.png" alt="OpenExo_L1 on a myoLeg model">
     <div class="device-meta">
-      <h3><code>OpenExo_L1</code> <img class="device-logo" src="../../assets/devices/openexo_logo.png" alt="OpenExo"></h3>
+      <h3><code>OpenExo_L1</code> <img class="device-logo logo-sm" src="../../assets/devices/openexo_logo.png" alt="OpenExo"></h3>
       <p class="device-type">Ankle exoskeleton</p>
       <p>Bilateral ankle exoskeleton (OpenExo).</p>
     </div>
@@ -129,7 +129,7 @@ pipeline, so they do not appear in `python -m assist_sim list`.
   <div class="device-card">
     <img class="device-img" src="../../assets/devices/auxivo_upper.png" alt="AuxivoLiftsuit on a muscled torso">
     <div class="device-meta">
-      <h3><code>AuxivoLiftsuit</code> <img class="device-logo" src="../../assets/devices/auxivo_logo.png" alt="Auxivo"></h3>
+      <h3><code>AuxivoLiftsuit</code> <img class="device-logo logo-sm" src="../../assets/devices/auxivo_logo.png" alt="Auxivo"></h3>
       <p class="device-type">Back exosuit</p>
       <p>A passive back exosuit on the muscled <code>myotorso</code>.</p>
     </div>

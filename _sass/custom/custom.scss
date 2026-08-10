@@ -262,11 +262,17 @@ a:hover {
 
 .device-card .device-logo {
     max-height: 22px;
-    max-width: 88px;
+    max-width: 100px;
     width: auto;
     height: auto;
     margin-left: auto;
     object-fit: contain;
+}
+
+/* Compact, padding-free logos that otherwise render oversized. */
+.device-card .device-logo.logo-sm {
+    max-height: 16px;
+    max-width: 68px;
 }
 
 .device-card .device-type {
