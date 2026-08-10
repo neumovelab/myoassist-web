@@ -104,6 +104,8 @@ Total time: 13.60s
 
 ## Next steps
 
+- **[Quick Start](quick-start)**: run a minimal environment to confirm your setup.
 - **[Defining an Environment](defining-an-environment)**: describe a `{msk, device, terrain}` environment once and run it in either pipeline.
+- **[Examples](examples)**: ready-to-run environment specs.
 - **[Simulation Environments](../modeling/)**: the MSK models, devices, and terrains you can compose.
 - **[Reinforcement Learning](../reinforcement-learning/)** and **[Controller Optimization](../controller-optimization/)**: the two training frameworks.
