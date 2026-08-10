@@ -49,5 +49,4 @@ One device config can carry per-MSK variations. Sections such as `attachments`,
 `tendon_modifications`, `keyframe_overrides`, `actuator_removals`, `tendon_removals`,
 and `mesh_replacements` can hold a `default` entry plus per-MSK-key entries. The
 resolver picks the matching MSK key if it is present, otherwise it uses `default`.
-The full config reference is in the
-[assist_sim docs](https://github.com/neumovelab/assist_sim/blob/main/docs/device-config-reference.md).
+See [Device Configuration](device-configuration) for the sections and their fields.
