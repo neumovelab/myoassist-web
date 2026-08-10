@@ -15,6 +15,8 @@ cleanly.
 
 ## `flat`
 
+<img src="../../assets/terrains/flat.png" alt="flat tile render" width="300">
+
 A flat-topped box at a fixed height.
 
 | Parameter | Default | Range / type | Description |
@@ -22,6 +24,8 @@ A flat-topped box at a fixed height.
 | `height`  | `0.0`   | float        | Top face z-coordinate (offset above the grid plane). |
 
 ## `stairs`
+
+<img src="../../assets/terrains/stairs.png" alt="stairs tile render" width="300">
 
 A staircase that rises to a central peak, then mirrors down. It supports an
 `inverted` pit variant.
@@ -40,6 +44,8 @@ A staircase that rises to a central peak, then mirrors down. It supports an
 
 ## `slope`
 
+<img src="../../assets/terrains/slope.png" alt="slope tile render" width="300">
+
 A flat ramp that climbs along one axis, with an optional plateau at the peak.
 
 | Parameter | Default | Range / type | Description |
@@ -54,6 +60,8 @@ A flat ramp that climbs along one axis, with an optional plateau at the peak.
 
 ## `pyramid_stairs`
 
+<img src="../../assets/terrains/pyramid_stairs.png" alt="pyramid_stairs tile render" width="300">
+
 Concentric square stairs that rise to (or descend from) a central platform.
 
 | Parameter | Default | Range / type | Description |
@@ -66,6 +74,8 @@ Concentric square stairs that rise to (or descend from) a central platform.
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
 
 ## `rough`
+
+<img src="../../assets/terrains/rough.png" alt="rough tile render" width="300">
 
 Heightfield-backed mixed terrain (basins, plateaus, hills, and detail noise). It
 writes a `.png` heightmap to the terrain library directory.
@@ -86,6 +96,8 @@ writes a `.png` heightmap to the terrain library directory.
 
 ## `discrete_obstacles`
 
+<img src="../../assets/terrains/discrete_obstacles.png" alt="discrete_obstacles tile render" width="300">
+
 Randomly placed boxes at random heights.
 
 | Parameter | Default | Range / type | Description |
@@ -98,6 +110,8 @@ Randomly placed boxes at random heights.
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
 
 ## `stepping_stones`
+
+<img src="../../assets/terrains/stepping_stones.png" alt="stepping_stones tile render" width="300">
 
 A regular grid of small raised stones, with optional jitter.
 
@@ -114,6 +128,8 @@ A regular grid of small raised stones, with optional jitter.
 
 ## `boulders`
 
+<img src="../../assets/terrains/boulders.png" alt="boulders tile render" width="300">
+
 Randomly placed half-sphere boulders.
 
 | Parameter | Default | Range / type | Description |
@@ -125,6 +141,8 @@ Randomly placed half-sphere boulders.
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
 
 ## `gap`
+
+<img src="../../assets/terrains/gap.png" alt="gap tile render" width="300">
 
 A linear gap cut through the tile (no geom in the gap band).
 

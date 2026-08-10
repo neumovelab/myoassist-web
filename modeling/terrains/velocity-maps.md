@@ -14,6 +14,11 @@ component) and a speed. The local tile type, the surface grade, and the roughnes
 slow the speed. Use a velocity map to author and visualize target-velocity fields
 for locomotion tasks, and as an input to velocity-tracking rewards.
 
+<div style="text-align: center;">
+  <img src="../../assets/terrains/velocity-map.png" alt="Velocity map over a tiled terrain" style="max-width: 100%; width: 520px; height: auto;">
+  <div><i>A velocity field over a tiled course. Arrows point toward the goal, colored red (slow) to green (fast).</i></div>
+</div>
+
 The subsystem has two modules:
 
 - **`myoassist_terrains.velocity_map`** builds the field from a `TerrainConfig`. It

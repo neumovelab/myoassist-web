@@ -18,7 +18,10 @@ This section covers the tiled-grid model. For the uniform surfaces and how to se
 `terrain` in a CO or RL run, see
 [Defining an Environment](../../getting-started/defining-an-environment).
 
-<!-- TODO(media): terrain render figures (flat / slope / rough / tiled course). -->
+<div style="text-align: center;">
+  <img src="../../assets/terrains/course.png" alt="A tiled terrain course" style="max-width: 100%; width: 520px; height: auto;">
+  <div><i>A tiled grid mixing flat, slope, rough, and stairs tiles, joined by connectors.</i></div>
+</div>
 
 ## Grid
 
