@@ -28,6 +28,10 @@ them separately.
 
 ## myolegs26
 
+<div style="text-align: center;">
+  <img src="../assets/msk/myoleg26.png" alt="myolegs26 model" style="height: 360px; width: auto; max-width: 100%;">
+</div>
+
 `myolegs26` is the base 3D model: 26-muscle legs under a passive anatomical torso.
 
 - **Torso.** A passive torso scaffold (spine, ribs, head; no arms, no torso muscles)
@@ -54,6 +58,10 @@ for most reflex Controller Optimization work.
 
 ## myolegs (80-muscle)
 
+<div style="text-align: center;">
+  <img src="../assets/msk/myoleg80.png" alt="myolegs (80-muscle) model" style="height: 360px; width: auto; max-width: 100%;">
+</div>
+
 `myolegs` is the 80-muscle lower-limb model: the highest muscle fidelity for the legs,
 over the same passive torso scaffold as `myolegs26`.
 
@@ -64,6 +72,10 @@ over the same passive torso scaffold as `myolegs26`.
 - Requires `mujoco>=3.3.4`.
 
 ## myofullbody (full body)
+
+<div style="text-align: center;">
+  <img src="../assets/msk/myofullbody.png" alt="myofullbody model" style="height: 360px; width: auto; max-width: 100%;">
+</div>
 
 `myofullbody` is the most complete human model: torso muscles, arms, and legs (129 base
 DOFs). Use it for whole-body studies, or when a device or task involves the trunk or
