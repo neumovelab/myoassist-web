@@ -12,10 +12,11 @@ Welcome to MyoAssist! This section will help you get up and running with the fra
 ## Prerequisites
 
 Before you begin, make sure you have:
-- [Python 3.11](https://www.python.org/downloads/release/python-3119/) (Make sure to add Python to PATH during installation)
-- [Visual Studio Code](https://code.visualstudio.com/download) (Or other IDE)
-- [MuJoCo 3.3.3](https://github.com/google-deepmind/mujoco/releases/tag/3.3.3)
+- [Python 3.11](https://www.python.org/downloads/release/python-3119/) or newer (add Python to PATH during installation)
 - [Git](https://git-scm.com/downloads)
+- [Visual Studio Code](https://code.visualstudio.com/download) or another IDE (optional)
+
+MuJoCo 3.3.4 or newer installs automatically with the package.
 
 ## Installation
 
@@ -78,8 +79,11 @@ After creating and activating the virtual environment, you can install the requi
 
 ### Step 3: Install the Package
 ```bash
-pip install -e .
+pip install -e . -r requirements.txt
 ```
+
+`requirements.txt` installs the three sibling packages (`myo_sim`, `assist_sim`, and
+`myoassist.terrains`) from git, because they are not yet on PyPI.
 
 ### Step 4: Verify Installation
 
@@ -92,8 +96,16 @@ You should see output similar to this:
 ```bash
 Test Summary
 ----------------------------------------
-Total tests: 13
-Passed: 13
+Total tests: 15
+Passed: 15
 Failed: 0
 Total time: 13.60s
 ```
+
+## Next steps
+
+- **[Quick Start](quick-start)**: run a minimal environment to confirm your setup.
+- **[Defining an Environment](defining-an-environment)**: describe a `{msk, device, terrain}` environment once and run it in either pipeline.
+- **[Examples](examples)**: ready-to-run environment specs.
+- **[Simulation Environments](../modeling/)**: the MSK models, devices, and terrains you can compose.
+- **[Reinforcement Learning](../reinforcement-learning/)** and **[Controller Optimization](../controller-optimization/)**: the two training frameworks.

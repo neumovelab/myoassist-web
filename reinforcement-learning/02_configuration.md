@@ -96,10 +96,11 @@ TrainSessionConfigBase
 | `observation_joint_pos_keys` | Joint position observation keys | ["ankle_angle_l", "hip_flexion_l"] |
 | `observation_joint_vel_keys` | Joint velocity observation keys | ["ankle_angle_l", "hip_flexion_l"] |
 | `observation_joint_sensor_keys` | Joint sensor observation keys | ["r_foot", "l_foot"] |
-| `terrain_type` | Terrain type (flat, random, harmonic_sinusoidal, slope, dev) | "flat" |
-| `terrain_params` | Terrain parameters (space-separated values) | "0.1 20" |
+| `msk_key` | Human MSK model key, composed with `device_key` (see [Defining an Environment](../getting-started/defining-an-environment)) | "myolegs22" |
+| `device_key` | Assistive device key | "Humotech_L1" |
+| `terrain` | Terrain spec (path or inline config); defined by [Terrains](../modeling/terrains/) | null |
 | `custom_max_episode_steps` | Maximum episode steps | 1000 |
-| `model_path` | MuJoCo model file path | "models/22muscle_2D/myoLeg22_2D_TUTORIAL.xml" |
+| `model_path` | Optional literal MJCF path (escape hatch); leave null to compose from `msk_key`/`device_key` | null |
 | `reference_data_path` | Path to reference motion data | "rl_train/reference_data/short_reference_gait.npz" |
 | `reference_data_keys` | Joint keys for reference data | ["ankle_angle_l", "hip_flexion_l"] |
 | `prev_trained_policy_path` | Path to previous trained policy | null |
@@ -205,7 +206,7 @@ These parameters are provided as a list of dictionaries, where each dictionary r
 
 ## Related Documentation
 
-- [Terrain Types](03_terrain-types) - Detailed explanation of terrain types and parameters
+- [Terrains](../modeling/terrains/) - Terrain generation and configuration
 - [Network Index Handler](04_network-index-handler) - Network indexing information and structure
 
 ## Example Configuration

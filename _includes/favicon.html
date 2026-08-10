@@ -1,0 +1,11 @@
+{%- comment -%}
+  Repo override of just-the-docs' _includes/favicon.html.
+  head.html always renders this via {% raw %}{% include_cached favicon.html %}{% endraw %}.
+
+  The theme default only emits a <link> if a `favicon.ico` static file exists.
+  We instead point at a fixed asset so the site owner can drop in a custom icon.
+
+  ACTION REQUIRED: add the icon file at  assets/favicon.png  (served as /assets/favicon.png).
+  Until that file exists the tab just falls back to the browser default (no error).
+{%- endcomment -%}
+<link rel="icon" type="image/png" href="{{ '/assets/favicon.png' | relative_url }}">

@@ -8,8 +8,6 @@ nav_order: 1
 
 **An open-source Python toolkit for simulating and optimizing assistive devices in neuromechanical simulations**
 
-> This site is a hands-on tutorial for MyoAssist. Once you finish the tutorial, please share your feedback via the [**Survey**](https://docs.google.com/forms/d/e/1FAIpQLSdyd8T8Vqt4vtIVDGpYT7h2VOHeG4zd06EURFyuUW0XA8RKTA/viewform?usp=header) link in the header.
-
 <div style="display: flex; justify-content: center; align-items: center; gap: 24px;">
   <div style="flex: 1; text-align: center;">
     <img src="assets/partial_flat_short.gif" alt="Flat replay" style="max-width: 100%; height: auto;">
@@ -28,12 +26,11 @@ MyoAssist consists of three main components that together support simulation, tr
 ## 1. **Simulation Environments**
 Forward simulations that combine musculoskeletal models with assistive devices.
 
-- **Currently available**:
-  - Lower-limb exoskeletons and robotic prosthetic legs
-- **Planned additions**:
-  - **Upper-body wearable devices**: prosthetic arms, back orthoses, etc.
-  - **Non-wearable assistive devices**: wheelchairs, externally actuated supports, etc.
-- Includes baseline controllers for common assistive scenarios
+- **Gait-assistive** (lower limb): ankle and hip exoskeletons, and powered or passive prosthetic legs.
+- **Upper-body and seated-mobility**: a back exosuit, a manual wheelchair, and a bimanual prosthetic-limb manipulation environment.
+- Baseline controllers for common assistive scenarios.
+
+See [Simulation Environments](modeling/) for the full catalog.
 
 ## 2. **Training Frameworks**
 Tools to generate control policies or optimize behavior in simulation.
@@ -48,3 +45,11 @@ Tools to generate control policies or optimize behavior in simulation.
 
 ## <span style="color:gray">3. **Motion Library** (planned)</span>
 <span style="color:gray">A curated dataset of human movement, both real and simulated.</span>
+
+## Get started
+
+- **[Getting Started](getting-started/)**: install MyoAssist and run the setup check.
+- **[Defining an Environment](getting-started/defining-an-environment)**: the shared `{msk, device, terrain}` spec used by both pipelines.
+- **[Simulation Environments](modeling/)**: the MSK models, devices, and terrains you can compose.
+- **[Reinforcement Learning](reinforcement-learning/)** and **[Controller Optimization](controller-optimization/)**: the training frameworks.
+- **[Evaluation](evaluation/)**: the shared results pipeline.
