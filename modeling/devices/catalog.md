@@ -19,7 +19,10 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
 
 <div class="device-grid">
   <div class="device-card">
-    <img class="device-img" src="../../assets/devices/anatomics_leg.png" alt="Anatomics_L1 on a myoLeg model">
+    <div class="device-imgwrap">
+      <img class="device-img device-img-model" src="../../assets/devices/anatomics_leg.png" alt="Anatomics_L1 on a myoLeg model">
+      <img class="device-img device-img-closeup" src="../../assets/devices/anatomics_device.png" alt="Anatomics_L1 device closeup">
+    </div>
     <div class="device-meta">
       <h3><code>Anatomics_L1</code> <img class="device-logo logo-sm" src="../../assets/devices/ucla_logo.png" alt="UCLA"></h3>
       <p class="device-type">Ankle exoskeleton</p>
@@ -27,7 +30,10 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
   </div>
   <div class="device-card">
-    <img class="device-img" src="../../assets/devices/stride_leg.png" alt="STRIDE_L2 on a myoLeg model">
+    <div class="device-imgwrap">
+      <img class="device-img device-img-model" src="../../assets/devices/stride_leg.png" alt="STRIDE_L2 on a myoLeg model">
+      <img class="device-img device-img-closeup" src="../../assets/devices/stride_device.png" alt="STRIDE_L2 device closeup">
+    </div>
     <div class="device-meta">
       <h3><code>STRIDE_L2</code> <img class="device-logo" src="../../assets/devices/neu_logo.png" alt="Northeastern"></h3>
       <p class="device-type">Cable-driven ankle exo</p>
@@ -35,7 +41,10 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
   </div>
   <div class="device-card">
-    <img class="device-img" src="../../assets/devices/dephy_leg.png" alt="DephyExoBoot_L1 on a myoLeg model">
+    <div class="device-imgwrap">
+      <img class="device-img device-img-model" src="../../assets/devices/dephy_leg.png" alt="DephyExoBoot_L1 on a myoLeg model">
+      <img class="device-img device-img-closeup" src="../../assets/devices/dephy_device.png" alt="DephyExoBoot_L1 device closeup">
+    </div>
     <div class="device-meta">
       <h3><code>DephyExoBoot_L1</code> <img class="device-logo" src="../../assets/devices/dephy_logo.png" alt="Dephy"></h3>
       <p class="device-type">Ankle exoskeleton</p>
@@ -43,7 +52,10 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
   </div>
   <div class="device-card">
-    <img class="device-img" src="../../assets/devices/hmedi_leg.png" alt="HMEDI_L1 on a myoLeg model">
+    <div class="device-imgwrap">
+      <img class="device-img device-img-model" src="../../assets/devices/hmedi_leg.png" alt="HMEDI_L1 on a myoLeg model">
+      <img class="device-img device-img-closeup" src="../../assets/devices/hmedi_device.png" alt="HMEDI_L1 device closeup">
+    </div>
     <div class="device-meta">
       <h3><code>HMEDI_L1</code> <img class="device-logo" src="../../assets/devices/hmedi_logo.png" alt="HMEDI"></h3>
       <p class="device-type">Hip-flexion cable exo</p>
@@ -51,7 +63,10 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
   </div>
   <div class="device-card">
-    <img class="device-img" src="../../assets/devices/hippo_leg.png" alt="Hippo_L1 on a myoLeg model">
+    <div class="device-imgwrap">
+      <img class="device-img device-img-model" src="../../assets/devices/hippo_leg.png" alt="Hippo_L1 on a myoLeg model">
+      <img class="device-img device-img-closeup" src="../../assets/devices/hippo_device.png" alt="Hippo_L1 device closeup">
+    </div>
     <div class="device-meta">
       <h3><code>Hippo_L1</code> <img class="device-logo" src="../../assets/devices/neu_logo.png" alt="Northeastern"></h3>
       <p class="device-type">Hip-flexion exoskeleton</p>
@@ -59,7 +74,10 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
   </div>
   <div class="device-card">
-    <img class="device-img" src="../../assets/devices/humotech_leg.png" alt="Humotech_L1 on a myoLeg model">
+    <div class="device-imgwrap">
+      <img class="device-img device-img-model" src="../../assets/devices/humotech_leg.png" alt="Humotech_L1 on a myoLeg model">
+      <img class="device-img device-img-closeup" src="../../assets/devices/humotech_device.png" alt="Humotech_L1 device closeup">
+    </div>
     <div class="device-meta">
       <h3><code>Humotech_L1</code> <img class="device-logo" src="../../assets/devices/humotech_logo.png" alt="Humotech"></h3>
       <p class="device-type">Ankle exo with cables</p>
@@ -67,7 +85,10 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
   </div>
   <div class="device-card">
-    <img class="device-img" src="../../assets/devices/openexo_leg.png" alt="OpenExo_L1 on a myoLeg model">
+    <div class="device-imgwrap">
+      <img class="device-img device-img-model" src="../../assets/devices/openexo_leg.png" alt="OpenExo_L1 on a myoLeg model">
+      <img class="device-img device-img-closeup" src="../../assets/devices/openexo_device.png" alt="OpenExo_L1 device closeup">
+    </div>
     <div class="device-meta">
       <h3><code>OpenExo_L1</code> <img class="device-logo logo-sm" src="../../assets/devices/openexo_logo.png" alt="OpenExo"></h3>
       <p class="device-type">Ankle exoskeleton</p>
@@ -75,7 +96,10 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
   </div>
   <div class="device-card">
-    <img class="device-img" src="../../assets/devices/utwente_leg.png" alt="UTAnkleExo_L2 on a myoLeg model">
+    <div class="device-imgwrap">
+      <img class="device-img device-img-model" src="../../assets/devices/utwente_leg.png" alt="UTAnkleExo_L2 on a myoLeg model">
+      <img class="device-img device-img-closeup" src="../../assets/devices/utwente_device.png" alt="UTAnkleExo_L2 device closeup">
+    </div>
     <div class="device-meta">
       <h3><code>UTAnkleExo_L2</code> <img class="device-logo" src="../../assets/devices/utwente_logo.png" alt="University of Twente"></h3>
       <p class="device-type">Parallel-linkage ankle exo</p>
@@ -83,7 +107,10 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
   </div>
   <div class="device-card">
-    <img class="device-img" src="../../assets/devices/kfoot_leg.png" alt="KFoot_L1 on a myoLeg model">
+    <div class="device-imgwrap">
+      <img class="device-img device-img-model" src="../../assets/devices/kfoot_leg.png" alt="KFoot_L1 on a myoLeg model">
+      <img class="device-img device-img-closeup" src="../../assets/devices/kfoot_device.png" alt="KFoot_L1 device closeup">
+    </div>
     <div class="device-meta">
       <h3><code>KFoot_L1</code> <img class="device-logo" src="../../assets/devices/neu_logo.png" alt="Northeastern"></h3>
       <p class="device-type">Transtibial prosthetic</p>
@@ -91,7 +118,10 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
   </div>
   <div class="device-card">
-    <img class="device-img" src="../../assets/devices/neuankle_leg.png" alt="NEUankle_L1 on a myoLeg model">
+    <div class="device-imgwrap">
+      <img class="device-img device-img-model" src="../../assets/devices/neuankle_leg.png" alt="NEUankle_L1 on a myoLeg model">
+      <img class="device-img device-img-closeup" src="../../assets/devices/neuankle_device.png" alt="NEUankle_L1 device closeup">
+    </div>
     <div class="device-meta">
       <h3><code>NEUankle_L1</code> <img class="device-logo" src="../../assets/devices/neu_logo.png" alt="Northeastern"></h3>
       <p class="device-type">Powered transtibial prosthetic</p>
@@ -99,7 +129,10 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
   </div>
   <div class="device-card">
-    <img class="device-img" src="../../assets/devices/osl_a_leg.png" alt="OpenSourceLeg_A_L1 on a myoLeg model">
+    <div class="device-imgwrap">
+      <img class="device-img device-img-model" src="../../assets/devices/osl_a_leg.png" alt="OpenSourceLeg_A_L1 on a myoLeg model">
+      <img class="device-img device-img-closeup" src="../../assets/devices/osl_a_device.png" alt="OpenSourceLeg_A_L1 device closeup">
+    </div>
     <div class="device-meta">
       <h3><code>OpenSourceLeg_A_L1</code> <img class="device-logo" src="../../assets/devices/osl_logo.png" alt="Open-Source Leg"></h3>
       <p class="device-type">Transtibial prosthetic</p>
@@ -107,7 +140,10 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
   </div>
   <div class="device-card">
-    <img class="device-img" src="../../assets/devices/osl_ka_leg.png" alt="OpenSourceLeg_KA_L1 on a myoLeg model">
+    <div class="device-imgwrap">
+      <img class="device-img device-img-model" src="../../assets/devices/osl_ka_leg.png" alt="OpenSourceLeg_KA_L1 on a myoLeg model">
+      <img class="device-img device-img-closeup" src="../../assets/devices/osl_ka_device.png" alt="OpenSourceLeg_KA_L1 device closeup">
+    </div>
     <div class="device-meta">
       <h3><code>OpenSourceLeg_KA_L1</code> <img class="device-logo" src="../../assets/devices/osl_logo.png" alt="Open-Source Leg"></h3>
       <p class="device-type">Transfemoral prosthetic</p>

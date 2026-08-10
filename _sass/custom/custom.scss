@@ -275,6 +275,31 @@ a:hover {
     max-width: 68px;
 }
 
+/* Hover swap: fade from the on-model image to the device closeup. */
+.device-card .device-imgwrap {
+    position: relative;
+}
+
+.device-card .device-img-model,
+.device-card .device-img-closeup {
+    transition: opacity 0.2s ease;
+}
+
+.device-card .device-img-closeup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.device-card:hover .device-img-closeup {
+    opacity: 1;
+}
+
+.device-card:hover .device-img-model {
+    opacity: 0;
+}
+
 .device-card .device-type {
     margin: 0 0 0.45rem;
     font-size: 0.82rem;
