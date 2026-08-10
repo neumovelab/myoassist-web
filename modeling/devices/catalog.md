@@ -8,26 +8,12 @@ layout: home
 
 # Device Catalog
 
-This page lists the human MSK models, the gait-assistive devices, the upper-body and
-seated-mobility environments, and which pairs are compatible. For the authoritative,
-installed set, run `python -m assist_sim list`.
+This page lists the gait-assistive devices, the upper-body and seated-mobility
+environments, and which pairs are compatible with each MSK model. For the human MSK
+models, see [MSK Models](../msk-models). For the authoritative, installed set, run
+`python -m assist_sim list`.
 
 <!-- TODO(media): device render/photo grid for the catalog. -->
-
-## MSK models
-
-`myo_sim` composes each leg model at runtime, so an MSK key resolves by a call to
-`myo_sim.build_spec(<model>)`. The `assist_sim` key matches the `myo_sim` model name.
-
-| Key | Base DOFs | Description |
-|-----|-----------|-------------|
-| `myolegs22` | 39 | Planar 22-muscle, sagittal-plane legs and passive torso. A 26→22 reduction of `myolegs26`. |
-| `myolegs26` | 47 | 26-muscle, passive torso and legs. |
-| `myolegs` | 35 | 80-muscle, passive torso. |
-| `myofullbody` | 129 | Full body: torso muscles, arms, and legs. |
-
-`myolegs`, `myofullbody`, and `myolegs22` require `mujoco>=3.3.4`. `myolegs26` builds
-on `3.3.3`. An unknown key raises a clear error rather than a silent fallback.
 
 ## Gait-assistive devices
 
