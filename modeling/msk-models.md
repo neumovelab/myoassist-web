@@ -28,7 +28,11 @@ them separately.
 
 ## myolegs26
 
-<img src="../assets/msk/myoleg26.png" alt="myolegs26 model" style="float: right; height: 300px; width: auto; max-width: 40%; margin: 0.25rem 0 1rem 1.5rem;">
+<div class="msk-figure">
+<div class="msk-figure-img">
+<img src="../assets/msk/myoleg26.png" alt="myolegs26 model">
+</div>
+<div class="msk-figure-text" markdown="1">
 
 `myolegs26` is the base 3D model: 26-muscle legs under a passive anatomical torso.
 
@@ -40,7 +44,8 @@ them separately.
 - **No keyframe.** The model loads at `qpos0`, the assembled standing pose. It loads
   floating slightly above the ground; there is no `stand` keyframe.
 
-<div style="clear: both;"></div>
+</div>
+</div>
 
 ### myolegs22 (planar reduction)
 
@@ -58,7 +63,11 @@ for most reflex Controller Optimization work.
 
 ## myolegs (80-muscle)
 
-<img src="../assets/msk/myoleg80.png" alt="myolegs (80-muscle) model" style="float: right; height: 300px; width: auto; max-width: 40%; margin: 0.25rem 0 1rem 1.5rem;">
+<div class="msk-figure">
+<div class="msk-figure-img">
+<img src="../assets/msk/myoleg80.png" alt="myolegs (80-muscle) model">
+</div>
+<div class="msk-figure-text" markdown="1">
 
 `myolegs` is the 80-muscle lower-limb model: the highest muscle fidelity for the legs,
 over the same passive torso scaffold as `myolegs26`.
@@ -69,11 +78,16 @@ over the same passive torso scaffold as `myolegs26`.
 - **No keyframe.** It loads at `qpos0`, floating slightly above the ground.
 - Requires `mujoco>=3.3.4`.
 
-<div style="clear: both;"></div>
+</div>
+</div>
 
 ## myofullbody (full body)
 
-<img src="../assets/msk/myofullbody.png" alt="myofullbody model" style="float: right; height: 300px; width: auto; max-width: 40%; margin: 0.25rem 0 1rem 1.5rem;">
+<div class="msk-figure">
+<div class="msk-figure-img">
+<img src="../assets/msk/myofullbody.png" alt="myofullbody model">
+</div>
+<div class="msk-figure-text" markdown="1">
 
 `myofullbody` is the most complete human model: torso muscles, arms, and legs (129 base
 DOFs). Use it for whole-body studies, or when a device or task involves the trunk or
@@ -83,7 +97,8 @@ arms as well as the legs.
 - Every device also composes with it, because it shares the same torso attachment
   scaffold. See the [Device Catalog](devices/catalog).
 
+</div>
+</div>
+
 See [Defining an Environment](../getting-started/defining-an-environment) for how to
 pair an MSK with a device and a terrain.
-
-<div style="clear: both;"></div>

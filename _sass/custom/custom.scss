@@ -311,3 +311,27 @@ a:hover {
     margin: 0.2rem 0;
     font-size: 0.85rem;
 }
+
+/* MSK model: centered figure with the text beside it, vertically centered. */
+.msk-figure {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin: 1rem 0 1.5rem;
+}
+
+.msk-figure-img {
+    flex: 0 0 38%;
+    text-align: center;
+}
+
+.msk-figure-img img {
+    height: 300px;
+    width: auto;
+    max-width: 100%;
+}
+
+.msk-figure-text {
+    flex: 1 1 300px;
+}
