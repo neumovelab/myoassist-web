@@ -63,8 +63,8 @@ A **uniform surface** (one plane or one heightfield):
 | `{ "terrain": "random", "amplitude": 0.06 }` | a rough heightfield, up to 6 cm relief |
 | `{ "terrain": "sinusoidal", "amplitude": 0.05, "period": 1.0 }` | rolling waves |
 
-A **tiled grid**: a [`myoassist_terrains`](https://github.com/neumovelab/myoassist.terrains)
-config with a `grid` and per-cell `tiles`. Tile types are `flat`, `slope`, `stairs`,
+A **tiled grid**: a [terrain config](../modeling/terrains/configuration) with a `grid`
+and per-cell `tiles`. Tile types are `flat`, `slope`, `stairs`,
 `pyramid_stairs`, `rough`, `boulders`, `stepping_stones`, `discrete_obstacles`, and
 `gap`. You can fill empty cells with `randomization`. Give the config inline or as a
 path to a JSON file:

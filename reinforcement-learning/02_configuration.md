@@ -98,7 +98,7 @@ TrainSessionConfigBase
 | `observation_joint_sensor_keys` | Joint sensor observation keys | ["r_foot", "l_foot"] |
 | `msk_key` | Human MSK model key, composed with `device_key` (see [Defining an Environment](../getting-started/defining-an-environment)) | "myolegs22" |
 | `device_key` | Assistive device key | "Humotech_L1" |
-| `terrain` | Terrain spec (path or inline config); defined by [myoassist.terrains](https://github.com/neumovelab/myoassist.terrains) | null |
+| `terrain` | Terrain spec (path or inline config); defined by [Terrains](../modeling/terrains/) | null |
 | `custom_max_episode_steps` | Maximum episode steps | 1000 |
 | `model_path` | Optional literal MJCF path (escape hatch); leave null to compose from `msk_key`/`device_key` | null |
 | `reference_data_path` | Path to reference motion data | "rl_train/reference_data/short_reference_gait.npz" |
@@ -206,7 +206,7 @@ These parameters are provided as a list of dictionaries, where each dictionary r
 
 ## Related Documentation
 
-- [myoassist.terrains](https://github.com/neumovelab/myoassist.terrains) - Terrain generation and configuration
+- [Terrains](../modeling/terrains/) - Terrain generation and configuration
 - [Network Index Handler](04_network-index-handler) - Network indexing information and structure
 
 ## Example Configuration
