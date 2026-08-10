@@ -44,7 +44,7 @@ Controller optimization in MyoAssist enables optimization of a reflex-based musc
     <ul>
       <li><a href="Running_Reflex_Control">Running Reflex Control</a></li>
       <li><a href="Running_Optimizations">Running Optimizations</a></li>
-      <li><a href="Evaluating_Results">Result Evaluation</a></li>
+      <li><a href="../evaluation/">Evaluation</a></li>
     </ul>
   </div>
   <div style="flex: 1; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
