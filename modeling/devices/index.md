@@ -9,12 +9,11 @@ layout: home
 # Assistive Devices
 
 A **device** is the assistive hardware that composes with a human MSK model to form
-an environment. A device is an exoskeleton, a powered or passive prosthetic leg, or a
-teaching stub. Devices come from [`assist_sim`](https://github.com/neumovelab/assist_sim).
+an environment. A device can be an exoskeleton, a powered or passive prosthetic leg, or any other assistive device. Devices come from [`assist_sim`](https://github.com/neumovelab/assist_sim).
 You select one with the `device` field of the
 [environment spec](../../getting-started/defining-an-environment).
 
-See [Device Catalog](catalog) for every device and its MSK compatibility.
+See [Device Catalog](catalog) for every currently available device.
 
 ## Where devices fit
 
