@@ -1,0 +1,42 @@
+{%- comment -%}
+  Repo override of just-the-docs' _includes/components/aux_nav.html.
+  Renders the top-right auxiliary nav. Plain aux_links (Survey, Issues, ...) are still
+  driven by site.aux_links in _config.yml, EXCEPT the old "MyoAssist repository" entry,
+  which is intentionally skipped and replaced by the hardcoded "MyoAssist Repositories"
+  dropdown below (native <details>/<summary>, styled in _sass/custom/custom.scss).
+  The skip guard keeps things correct even if that config entry has not yet been removed.
+{%- endcomment -%}
+<nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    <li class="aux-nav-list-item aux-nav-dropdown">
+      <details class="aux-nav-dropdown-details">
+        <summary class="site-button aux-nav-dropdown-summary" aria-haspopup="true">MyoAssist Repositories</summary>
+        <ul class="aux-nav-dropdown-menu">
+          <li>
+            <a href="https://github.com/neumovelab/myoassist" target="_blank" rel="noopener noreferrer">myoassist<svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg></a>
+          </li>
+          <li>
+            <a href="https://github.com/neumovelab/assist_sim" target="_blank" rel="noopener noreferrer">assist_sim<svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg></a>
+          </li>
+          <li>
+            <a href="https://github.com/neumovelab/myoassist.terrains" target="_blank" rel="noopener noreferrer">myoassist.terrains<svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg></a>
+          </li>
+        </ul>
+      </details>
+    </li>
+
+    {% for link in site.aux_links %}
+      {% unless link.first == "MyoAssist repository" %}
+      <li class="aux-nav-list-item">
+        <a href="{{ link.last }}" class="site-button"
+          {% if site.aux_links_new_tab %}
+          target="_blank" rel="noopener noreferrer"
+          {% endif %}
+        >
+          {{ link.first }}
+        </a>
+      </li>
+      {% endunless %}
+    {% endfor %}
+  </ul>
+</nav>

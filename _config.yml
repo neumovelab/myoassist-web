@@ -1,6 +1,7 @@
 title: MyoAssist Documentation
 description: Documentation for MyoAssist - A musculoskeletal simulation framework with reinforcement learning and reflex control
 theme: just-the-docs
+color_scheme: myoassist_custom
 
 # Site settings
 url: https://myoassist.neumove.org
@@ -15,8 +16,6 @@ ga_tracking: "G-LHB5MGPDRH"
 # Just the Docs theme settings
 just_the_docs:
 
-  color_scheme: myoassist_custom
-  
   # Enable search
   search: true
   
@@ -53,8 +52,6 @@ defaults:
 
 # Auxiliary links (top-right)
 aux_links:
-  "Survey": https://docs.google.com/forms/d/e/1FAIpQLSdyd8T8Vqt4vtIVDGpYT7h2VOHeG4zd06EURFyuUW0XA8RKTA/viewform?usp=header
-  "MyoAssist repository": https://github.com/neumovelab/myoassist
   "Issues": https://github.com/neumovelab/myoassist/issues
 aux_links_new_tab: true
 
