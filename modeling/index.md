@@ -42,12 +42,12 @@ Learning pipelines step.
 
 ## In this section
 
-- **[MSK Models](msk-models)** — the human models: `myolegs26`, `myolegs22`, `myolegs`,
+- **[MSK Models](msk-models)**: the human models: `myolegs26`, `myolegs22`, `myolegs`,
   and `myofullbody`.
-- **[Assistive Devices](devices/)** — the device catalog, MSK compatibility, and device
+- **[Assistive Devices](devices/)**: the device catalog, MSK compatibility, and device
   configuration. Covers gait-assistive devices and upper-body and seated-mobility
   environments.
-- **[Terrains](terrains/)** — tile types, terrain configuration, and velocity maps.
-- **[Modeling Guide](Modeling)** — model and mesh preparation, XML structure, and adding
+- **[Terrains](terrains/)**: tile types, terrain configuration, and velocity maps.
+- **[Modeling Guide](Modeling)**: model and mesh preparation, XML structure, and adding
   devices, actuators, and sensors.
-- **[Model Preparation](model_prep)** — preparing and modifying models.
+- **[Model Preparation](model_prep)**: preparing and modifying models.
