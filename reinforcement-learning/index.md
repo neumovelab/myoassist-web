@@ -68,14 +68,14 @@ The agent outputs actions that control:
 1. **Define a config** – start from an existing JSON preset or create one from scratch.
 2. **Launch training**
    ```bash
-   python rl_train/run_train.py --config_file_path rl_train/train_configs/my_config.json
+   python rl_train/run_train.py --config_file_path rl_train/train/train_configs/my_config.json
    ```
 3. **Monitor progress** – logs & results in `results/train_session_*`.
 4. **Evaluate policy** –
    ```bash
    python rl_train/run_policy_eval.py results/train_session_<timestamp>
    ```
-5. **Analyze results** – automatic plots + gait metrics saved under `analyze_results/`.
+5. **Analyze results** – see [Evaluation](../evaluation/) for the shared eval outputs.
 
 ---
 
@@ -204,10 +204,7 @@ Test a trained model:
 python rl_train/run_policy_eval.py [path/to/trainsession/folder]
 ```
 
-**Example (evaluating with a pretrained model we provide):**
-```bash
-python rl_train/run_policy_eval.py docs/assets/tutorial_rl_models/train_session_20250728-161129_tutorial_partial_obs
-```
+> Point `run_policy_eval.py` at any `train_session_*` directory that you produced.
 
 
 After training, an `analyze_results` folder will be created inside your `train_session` directory.  
@@ -215,14 +212,11 @@ This folder contains various plots and videos that visualize your agent's perfor
 
 - **Where to find:**  
   ```
-  rl_train/results/train_session_[date-time]/analyze_results/
+  rl_train/results/train_session_[date-time]/analyze_results_[NN]/
   ```
 - **What's inside:**  
-  - Multiple plots (e.g., reward curves, kinematics, etc.)
-  - Videos
-  <p align="center">
-    <img src="../assets/rl_evaluate_result.png" alt="evaluation result" width="50%">
-  </p>
+  - `composite.png` (and `.svg`), `replay.mp4`, and `gait_evaluated_data.json`
+  - See [Evaluation](../evaluation/) for the full description of these outputs.
 
 
 The parameters used for evaluation and analysis (such as which plots/videos are generated) are controlled by the `evaluate_param_list` in your `session_config.json` file.
@@ -268,12 +262,4 @@ mjpython rl_train/run_train.py --config_file_path [path/to/config.json] --config
   <img src="../assets/train_models.png" alt="trained model" width="50%">
 </p>
 
-**Example (evaluating with a pretrained model we provide):**
-- windows:
-```bash
-python rl_train/run_train.py --config_file_path docs/assets/tutorial_rl_models/train_session_20250728-161129_tutorial_partial_obs/session_config.json --config.env_params.prev_trained_policy_path docs/assets/tutorial_rl_models/train_session_20250728-161129_tutorial_partial_obs/trained_models/model_19939328 --flag_realtime_evaluate
-```
-- mac:
-```bash
-mjpython rl_train/run_train.py --config_file_path docs/assets/tutorial_rl_models/train_session_20250728-161129_tutorial_partial_obs/session_config.json --config.env_params.prev_trained_policy_path docs/assets/tutorial_rl_models/train_session_20250728-161129_tutorial_partial_obs/trained_models/model_19939328 --flag_realtime_evaluate
-```
+> Use a `session_config.json` and a `model_<steps>` file from a `train_session_*` directory that you produced.
