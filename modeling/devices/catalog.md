@@ -34,8 +34,8 @@ on `3.3.3`. An unknown key raises a clear error rather than a silent fallback.
 Lower-limb exoskeletons and prosthetic legs. Thirteen device keys from twelve device
 directories:
 
-| Device key | Type | Notes |
-|------------|------|-------|
+| Device key | Type | Description |
+|------------|------|-------------|
 | `Anatomics_L1` | Ankle exoskeleton | Bilateral instrumented soles and a right shank/foot frame; passive (welded, no actuators). |
 | `STRIDE_L2` | Cable-driven ankle exo | Bilateral, closed six-bar linkage behind each ankle; 400 N Bowden cables; ankle ROM clamped to the coupling window. |
 | `DephyExoBoot_L1` | Ankle exoskeleton | Bilateral; boot strapping; ankle ROM override. |
