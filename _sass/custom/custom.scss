@@ -129,3 +129,73 @@ a:hover {
 .site-footer {
     display: none !important;
 }
+
+/* Left-nav link text: modest size bump.
+   The theme applies fs-4/fs-3 (~0.875rem on desktop) to `.nav-list-item`, which the
+   link inherits. Setting the size on the link itself overrides that inheritance. */
+.nav-list .nav-list-item .nav-list-link {
+    font-size: 0.95rem !important;
+}
+
+/* "MyoAssist Repositories" grouped dropdown, injected via _includes/nav_footer_custom.html
+   at the bottom of the left sidebar. Native <details>/<summary> collapsible, styled to
+   read like the theme's nav category + nav links. */
+.repo-nav {
+    margin-top: 1rem;
+}
+
+.repo-nav-details {
+    border-top: 1px solid #eeebee;
+}
+
+.repo-nav-summary {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #155257;
+    cursor: pointer;
+    list-style: none; /* hide default disclosure marker (Firefox) */
+    outline: none;
+}
+
+/* hide default disclosure triangle (WebKit/Blink) and add our own caret */
+.repo-nav-summary::-webkit-details-marker {
+    display: none;
+}
+
+.repo-nav-summary::before {
+    content: "\25B8"; /* right-pointing caret */
+    display: inline-block;
+    margin-right: 0.4rem;
+    font-size: 0.7em;
+    transition: transform 0.15s ease;
+}
+
+.repo-nav-details[open] > .repo-nav-summary::before {
+    transform: rotate(90deg);
+}
+
+.repo-nav-list {
+    padding-left: 0;
+    margin: 0 0 0.5rem;
+    list-style: none;
+}
+
+.repo-nav-list .nav-list-item {
+    margin: 0;
+}
+
+.repo-nav-list .nav-list-link {
+    display: block;
+    padding: 0.25rem 0.75rem 0.25rem 1.4rem;
+    font-size: 0.9rem;
+}
+
+.repo-nav-list .nav-list-link.external > svg {
+    width: 0.8rem;
+    height: 0.8rem;
+    margin-left: 0.25rem;
+    vertical-align: text-bottom;
+}
