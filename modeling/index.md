@@ -18,14 +18,14 @@ Controller Optimization and the Reinforcement Learning pipelines. See
 <div style="text-align: center;">
   <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 0 auto;">
     <div style="flex: 1 1 300px; min-width: 0; max-width: 600px;">
-      <img src="../assets/modeling.png" alt="Composed model" style="width: 100%; height: auto; max-height: 400px; object-fit: contain;">
+      <img src="../assets/ensemble.png" alt="An ensemble of composed environments on varied terrain" style="width: 100%; height: auto; max-height: 400px; object-fit: contain;">
     </div>
-    <div style="flex: 1 1 300px; min-width: 0; max-width: 645px;">
-      <img src="../assets/modeling_xml.png" alt="Model XML structure" style="width: 100%; height: auto; max-height: 400px; object-fit: contain;">
+    <div style="flex: 1 1 300px; min-width: 0; max-width: 600px;">
+      <img src="../assets/vel_map.png" alt="A target-velocity field over a tiled terrain" style="width: 100%; height: auto; max-height: 400px; object-fit: contain;">
     </div>
   </div>
   <div style="margin-top: 1rem;">
-    <i>A composed model: the OSL knee-ankle prosthesis on a myoLeg model</i>
+    <i>Composed environments across varied terrain (left) and a target-velocity field over a tiled course (right).</i>
   </div>
 </div>
 
