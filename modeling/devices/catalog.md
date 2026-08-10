@@ -8,9 +8,9 @@ layout: home
 
 # Device Catalog
 
-This page lists the human MSK models, the assistive devices, the collaboration
-environments, and which pairs are compatible. For the authoritative, installed set,
-run `python -m assist_sim list`.
+This page lists the human MSK models, the gait-assistive devices, the upper-body and
+seated-mobility environments, and which pairs are compatible. For the authoritative,
+installed set, run `python -m assist_sim list`.
 
 <!-- TODO(media): device render/photo grid for the catalog. -->
 
@@ -29,9 +29,10 @@ run `python -m assist_sim list`.
 `myolegs`, `myofullbody`, and `myolegs22` require `mujoco>=3.3.4`. `myolegs26` builds
 on `3.3.3`. An unknown key raises a clear error rather than a silent fallback.
 
-## Devices
+## Gait-assistive devices
 
-Thirteen device keys from twelve device directories:
+Lower-limb exoskeletons and prosthetic legs. Thirteen device keys from twelve device
+directories:
 
 | Device key | Type | Notes |
 |------------|------|-------|
@@ -51,22 +52,21 @@ Thirteen device keys from twelve device directories:
 
 `OSL_A` and `OSL_KA` are registered as aliases for the OSL keys.
 
-## Collaboration environments
+## Upper-body and seated-mobility environments
 
-The collaboration environments are upper-body models built by dedicated functions in
-`assist_sim/upper_body.py`, not by `load_combined`. They are **not** modular MSK ×
-device pairings and are **not** registry devices, so they do not appear in
-`python -m assist_sim list` or the compatibility matrix.
+These environments cover assistance above the legs and seated mobility. They are built
+by dedicated functions in `assist_sim/upper_body.py`, not by the modular MSK × device
+pipeline, so they do not appear in `python -m assist_sim list` or the compatibility
+matrix.
 
 | Environment | Description | Builder |
 |-------------|-------------|---------|
-| `Wheelchair` | A seated human propelling a manual wheelchair | `build_wheelchair(arms=..., torso=...)` |
-| `MPL` | A standalone bimanual Modular Prosthetic Limb robot | `build_mpl()` |
 | `AuxivoLiftsuit` | A passive back-exosuit on the muscled `myotorso` | `build_auxivo_liftsuit()` |
-| `bionic-bimanual` | A biological-arm plus MPL-prosthesis manipulation task | `build_bionic_bimanual()` |
+| `Wheelchair` | A seated human propelling a manual wheelchair | `build_wheelchair(arms=..., torso=...)` |
+| `MPL` | A bimanual Modular Prosthetic Limb robot. It also drives the bionic-bimanual manipulation task (a biological arm plus an MPL prosthesis). | `build_mpl()`, `build_bionic_bimanual()` |
 
-The three composed environments (`Wheelchair`, `AuxivoLiftsuit`, `bionic-bimanual`)
-also expose a `build_*_spec()` companion that returns the uncompiled `MjSpec`.
+`Wheelchair`, `AuxivoLiftsuit`, and the bionic-bimanual task also expose a
+`build_*_spec()` companion that returns the uncompiled `MjSpec`.
 `export_upper_body_xml(spec, path)` writes it to a standalone, reloadable XML.
 
 ## Compatibility matrix
