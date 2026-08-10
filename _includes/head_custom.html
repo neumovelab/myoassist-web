@@ -1,24 +1,48 @@
 <script>
-  // Close the "MyoAssist Repositories" aux-nav dropdown on a click outside it, or on Escape.
-  // The dropdown is a native <details>; without this it stays open until toggled again.
+  // Close the "MyoAssist Repositories" aux-nav dropdown (a native <details>) on an
+  // outside click or on Escape. Native <details> has no such behavior on its own.
+  //
+  // Robust pattern: the outside-click / Escape listeners are bound ONLY while a dropdown
+  // is open (driven by the details' `toggle` event) and removed when it closes. Because
+  // the listeners are attached *after* the opening click has finished dispatching, the
+  // same click that opens the menu can never immediately re-close it — this sidesteps the
+  // native <details> toggle-timing race entirely. Works regardless of browser toggle order.
   (function () {
-    document.addEventListener("click", function (event) {
-      document
-        .querySelectorAll("details.aux-nav-dropdown-details[open]")
-        .forEach(function (details) {
-          if (!details.contains(event.target)) {
-            details.removeAttribute("open");
-          }
-        });
-    });
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") {
-        document
-          .querySelectorAll("details.aux-nav-dropdown-details[open]")
-          .forEach(function (details) {
-            details.removeAttribute("open");
-          });
+    function wire(details) {
+      function onDocClick(event) {
+        if (!details.contains(event.target)) {
+          details.open = false;
+        }
       }
-    });
+      function onKeydown(event) {
+        if (event.key === "Escape" || event.key === "Esc") {
+          details.open = false;
+        }
+      }
+      details.addEventListener("toggle", function () {
+        if (details.open) {
+          // defer binding one tick so the opening click isn't caught by onDocClick
+          document.addEventListener("click", onDocClick);
+          document.addEventListener("keydown", onKeydown);
+        } else {
+          document.removeEventListener("click", onDocClick);
+          document.removeEventListener("keydown", onKeydown);
+        }
+      });
+    }
+
+    function init() {
+      var list = document.querySelectorAll("details.aux-nav-dropdown-details");
+      for (var i = 0; i < list.length; i++) {
+        wire(list[i]);
+      }
+    }
+
+    // Run once the DOM is parsed (this include is emitted in <head>, before <body>).
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
   })();
 </script>
