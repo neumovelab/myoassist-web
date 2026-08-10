@@ -1,0 +1,24 @@
+<script>
+  // Close the "MyoAssist Repositories" aux-nav dropdown on a click outside it, or on Escape.
+  // The dropdown is a native <details>; without this it stays open until toggled again.
+  (function () {
+    document.addEventListener("click", function (event) {
+      document
+        .querySelectorAll("details.aux-nav-dropdown-details[open]")
+        .forEach(function (details) {
+          if (!details.contains(event.target)) {
+            details.removeAttribute("open");
+          }
+        });
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        document
+          .querySelectorAll("details.aux-nav-dropdown-details[open]")
+          .forEach(function (details) {
+            details.removeAttribute("open");
+          });
+      }
+    });
+  })();
+</script>
