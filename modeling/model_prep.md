@@ -1,6 +1,6 @@
 ---
 title: Model Preparation
-parent: Modeling
+parent: Simulation Environments
 nav_order: 3
 layout: home
 ---

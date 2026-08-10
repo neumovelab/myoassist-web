@@ -1,6 +1,6 @@
 ---
 title: Modeling Guide
-parent: Modeling
+parent: Simulation Environments
 nav_order: 2
 layout: home
 ---

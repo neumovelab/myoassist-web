@@ -1,6 +1,6 @@
 ---
 title: Available Models
-parent: Modeling
+parent: Simulation Environments
 nav_order: 1
 layout: home
 ---
