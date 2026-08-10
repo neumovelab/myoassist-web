@@ -261,9 +261,12 @@ a:hover {
 }
 
 .device-card .device-logo {
-    height: 22px;
+    max-height: 22px;
+    max-width: 88px;
     width: auto;
+    height: auto;
     margin-left: auto;
+    object-fit: contain;
 }
 
 .device-card .device-type {
