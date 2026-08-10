@@ -19,8 +19,8 @@ This section covers the tiled-grid model. For the uniform surfaces and how to se
 [Defining an Environment](../../getting-started/defining-an-environment).
 
 <div style="text-align: center;">
-  <img src="../../assets/terrains/course.png" alt="A tiled terrain course" style="max-width: 100%; width: 520px; height: auto;">
-  <div><i>A tiled grid mixing flat, slope, rough, and stairs tiles, joined by connectors.</i></div>
+  <img src="../../assets/terrains/base_tiled_diverse.png" alt="A large tiled terrain grid in the diverse palette" style="max-width: 100%; height: auto;">
+  <div><i>A tiled grid in the diverse palette: each tile type renders in its own color, joined by connectors.</i></div>
 </div>
 
 ## Grid
