@@ -82,7 +82,7 @@ The agent outputs actions that control:
 ## Key Features
 
 - **Multi-Actor Support** – Separate networks for human muscles and exoskeleton actuators (see [Network Index Handler](04_network-index-handler)).
-- **Terrain Curriculum** – Train on a progression of terrains from flat to rough ([Terrain Types](03_terrain-types)).
+- **Variable Terrain** – Train on flat, sloped, rough, or tiled terrain, defined by [myoassist.terrains](https://github.com/neumovelab/myoassist.terrains).
 - **Reference Motion Imitation** – Optional imitation reward using ground-truth gait trajectories.
 - **Realtime Evaluation** – Run policies in realtime with `--flag_realtime_evaluate`.
 

@@ -96,8 +96,7 @@ TrainSessionConfigBase
 | `observation_joint_pos_keys` | Joint position observation keys | ["ankle_angle_l", "hip_flexion_l"] |
 | `observation_joint_vel_keys` | Joint velocity observation keys | ["ankle_angle_l", "hip_flexion_l"] |
 | `observation_joint_sensor_keys` | Joint sensor observation keys | ["r_foot", "l_foot"] |
-| `terrain_type` | Terrain type (flat, random, harmonic_sinusoidal, slope, dev) | "flat" |
-| `terrain_params` | Terrain parameters (space-separated values) | "0.1 20" |
+| `terrain` | Terrain spec (path or inline config); defined by [myoassist.terrains](https://github.com/neumovelab/myoassist.terrains) | null |
 | `custom_max_episode_steps` | Maximum episode steps | 1000 |
 | `model_path` | MuJoCo model file path | "models/22muscle_2D/myoLeg22_2D_TUTORIAL.xml" |
 | `reference_data_path` | Path to reference motion data | "rl_train/reference_data/short_reference_gait.npz" |
@@ -205,7 +204,7 @@ These parameters are provided as a list of dictionaries, where each dictionary r
 
 ## Related Documentation
 
-- [Terrain Types](03_terrain-types) - Detailed explanation of terrain types and parameters
+- [myoassist.terrains](https://github.com/neumovelab/myoassist.terrains) - Terrain generation and configuration
 - [Network Index Handler](04_network-index-handler) - Network indexing information and structure
 
 ## Example Configuration
