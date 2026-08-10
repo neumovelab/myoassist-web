@@ -222,3 +222,58 @@ a:hover {
     margin-left: 0.3rem;
     vertical-align: text-bottom;
 }
+
+/* Device catalog cards */
+.device-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.device-card {
+    flex: 1 1 280px;
+    max-width: 340px;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.device-card .device-img {
+    display: block;
+    width: 100%;
+    height: 210px;
+    object-fit: contain;
+    background: #fff;
+}
+
+.device-card .device-meta {
+    padding: 0.5rem 0.85rem 0.85rem;
+}
+
+.device-card .device-meta h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.35rem 0 0.15rem;
+    font-size: 0.95rem;
+}
+
+.device-card .device-logo {
+    height: 22px;
+    width: auto;
+    margin-left: auto;
+}
+
+.device-card .device-type {
+    margin: 0 0 0.45rem;
+    font-size: 0.82rem;
+    font-style: italic;
+    color: #575757;
+}
+
+.device-card .device-meta p {
+    margin: 0.2rem 0;
+    font-size: 0.85rem;
+}
