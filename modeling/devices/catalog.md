@@ -9,7 +9,7 @@ layout: home
 # Device Catalog
 
 This page lists the gait-assistive devices, the upper-body and seated-mobility
-environments, and which pairs are compatible with each MSK model. For the human MSK
+environments, and their MSK compatibility. For the human MSK
 models, see [MSK Models](../msk-models). For the authoritative, installed set, run
 `python -m assist_sim list`.
 
@@ -55,27 +55,10 @@ matrix.
 `build_*_spec()` companion that returns the uncompiled `MjSpec`.
 `export_upper_body_xml(spec, path)` writes it to a standalone, reloadable XML.
 
-## Compatibility matrix
+## Compatibility
 
-Every device works with every MSK model, because all four MSK models share the
-passive torso scaffold. The three devices that pin `compatible_msk` (`KFoot_L1`,
-`NEUankle_L1`, `STRIDE_L2`) list all four, so nothing is excluded.
-
-| Device | myolegs22 | myolegs26 | myolegs | myofullbody |
-|--------|:-:|:-:|:-:|:-:|
-| `Anatomics_L1` | ✓ | ✓ | ✓ | ✓ |
-| `NEUankle_L1` | ✓ | ✓ | ✓ | ✓ |
-| `DephyExoBoot_L1` | ✓ | ✓ | ✓ | ✓ |
-| `KFoot_L1` | ✓ | ✓ | ✓ | ✓ |
-| `OpenSourceLeg_A_L1` | ✓ | ✓ | ✓ | ✓ |
-| `OpenSourceLeg_KA_L1` | ✓ | ✓ | ✓ | ✓ |
-| `STRIDE_L2` | ✓ | ✓ | ✓ | ✓ |
-| `Humotech_L1` | ✓ | ✓ | ✓ | ✓ |
-| `OpenExo_L1` | ✓ | ✓ | ✓ | ✓ |
-| `UTAnkleExo_L2` | ✓ | ✓ | ✓ | ✓ |
-| `Tutorial_L1` | ✓ | ✓ | ✓ | ✓ |
-| `HMEDI_L1` | ✓ | ✓ | ✓ | ✓ |
-| `Hippo_L1` | ✓ | ✓ | ✓ | ✓ |
+Every device is compatible with every MSK model, because all four MSK models share the
+same passive torso attachment scaffold.
 
 ## Listing combinations
 
