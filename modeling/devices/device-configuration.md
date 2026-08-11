@@ -2,7 +2,7 @@
 title: Device Configuration
 parent: Assistive Devices
 grand_parent: Simulation Environments
-nav_order: 2
+nav_order: 3
 layout: home
 ---
 
@@ -77,6 +77,10 @@ to adjust the frame per attach point.
 world` instead. The device body keeps its own `<freejoint>`, and `equality`
 constraints then tie it to the leg.
 
+<div style="text-align: center;">
+  <img src="../../assets/devices/exo_compile.png" alt="Exoskeleton device composition pipeline" style="width: 35.3rem; max-width: 100%; height: auto;">
+</div>
+
 ## Optional sections
 
 | Section | Purpose |
@@ -106,6 +110,10 @@ matters:
 4. `mesh_replacements` and `body_overrides`: swap in the residual stump mesh and reduce
    its mass.
 
+<div style="text-align: center;">
+  <img src="../../assets/devices/prosthetic_compile.png" alt="Prosthetic amputation composition pipeline" style="width: 45rem; max-width: 100%; height: auto;">
+</div>
+
 ## Per-MSK overrides
 
 One config can carry per-MSK variations. A section holds a `default` entry plus
@@ -125,3 +133,159 @@ attachments:
 Every section except `actuators` and the legacy `keyframes` supports this form. The
 [assist_sim config reference](https://github.com/neumovelab/assist_sim/blob/main/docs/device-config-reference.md)
 gives the full field detail and authoring rules for each section.
+
+---
+
+## Upper-body & Seated-mobility environments {#upper-body}
+
+The upper-body and seated-mobility environments are the non-gait members of the
+device set. Each one pairs a `myo_sim` human with one item of collaborator
+hardware: a wheelchair, a back-exosuit, or a bionic manipulation setup. The set
+also includes one standalone collaborator robot, the MPL. See the three cards at
+the bottom of the [Device Catalog](catalog).
+
+These environments differ from the [gait-assistive devices](catalog). They are
+**not registry devices**, and they are **not modular**. A dedicated builder
+function in `assist_sim.upper_body` makes each one. You do not use
+`load_combined`.
+
+### How they differ from the gait-assistive devices
+
+The gait-assistive devices are modular. You combine any registry MSK model with
+any device, and `load_combined` resolves the pair. The upper-body environments
+have the opposite shape. Each one is a single, fully composed model.
+
+| | Gait-assistive devices | Upper-body & seated-mobility |
+|---|---|---|
+| Shape | Modular MSK × device composition | Single composed model per environment |
+| Entry point | `load_combined("<msk>", "<device>")` | `build_<env>(...)` in `assist_sim.upper_body` |
+| Discovery | Found in the registry; `list` shows them | Not registry devices; `list` does not show them |
+| MSK choice | Any compatible registry MSK model | The builder composes the human, if there is one |
+| Configuration | Device YAML plus per-MSK overrides | Builder keyword arguments (for example `arms=`, `torso=`) |
+| Output | `(MjModel, MjData)` | `(MjModel, MjData)` |
+
+### The build API
+
+Each environment has a builder in `assist_sim.upper_body`. The builder returns a
+compiled model and a new `MjData`:
+
+```python
+from assist_sim.upper_body import (
+    build_wheelchair,
+    build_mpl,
+    build_auxivo_liftsuit,
+    build_bionic_bimanual,
+)
+
+model, data = build_wheelchair(arms="both", torso="passive")  # "both"|"right"|"left"; "passive"|"muscled"
+model, data = build_mpl()               # standalone bimanual MPL robot (no myo_sim human)
+model, data = build_auxivo_liftsuit()   # passive back-exosuit on the muscled myotorso
+model, data = build_bionic_bimanual()   # biological arm + MPL prosthesis manipulation task
+```
+
+Every builder returns `(mujoco.MjModel, mujoco.MjData)`. This is a standard
+compiled MuJoCo model with data at `qpos0`. You can step it or render it at once.
+
+The three **composed** environments also give a `build_*_spec(...)` companion:
+`build_wheelchair_spec`, `build_auxivo_liftsuit_spec`, and
+`build_bionic_bimanual_spec`. The companion returns the uncompiled `MjSpec`. Use
+it to compose more elements, or to export the environment (see
+[Exporting & Loading Models](exporting-and-loading#upper-body-environments)).
+`build_mpl` has **no** spec companion, because `assist_sim` loads the MPL directly
+from its XML file.
+
+### Common properties
+
+The three composed environments (Wheelchair, AuxivoLiftsuit, bionic-bimanual)
+share the same conventions. **MPL is the exception.** MPL is a self-contained
+collaborator robot with no `myo_sim` human, and `assist_sim` loads it directly.
+
+- **The human comes from `myo_sim`.** `assist_sim` composes the anatomical body
+  from `myo_sim` at build time. It does not hold the anatomical meshes.
+- **Device hardware meshes only.** The hardware meshes for each environment
+  (chair frame, exosuit shell, prosthetic parts, task object) are in
+  `models/<Name>/`. MPL is a robot, so it holds its full mesh set.
+- **Rigid parts have no joints.** Some parts do not need a degree of freedom, such
+  as the seated legs of the Wheelchair. The builder writes the pose into the body
+  geometry and removes the joints.
+- **Transcribed keyframes.** If the original environment supplied keyframes, the
+  builder maps them by joint name onto this build. The Wheelchair has two
+  propulsion poses. bionic-bimanual has four task poses. MPL and AuxivoLiftsuit
+  have none.
+- **Model-only output.** The composed model holds the human and the device. A
+  downstream step adds the scene and the terrain, the same as for the
+  gait-assistive devices. MPL is the exception, because it carries its own basic
+  scene.
+
+### The environments
+
+#### Wheelchair
+
+A seated human who propels a manual wheelchair.
+`build_wheelchair(arms="both", torso="passive")` composes the selected arms on the
+selected torso, sets the legs to a rigid seated pose, and fixes the chair hardware
+to the torso.
+
+```python
+from assist_sim.upper_body import build_wheelchair
+
+model, data = build_wheelchair(arms="both", torso="passive")
+```
+
+- **`arms`**: `"both"` (mirrored bimanual), `"right"`, or `"left"`. The original
+  model has a single right arm, which is `arms="right"`.
+- **`torso`**: `"passive"` or `"muscled"`. The default is `"passive"`, a locked
+  scaffold with no muscles. `"muscled"` is the active `myotorso` with spine joints
+  and trunk muscles.
+- The **legs** are rigid and have no joints. Only the arms articulate.
+- The **keyframes** `start_return` and `pushing` drive the propulsion cycle.
+
+#### MPL
+
+The **Modular Prosthetic Limb** (JHU/APL) is a self-contained robotic bimanual arm
+and hand model. It has its own meshes and actuators, and it has **no `myo_sim`
+human**. It comes as the bimanual "SALLY" configuration: a torso with two MPL arms
+and simplified hands. `build_mpl()` **loads it directly** and does not compose it.
+MPL carries its own basic scene (floor, skybox, lights) and supplies no keyframes.
+
+```python
+from assist_sim.upper_body import build_mpl
+
+model, data = build_mpl()
+```
+
+#### AuxivoLiftsuit
+
+A passive back-exosuit in the style of the Auxivo Liftsuit. The human wears it over
+the **muscled** `myotorso`, which has spine joints and trunk muscles.
+`build_auxivo_liftsuit()` attaches the exosuit hardware to the torso, then couples
+it with two body welds and four spring tendons. This environment supplies no
+keyframes.
+
+```python
+from assist_sim.upper_body import build_auxivo_liftsuit
+
+model, data = build_auxivo_liftsuit()
+```
+
+#### bionic-bimanual
+
+The "bionic bimanual" manipulation task. A biological **right** arm faces an MPL
+**left** prosthetic arm. Between them is a YCB gelatin box on a `start` pillar, and
+the task moves it to a `goal` pillar. `build_bionic_bimanual()` composes the human
+as a passive torso with a right arm, then attaches the prosthesis, the object, the
+pillars, and the base pedestal. It supplies four task keyframes.
+
+```python
+from assist_sim.upper_body import build_bionic_bimanual
+
+model, data = build_bionic_bimanual()
+```
+
+### Exporting
+
+To write a composed environment to a standalone XML file, pass the output of the
+`build_*_spec(...)` companion to `export_upper_body_xml`. See
+[Exporting & Loading Models](exporting-and-loading#upper-body-environments) for the
+full procedure. `build_mpl` has no export path, because the MPL is already a
+standalone XML file on disk.

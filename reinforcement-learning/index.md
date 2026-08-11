@@ -9,26 +9,10 @@ layout: home
 
 MyoAssist’s reinforcement learning (RL) pipeline is built on top of **[Stable-Baselines3 (SB3) PPO](https://stable-baselines3.readthedocs.io/en/master/index.html)** and a set of custom **[MuJoCo](https://mujoco.org/)** environments that simulate human–exoskeleton interaction. This page gives you a bird’s-eye view of how everything fits together and where to find more information.
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 24px;">
-  <div style="flex: 1; text-align: center;">
-    <img src="../assets/partial_flat_short.gif" alt="Flat replay" style="max-width: 100%; height: auto;">
-    <!-- <div>Flat Terrain</div> -->
-  </div>
-  <div style="flex: 1; text-align: center;">
-    <img src="../assets/rough_short.gif" alt="Rough replay" style="max-width: 100%; height: auto;">
-    <!-- <div>Rough Terrain</div> -->
-  </div>
-  <div style="flex: 1; text-align: center;">
-    <img src="../assets/speed_control_shortest.gif" alt="Speed control replay" style="max-width: 100%; height: auto;">
-    <!-- <div>Rough Terrain</div> -->
-  </div>
-</div>
-
-
 Reinforcement learning (RL) is a machine learning paradigm where an agent learns to make decisions by interacting with an environment and receiving feedback in the form of rewards. In the context of MyoAssist, RL is used to train control policies for human–exoskeleton systems within MuJoCo simulation environments.
 
 <p align="center">
-  <img src="../assets/reinforcement_learning_explanation.png" alt="Reinforcement Learning Overview" style="max-width: 100%; height: auto;">
+  <img src="../assets/rl_framework.png" alt="MyoAssist reinforcement learning framework" style="width: 34rem; max-width: 100%; height: auto;">
 </p>
 
 **Observation Space:**  
@@ -85,6 +69,18 @@ The agent outputs actions that control:
 - **Variable Terrain** – Train on flat, sloped, rough, or tiled terrain, defined by [Terrains](../modeling/terrains/).
 - **Reference Motion Imitation** – Optional imitation reward using ground-truth gait trajectories.
 - **Realtime Evaluation** – Run policies in realtime with `--flag_realtime_evaluate`.
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 24px;">
+  <div style="flex: 1; text-align: center;">
+    <img src="../assets/partial_flat_short.gif" alt="Flat replay" style="max-width: 100%; height: auto;">
+  </div>
+  <div style="flex: 1; text-align: center;">
+    <img src="../assets/rough_short.gif" alt="Rough replay" style="max-width: 100%; height: auto;">
+  </div>
+  <div style="flex: 1; text-align: center;">
+    <img src="../assets/speed_control_shortest.gif" alt="Speed control replay" style="max-width: 100%; height: auto;">
+  </div>
+</div>
 
 ---
 

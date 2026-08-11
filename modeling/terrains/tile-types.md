@@ -15,20 +15,28 @@ cleanly.
 
 ## `flat`
 
-<img src="../../assets/terrains/flat.png" alt="flat tile render" width="300">
-
-A flat-topped box at a fixed height.
+<div class="tile-row">
+<div class="tile-fig">
+<img src="../../assets/terrains/flat.png" alt="flat tile render">
+<div class="tile-cap">A flat-topped box at a fixed height.</div>
+</div>
+<div class="tile-tbl" markdown="1">
 
 | Parameter | Default | Range / type | Description |
 |-----------|---------|--------------|-------------|
 | `height`  | `0.0`   | float        | Top face z-coordinate (offset above the grid plane). |
 
+</div>
+</div>
+
 ## `stairs`
 
-<img src="../../assets/terrains/stairs.png" alt="stairs tile render" width="300">
-
-A staircase that rises to a central peak, then mirrors down. It supports an
-`inverted` pit variant.
+<div class="tile-row">
+<div class="tile-fig">
+<img src="../../assets/terrains/stairs.png" alt="stairs tile render">
+<div class="tile-cap">A staircase that rises to a central peak, then mirrors down. It supports an <code>inverted</code> pit variant.</div>
+</div>
+<div class="tile-tbl" markdown="1">
 
 | Parameter | Default | Range / type | Description |
 |-----------|---------|--------------|-------------|
@@ -42,11 +50,17 @@ A staircase that rises to a central peak, then mirrors down. It supports an
 | `inverted` | `False` | bool | If `True`, stairs descend into a pit and mirror back up. |
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
 
+</div>
+</div>
+
 ## `slope`
 
-<img src="../../assets/terrains/slope.png" alt="slope tile render" width="300">
-
-A flat ramp that climbs along one axis, with an optional plateau at the peak.
+<div class="tile-row">
+<div class="tile-fig">
+<img src="../../assets/terrains/slope.png" alt="slope tile render">
+<div class="tile-cap">A flat ramp that climbs along one axis, with an optional plateau at the peak.</div>
+</div>
+<div class="tile-tbl" markdown="1">
 
 | Parameter | Default | Range / type | Description |
 |-----------|---------|--------------|-------------|
@@ -58,11 +72,17 @@ A flat ramp that climbs along one axis, with an optional plateau at the peak.
 | `inverted` | `False` | bool | If `True`, the ramp descends into a pit and rises back. |
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
 
+</div>
+</div>
+
 ## `pyramid_stairs`
 
-<img src="../../assets/terrains/pyramid_stairs.png" alt="pyramid_stairs tile render" width="300">
-
-Concentric square stairs that rise to (or descend from) a central platform.
+<div class="tile-row">
+<div class="tile-fig">
+<img src="../../assets/terrains/pyramid_stairs.png" alt="pyramid_stairs tile render">
+<div class="tile-cap">Concentric square stairs that rise to (or descend from) a central platform.</div>
+</div>
+<div class="tile-tbl" markdown="1">
 
 | Parameter | Default | Range / type | Description |
 |-----------|---------|--------------|-------------|
@@ -73,12 +93,17 @@ Concentric square stairs that rise to (or descend from) a central platform.
 | `inverted` | `False` | bool | If `True`, stairs descend into a central pit. |
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
 
+</div>
+</div>
+
 ## `rough`
 
-<img src="../../assets/terrains/rough.png" alt="rough tile render" width="300">
-
-Heightfield-backed mixed terrain (basins, plateaus, hills, and detail noise). It
-writes a `.png` heightmap to the terrain library directory.
+<div class="tile-row">
+<div class="tile-fig">
+<img src="../../assets/terrains/rough.png" alt="rough tile render">
+<div class="tile-cap">Heightfield-backed mixed terrain (basins, plateaus, hills, and detail noise). It writes a <code>.png</code> heightmap to the terrain library directory.</div>
+</div>
+<div class="tile-tbl" markdown="1">
 
 | Parameter | Default | Range / type | Description |
 |-----------|---------|--------------|-------------|
@@ -94,11 +119,17 @@ writes a `.png` heightmap to the terrain library directory.
 | `relief_mode` | `"centered"` | `"centered"`, `"up"`, or `"down"` | Whether features go above and below the base, only up, or only down. |
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
 
+</div>
+</div>
+
 ## `discrete_obstacles`
 
-<img src="../../assets/terrains/discrete_obstacles.png" alt="discrete_obstacles tile render" width="300">
-
-Randomly placed boxes at random heights.
+<div class="tile-row">
+<div class="tile-fig">
+<img src="../../assets/terrains/discrete_obstacles.png" alt="discrete_obstacles tile render">
+<div class="tile-cap">Randomly placed boxes at random heights.</div>
+</div>
+<div class="tile-tbl" markdown="1">
 
 | Parameter | Default | Range / type | Description |
 |-----------|---------|--------------|-------------|
@@ -109,11 +140,17 @@ Randomly placed boxes at random heights.
 | `seed` | `0` | int | RNG seed. |
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
 
+</div>
+</div>
+
 ## `stepping_stones`
 
-<img src="../../assets/terrains/stepping_stones.png" alt="stepping_stones tile render" width="300">
-
-A regular grid of small raised stones, with optional jitter.
+<div class="tile-row">
+<div class="tile-fig">
+<img src="../../assets/terrains/stepping_stones.png" alt="stepping_stones tile render">
+<div class="tile-cap">A regular grid of small raised stones, with optional jitter.</div>
+</div>
+<div class="tile-tbl" markdown="1">
 
 | Parameter | Default | Range / type | Description |
 |-----------|---------|--------------|-------------|
@@ -126,11 +163,17 @@ A regular grid of small raised stones, with optional jitter.
 | `seed` | `0` | int | RNG seed. |
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
 
+</div>
+</div>
+
 ## `boulders`
 
-<img src="../../assets/terrains/boulders.png" alt="boulders tile render" width="300">
-
-Randomly placed half-sphere boulders.
+<div class="tile-row">
+<div class="tile-fig">
+<img src="../../assets/terrains/boulders.png" alt="boulders tile render">
+<div class="tile-cap">Randomly placed half-sphere boulders.</div>
+</div>
+<div class="tile-tbl" markdown="1">
 
 | Parameter | Default | Range / type | Description |
 |-----------|---------|--------------|-------------|
@@ -140,14 +183,23 @@ Randomly placed half-sphere boulders.
 | `seed` | `0` | int | RNG seed. |
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
 
+</div>
+</div>
+
 ## `gap`
 
-<img src="../../assets/terrains/gap.png" alt="gap tile render" width="300">
-
-A linear gap cut through the tile (no geom in the gap band).
+<div class="tile-row">
+<div class="tile-fig">
+<img src="../../assets/terrains/gap.png" alt="gap tile render">
+<div class="tile-cap">A linear gap cut through the tile (no geom in the gap band).</div>
+</div>
+<div class="tile-tbl" markdown="1">
 
 | Parameter | Default | Range / type | Description |
 |-----------|---------|--------------|-------------|
 | `gap_width` | `0.5` | float, `(0.1, 1.0)` | Width of the gap in meters. |
 | `axis` | `"y"` | `"x"` or `"y"` | Axis the gap runs along. |
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
+
+</div>
+</div>

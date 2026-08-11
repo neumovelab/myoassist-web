@@ -14,7 +14,7 @@ The heart of any optimization is its objective function—the "cost" that the op
 The **Covariance Matrix Adaptation Evolution Strategy (CMA-ES)** is a stochastic optimization algorithm well-suited for complex, non-linear problems where the gradient is unavailable. At its core, CMA-ES works by iteratively sampling a "population" of candidate solutions (in our case, sets of controller parameters) from a multivariate normal distribution.
 
 <div style="text-align: center; display: flex; justify-content: center; gap: 20px;">
-  <div style="flex: 1; max-width: 600px;">
+  <div style="flex: 1; max-width: 800px;">
     <img src="../assets/cmaes.png" alt="CMAES Overview" style="width: 100%; height: 400px; object-fit: contain;">
     <br>
     <i>CMA-ES cost landscape example</i>
