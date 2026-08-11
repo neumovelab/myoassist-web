@@ -1,20 +1,20 @@
 ---
-title: MSK Models
+title: Musculoskeletal Models
 parent: Simulation Environments
 nav_order: 1
 layout: home
 ---
 
-# MSK Models
+# Musculoskeletal Models
 
 The human musculoskeletal (MSK) model is the `msk` of an
 [environment spec](../getting-started/defining-an-environment). MSK models come from
 [`myo_sim`](https://github.com/MyoHub/myo_sim). `myo_sim` composes each leg model at
-runtime, so an MSK key resolves by a call to `myo_sim.build_spec(<model>)`. The
+runtime, so an MSK key resolves by a call to `myo_sim.load_spec(<model>)`. The
 `assist_sim` key matches the `myo_sim` model name.
 
-| Key | Base DOFs | Description |
-|-----|-----------|-------------|
+| Key | Base nq | Description |
+|-----|---------|-------------|
 | `myolegs26` | 47 | 26-muscle, passive torso and legs. |
 | `myolegs22` | 39 | Planar 22-muscle. A sagittal-plane reduction of `myolegs26`. |
 | `myolegs` | 35 | 80-muscle, passive torso. |
@@ -25,6 +25,9 @@ on `3.3.3`. An unknown key raises a clear error rather than a silent fallback.
 
 The muscle count and the 2D or 3D control mode come from the `msk` key. You do not set
 them separately.
+
+Only `myolegs22` ships keyframes. The other three models load at `qpos0`, so a device
+config's `keyframe_overrides` has no effect on them.
 
 ## myolegs26
 
@@ -99,6 +102,25 @@ arms as well as the legs.
 
 </div>
 </div>
+
+## Adding a new MSK model
+
+The MSK models live in `myo_sim`, not in this repository. `assist_sim` supports the
+four curated keys above and resolves them through `myo_sim`. There is no pattern to
+load an arbitrary MSK XML from a path, because the device pipeline depends on
+per-MSK conventions, such as the frame orientation and the joint, tendon, and site
+names.
+
+To add support for a new MSK model, do two steps:
+
+1. Contribute the model upstream to `myo_sim`, so `myo_sim.load_spec(<name>)` can
+   return it.
+2. Register the key in `assist_sim`, and add a per-MSK override block to each device
+   that needs one (see [Per-MSK Overrides](devices/per-msk-overrides)).
+
+See [Contributing](../contribution/) to get started, or open an issue on the
+[myo_sim](https://github.com/MyoHub/myo_sim) or
+[assist_sim](https://github.com/neumovelab/assist_sim) repository.
 
 See [Defining an Environment](../getting-started/defining-an-environment) for how to
 pair an MSK with a device and a terrain.

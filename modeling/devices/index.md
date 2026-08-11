@@ -13,6 +13,10 @@ an environment. A device can be an exoskeleton, a powered or passive prosthetic 
 You select one with the `device` field of the
 [environment spec](../../getting-started/defining-an-environment).
 
+<div style="text-align: center;">
+  <img src="../../assets/devices/carousel_all_lowerlimb_labeled.gif" alt="Lower-limb assistive devices composed on the model">
+</div>
+
 See [Device Catalog](catalog) for every currently available device.
 
 ## Where devices fit
@@ -49,3 +53,17 @@ One device config can carry per-MSK variations. Sections such as `attachments`,
 and `mesh_replacements` can hold a `default` entry plus per-MSK-key entries. The
 resolver picks the matching MSK key if it is present, otherwise it uses `default`.
 See [Device Configuration](device-configuration) for the sections and their fields.
+
+## In this section
+
+- **[Device Catalog](catalog)**: every gait-assistive and upper-body device, with a
+  render on the model.
+- **[Device Configuration](device-configuration)**: the YAML config schema, plus the
+  upper-body and seated-mobility environments.
+- **[Add a Device](add-a-device)**: write a new device XML and config.
+- **[Modeling Tips](modeling-tips)**: prepare and inspect the device meshes.
+- **[Per-MSK Overrides](per-msk-overrides)**: device behavior that differs by MSK
+  model, and the amputation re-anchor workflow.
+- **[Exporting & Loading Models](exporting-and-loading)**: write a composed model to
+  disk and reload it.
+- **[Troubleshooting](troubleshooting)**: common errors and their fixes.

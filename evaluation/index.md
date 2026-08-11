@@ -34,24 +34,32 @@ Each evaluation makes these files:
 
 ## The composite figure
 
-`composite.png` is a black-and-white summary with several panels. The panels are the
-same for both frameworks. One panel is different for each framework:
+<div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">
+<div style="flex: 1 1 340px; min-width: 0;" markdown="1">
 
-- **Environment snapshot**: a skeleton render from the middle of the rollout.
-- **Optimization progress**: the training return for each update (RL), or the CMA-ES
-  fitness for each generation (CO). The CMA-ES panel shows the best, median, and worst
-  cost.
-- **Kinematics**: the right-leg hip, knee, and ankle angles for each gait segment
-  (mean and standard deviation). The panel draws these on the shared human gait
-  reference (`rl_train/reference_data/segmented.npz`).
-- **Kinetics**: the active joint moments (Nm) for each gait cycle.
+`composite.png` is a single summary figure with several panels that together
+characterize one rollout. Most panels are shared across both frameworks, and one panel
+is framework-specific. The example to the right is one such figure.
+
+- **Environment snapshot**: a render of the model partway through the rollout.
+- **Optimization progress**: the training return per update (RL), or the CMA-ES
+  fitness per generation (CO).
+- **Speed and kinematics**: commanded against achieved speed, gait metrics, and the
+  hip, knee, and ankle angles across the gait cycle, drawn on a human gait reference.
 - **Activation**: a grid of the muscle activations, with the exo torque.
-- **Timeseries**: the right-leg joint angles, the pelvis height, and the foot-contact
-  sensors.
+- **Timeseries**: the joint angles, the pelvis height, and the foot-contact sensors
+  over the full rollout.
 
-MyoAssist defines the environment the same way everywhere. It is a
-`{msk, device, terrain}` env-spec of raw registry keys. Refer to
-[Defining an Environment](../getting-started/defining-an-environment).
+The exact panels vary with the environment and the eval settings. MyoAssist defines
+the environment the same way everywhere: a `{msk, device, terrain}` env-spec of raw
+registry keys. See [Defining an Environment](../getting-started/defining-an-environment).
+
+</div>
+<div style="flex: 0 0 auto; text-align: center;">
+  <img src="../assets/eval_output.png" alt="Example composite evaluation figure" style="width: 20rem; max-width: 100%; height: auto;">
+  <div style="font-size: 0.85rem; color: #575757; margin-top: 0.4rem;"><i>Example composite figure</i></div>
+</div>
+</div>
 
 ## Reinforcement Learning: `run_policy_eval.py`
 

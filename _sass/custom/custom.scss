@@ -1,3 +1,17 @@
+// 72rem (narrow), 96rem (wide), or set to `none` via the
+// alternate rule noted in the comment on .main-content.
+$content-max-width: 84rem;
+
+/* Reasonable maximum width for content media on wide monitors. Layout-specific
+   images set their own size and win by specificity or source order: device cards
+   (.device-card .device-img), MSK figures (.msk-figure-img img), and any image
+   with an inline width/max-width. This rule only caps otherwise-unconstrained
+   content images, so a figure does not stretch across a very wide content column. */
+.main-content img {
+    max-width: 45rem;
+    height: auto;
+}
+
 /* Custom link colors for MyoAssist */
 a {
     color: #155257 !important;
@@ -76,15 +90,23 @@ a:hover {
         width: 14rem !important;
     }
 
-    /* Adjust main content margin to match sidebar width */
+    /* Adjust main content margin to match sidebar width (small gap after the
+       14rem sidebar; kept tight so content can bleed left). */
     .main {
         margin-left: 18rem !important;
     }
 
-    /* Make main content extend further to the right */
+    /* The content column is LEFT-anchored (starts just right of the sidebar) and
+       extends RIGHTWARD to $content-max-width (top of this file), OR to the window
+       width minus a right gutter, whichever is smaller. The explicit width is
+       deliberate: with width:auto the theme pins the column to ~800px, so the knob
+       had no effect. Raise the value to use more of the right whitespace (so tables
+       are not condensed); lower it for more whitespace on the right. */
     .main-content {
         max-width: none !important;
-        width: calc(100vw - 35rem) !important;
+        width: min(#{$content-max-width}, calc(100vw - 22rem)) !important;
+        margin-left: 0 !important;
+        margin-right: auto !important;
     }
 
     /* Adjust the main header to give more space to the aux-nav */
@@ -216,13 +238,6 @@ a:hover {
     background-image: linear-gradient(-90deg, rgb(234.8, 236.82, 244.9) 0%, rgba(234.8, 236.82, 244.9, 0.8) 100%);
 }
 
-.aux-nav-dropdown-menu a > svg {
-    width: 0.85rem;
-    height: 0.85rem;
-    margin-left: 0.3rem;
-    vertical-align: text-bottom;
-}
-
 /* Device catalog cards */
 .device-grid {
     display: flex;
@@ -334,4 +349,43 @@ a:hover {
 
 .msk-figure-text {
     flex: 1 1 300px;
+}
+
+/* Tile Types: tile render (with its caption below) on the left, parameter table
+   floated to its right. */
+.tile-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin: 1rem 0 1.5rem;
+}
+
+.tile-fig {
+    flex: 0 0 300px;
+    max-width: 100%;
+}
+
+.tile-fig img {
+    width: 300px;
+    max-width: 100%;
+    height: auto;
+}
+
+.tile-cap {
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    color: #575757;
+}
+
+.tile-tbl {
+    flex: 1 1 320px;
+    min-width: 0;
+}
+
+/* Let the parameter table fill its column and keep its own font sizing. */
+.tile-tbl table {
+    margin-top: 0;
+    display: table;
+    width: 100%;
 }

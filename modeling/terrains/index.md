@@ -19,7 +19,7 @@ This section covers the tiled-grid model. For the uniform surfaces and how to se
 [Defining an Environment](../../getting-started/defining-an-environment).
 
 <div style="text-align: center;">
-  <img src="../../assets/terrains/base_tiled_diverse.png" alt="A large tiled terrain grid in the diverse palette" style="max-width: 100%; height: auto;">
+  <img src="../../assets/terrains/base_tiled_diverse.png" alt="A large tiled terrain grid in the diverse palette" style="width: 100%; max-width: 45rem; height: auto;">
   <div><i>A tiled grid in the diverse palette: each tile type renders in its own color, joined by connectors.</i></div>
 </div>
 
