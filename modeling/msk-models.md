@@ -13,8 +13,8 @@ The human musculoskeletal (MSK) model is the `msk` of an
 runtime, so an MSK key resolves by a call to `myo_sim.build_spec(<model>)`. The
 `assist_sim` key matches the `myo_sim` model name.
 
-| Key | Base DOFs | Description |
-|-----|-----------|-------------|
+| Key | Base nq | Description |
+|-----|---------|-------------|
 | `myolegs26` | 47 | 26-muscle, passive torso and legs. |
 | `myolegs22` | 39 | Planar 22-muscle. A sagittal-plane reduction of `myolegs26`. |
 | `myolegs` | 35 | 80-muscle, passive torso. |
@@ -25,6 +25,9 @@ on `3.3.3`. An unknown key raises a clear error rather than a silent fallback.
 
 The muscle count and the 2D or 3D control mode come from the `msk` key. You do not set
 them separately.
+
+Only `myolegs22` ships keyframes. The other three models load at `qpos0`, so a device
+config's `keyframe_overrides` has no effect on them.
 
 ## myolegs26
 

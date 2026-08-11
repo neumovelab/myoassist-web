@@ -29,9 +29,10 @@ body_removals:           # delete biological subtrees (prosthetics)
 mesh_replacements:       # swap a geom's mesh
 geom_removals:           # remove named geoms
 body_overrides:          # override a body's mass / inertia
+actuator_overrides:      # set a re-anchored muscle's lengthrange
 actuator_removals:       # remove named actuators
 tendon_removals:         # remove named tendons
-tendon_modifications:    # reposition / replace / drop tendon wrap sites
+tendon_modifications:    # re-anchor muscle wraps onto residual bone (myodesis)
 contact:                 # add contact pairs / excludes
 sensors:                 # add sensors
 sensor_removals:         # remove sensors
@@ -84,13 +85,26 @@ constraints then tie it to the leg.
 | `joint_overrides` | Change the range, damping, axis, or position of existing MSK joints. |
 | `actuators` | Add joint-transmission actuators to the combined model. Tendon-transmission actuators are authored in the device XML instead. |
 | `keyframe_overrides` | Patch joint values in the MSK's existing keyframes. Refers to joints by name, so it is model-agnostic. |
-| `body_removals` | Delete biological body subtrees before attaching the device. Used for prosthetics (for example remove `talus_r` and below for a transtibial amputation). |
-| `mesh_replacements` / `geom_removals` | Swap a geom's mesh for one from the device XML, or remove a named geom. |
+| `body_removals` | Delete biological body subtrees before attaching the device (for example remove `tibia_r` and below for a transfemoral amputation). Re-anchor any kept muscle first with `tendon_modifications`. |
+| `tendon_modifications` | Re-anchor a kept muscle onto the bone that remains (the myodesis step): move its wrap sites and geoms onto the residual bone. This runs before the removals, or the cascade removes the muscle. |
+| `actuator_overrides` | Set a re-anchored muscle's `lengthrange`. A re-anchor changes the muscle's operating range. |
+| `mesh_replacements` / `geom_removals` | Swap a geom's mesh for one from the device XML, or remove a named geom (for example the residual stump mesh). |
 | `body_overrides` | Override a body's mass and inertia. Used to reduce a residual limb after an amputation, so the stump does not carry the whole segment's mass. |
 | `actuator_removals` / `tendon_removals` | Remove named actuators or tendons (for example muscles that cross an amputation level). |
-| `tendon_modifications` | Reposition, replace, or drop tendon wrap sites without rebuilding the tendon. |
 | `contact` | Add contact pairs and excludes to the combined model. |
 | `sensors` / `sensor_removals` | Add or remove sensors (for example restore a foot touch sensor onto a prosthetic sole). |
+
+## Prosthetic amputation workflow
+
+A prosthetic device removes distal bones and keeps the muscles that remain. The order
+matters:
+
+1. `tendon_modifications`: re-anchor each kept muscle's wraps onto the residual bone.
+2. `body_removals`: remove the distal bones. The cascade removes any muscle still
+   anchored past the cut.
+3. `actuator_overrides`: give each re-anchored muscle a new `lengthrange`.
+4. `mesh_replacements` and `body_overrides`: swap in the residual stump mesh and reduce
+   its mass.
 
 ## Per-MSK overrides
 
@@ -108,7 +122,6 @@ attachments:
       pos: [-0.105, 0.08, 0]
 ```
 
-Most sections support this form. The
+Every section except `actuators` and the legacy `keyframes` supports this form. The
 [assist_sim config reference](https://github.com/neumovelab/assist_sim/blob/main/docs/device-config-reference.md)
-lists which sections support per-MSK overrides, and gives the full field detail and
-authoring rules for each section.
+gives the full field detail and authoring rules for each section.
