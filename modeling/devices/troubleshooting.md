@@ -15,15 +15,25 @@ incorrect reference.
 
 ## Install / import
 
+### `ResolutionImpossible` or a `mujoco` / `dm-control` conflict during install
+
+MyoAssist installs with `uv`, not plain `pip`. If you run `pip install -e .`, the resolver
+stops with a conflict about `mujoco` or `dm-control`. MyoSuite pins older versions in its
+metadata, and the `pyproject.toml` override that relaxes them is only read by `uv`. Install
+uv and use it:
+
+```bash
+pip install uv
+uv pip install -e .
+```
+
 ### `ImportError: ... myo_sim ... is not installed`
 
 `myo_sim` composes the musculoskeletal (MSK) models. `assist_sim` gets them through
-`myo_sim.load_spec(...)`. Install `myo_sim`:
+`myo_sim.load_spec(...)`. Install it from PyPI:
 
 ```bash
-pip install myo_sim   # once on PyPI
-# or, interim:
-pip install git+https://github.com/MyoHub/myo_sim.git@dev
+pip install myo-sim
 ```
 
 ### `ImportError: MSK model '...' requires ... mujoco>=3.3.4`
@@ -36,7 +46,7 @@ version. To upgrade, run `pip install "mujoco>=3.3.4"`.
 
 `assist_sim` is not on `sys.path`. Use one of these two fixes:
 
-- Run `pip install -e .` from the root of the repository.
+- Run `uv pip install -e .` from the root of the repository.
 - Or run scripts that call `sys.path.insert(0, repo_root)`. The scripts in
   `examples/` do this.
 

@@ -17,6 +17,10 @@ You select one with the `device` field of the
   <img src="../../assets/devices/carousel_all_lowerlimb_labeled.gif" alt="Lower-limb assistive devices composed on the model">
 </div>
 
+<div style="padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; margin: 20px 0; text-align: center;">
+  <a href="interactive-demo" style="font-size: 1.5rem; font-weight: 600;">Interactive Demo</a>
+</div>
+
 See [Device Catalog](catalog) for every currently available device.
 
 ## Where devices fit

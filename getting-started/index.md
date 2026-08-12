@@ -14,9 +14,10 @@ Welcome to MyoAssist! This section will help you get up and running with the fra
 Before you begin, make sure you have:
 - [Python 3.11](https://www.python.org/downloads/release/python-3119/) or newer (add Python to PATH during installation)
 - [Git](https://git-scm.com/downloads)
+- [uv](https://docs.astral.sh/uv/) (the installer MyoAssist uses; see the virtual-environment steps below)
 - [Visual Studio Code](https://code.visualstudio.com/download) or another IDE (optional)
 
-MuJoCo 3.3.4 or newer installs automatically with the package.
+MuJoCo 3.4 or newer installs automatically with the package.
 
 ## Installation
 
@@ -68,7 +69,17 @@ Virtual environments (venv) are essential because they allow you to create isola
    >  
    > This indicates that the virtual environment is currently active.
 
-3. **Deactivate the virtual environment (optional):**
+3. **Install uv (the installer MyoAssist uses):**
+   ```bash
+   pip install uv
+   ```
+
+   <div style="padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; margin: 16px 0;">
+     <h4>Why uv?</h4>
+     <p>MyoAssist installs with <code>uv</code>, not plain <code>pip</code>. MyoSuite 2.8.4 pins an older MuJoCo in its metadata, but the framework needs MuJoCo 3.4 for the sibling packages (<code>myo-sim</code>, <code>assist-sim</code>, and <code>myoassist-terrains</code>). A one-line override in <code>pyproject.toml</code> relaxes that pin, so <code>uv</code> resolves the whole stack in one command. Plain <code>pip</code> cannot do this and stops with a resolution error.</p>
+   </div>
+
+4. **Deactivate the virtual environment (optional):**
    ```bash
    deactivate
    ```
@@ -79,11 +90,12 @@ After creating and activating the virtual environment, you can install the requi
 
 ### Step 3: Install the Package
 ```bash
-pip install -e . -r requirements.txt
+uv pip install -e .
 ```
 
-`requirements.txt` installs the three sibling packages (`myo_sim`, `assist_sim`, and
-`myoassist.terrains`) from git, because they are not yet on PyPI.
+This one command installs MyoAssist and all of its dependencies, including the three sibling
+packages (`myo-sim`, `assist-sim`, and `myoassist-terrains`) from PyPI. It uses `uv` so the
+`pyproject.toml` override applies (see "Why uv?" above).
 
 ### Step 4: Verify Installation
 
