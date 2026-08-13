@@ -37,7 +37,7 @@ Controller optimization in MyoAssist enables optimization of a reflex-based musc
 - **`run_eval.py`**: Results evaluation and analysis
 
 <div style="display: flex; gap: 20px; margin: 20px 0;">
-  <div style="flex: 1; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+  <div class="info-box" style="flex: 1; margin: 0;">
     <h4>Getting Started</h4>
     <p>Learn the basics of reflex control and start your first optimization</p>
     <ul>
@@ -46,7 +46,7 @@ Controller optimization in MyoAssist enables optimization of a reflex-based musc
       <li><a href="../evaluation/">Evaluation</a></li>
     </ul>
   </div>
-  <div style="flex: 1; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+  <div class="info-box" style="flex: 1; margin: 0;">
     <h4>Additional Topics and Tools</h4>
     <p>Customize cost functions and analyze optimization results</p>
     <ul>

@@ -20,13 +20,18 @@ Please read MyoAssist's documentation and look through current topics on our Git
 We welcome contributions from the community. Here are the three main ways you can contribute:
 
 ### 1. GitHub Issues
-<img src="../assets/github_issues.png" alt="Issues" width="15%">
-
-Use Issues for:
-- **Bug Reports**: Report issues you encounter
-- **Feature Requests**: Suggest new features or improvements
-- **Questions**: Ask for help or clarification
-- **Documentation Issues**: Report problems with documentation
+<div style="display:flex; align-items:center; gap:28px; margin:16px 0;">
+<a href="https://github.com/neumovelab/myoassist/issues" target="_blank" rel="noopener" title="MyoAssist Issues" aria-label="MyoAssist Issues" style="color:#155257; flex:0 0 auto;"><svg width="56" height="56" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"></path></svg></a>
+<div>
+<p style="margin:0 0 6px;">Use Issues for:</p>
+<ul style="margin:0;">
+<li><strong>Bug Reports</strong>: Report issues you encounter</li>
+<li><strong>Feature Requests</strong>: Suggest new features or improvements</li>
+<li><strong>Questions</strong>: Ask for help or clarification</li>
+<li><strong>Documentation Issues</strong>: Report problems with documentation</li>
+</ul>
+</div>
+</div>
 
 ### Issue Labels
 
@@ -40,23 +45,33 @@ We use the following labels to organize issues:
 
 
 ### 2. GitHub Discussions
-<img src="../assets/github_discussions.png" alt="Discussions" width="20%">
-
-Use Discussions for:
-- **Community Help**: Get help from the community
-- **General Questions**: Ask questions about MyoAssist usage
-- **Sharing Experiences**: Share your experiences and use cases
-- **Ideas Discussion**: Discuss potential features or improvements
-- **Community Support**: Help other users with their questions
+<div style="display:flex; align-items:center; gap:28px; margin:16px 0;">
+<a href="https://github.com/neumovelab/myoassist/discussions" target="_blank" rel="noopener" title="MyoAssist Discussions" aria-label="MyoAssist Discussions" style="color:#155257; flex:0 0 auto;"><svg width="56" height="56" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M1.75 1h8.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 10.25 10H7.061l-2.574 2.573A1.458 1.458 0 0 1 2 11.543V10h-.25A1.75 1.75 0 0 1 0 8.25v-5.5C0 1.784.784 1 1.75 1ZM1.5 2.75v5.5c0 .138.112.25.25.25h1a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h3.5a.25.25 0 0 0 .25-.25v-5.5a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13 2a.25.25 0 0 0-.25-.25h-.5a.75.75 0 0 1 0-1.5h.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 14.25 12H14v1.543a1.458 1.458 0 0 1-2.487 1.03L9.22 12.28a.749.749 0 0 1 1.06-1.06l2.22 2.22v-2.19a.75.75 0 0 1 .75-.75h1a.25.25 0 0 0 .25-.25Z"></path></svg></a>
+<div>
+<p style="margin:0 0 6px;">Use Discussions for:</p>
+<ul style="margin:0;">
+<li><strong>Community Help</strong>: Get help from the community</li>
+<li><strong>General Questions</strong>: Ask questions about MyoAssist usage</li>
+<li><strong>Sharing Experiences</strong>: Share your experiences and use cases</li>
+<li><strong>Ideas Discussion</strong>: Discuss potential features or improvements</li>
+<li><strong>Community Support</strong>: Help other users with their questions</li>
+</ul>
+</div>
+</div>
 
 ### 3. Pull Requests
-<img src="../assets/github_pull_requests.png" alt="Discussions" width="25%">
-
-Use Pull Requests for:
-- **Code Contributions**: Submit code improvements and new features
-- **Documentation Updates**: Improve or add documentation
-- **Bug Fixes**: Submit fixes for reported issues
-- **Example Code**: Add examples or tutorials
+<div style="display:flex; align-items:center; gap:28px; margin:16px 0;">
+<a href="https://github.com/neumovelab/myoassist/pulls" target="_blank" rel="noopener" title="MyoAssist Pull Requests" aria-label="MyoAssist Pull Requests" style="color:#155257; flex:0 0 auto;"><svg width="56" height="56" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z"></path></svg></a>
+<div>
+<p style="margin:0 0 6px;">Use Pull Requests for:</p>
+<ul style="margin:0;">
+<li><strong>Code Contributions</strong>: Submit code improvements and new features</li>
+<li><strong>Documentation Updates</strong>: Improve or add documentation</li>
+<li><strong>Bug Fixes</strong>: Submit fixes for reported issues</li>
+<li><strong>Example Code</strong>: Add examples or tutorials</li>
+</ul>
+</div>
+</div>
 
 ## Contributing Guidelines
 

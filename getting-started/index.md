@@ -15,7 +15,7 @@ Before you begin, make sure you have:
 - [Python 3.11](https://www.python.org/downloads/release/python-3119/) or newer (add Python to PATH during installation)
 - [Git](https://git-scm.com/downloads)
 - [uv](https://docs.astral.sh/uv/) (the installer MyoAssist uses; see the virtual-environment steps below)
-- [Visual Studio Code](https://code.visualstudio.com/download) or another IDE (optional)
+- [Visual Studio Code](https://code.visualstudio.com/download) or other IDE
 
 MuJoCo 3.4 or newer installs automatically with the package.
 
@@ -29,9 +29,12 @@ cd myoassist
 
 ### Step 2: Set Up Virtual Environment (venv)
 
-> This step is optional if you are already familiar with Python virtual environments and prefer to set up your own environment.
+> *This step is optional if you are already familiar with Python virtual environments and prefer to set up your own environment.*
 
-Virtual environments (venv) are essential because they allow you to create isolated Python environments for your projects. This means each project can have its own dependencies, regardless of what dependencies other projects have. This helps prevent version conflicts and makes your development process more reliable and reproducible.
+<div class="info-box">
+   <h4>Why VENV?</h4>
+   <p>Virtual environments (venv) allow you to create isolated Python environments for your projects. This means each project can have its own dependencies, regardless of what dependencies other projects have. This helps prevent version conflicts and makes your development process more reliable and reproducible.</p>
+</div>
 
 ### How to Set Up a Virtual Environment
 
@@ -74,7 +77,7 @@ Virtual environments (venv) are essential because they allow you to create isola
    pip install uv
    ```
 
-   <div style="padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; margin: 16px 0;">
+   <div class="info-box">
      <h4>Why uv?</h4>
      <p>MyoAssist installs with <code>uv</code>, not plain <code>pip</code>. MyoSuite 2.8.4 pins an older MuJoCo in its metadata, but the framework needs MuJoCo 3.4 for the sibling packages (<code>myo-sim</code>, <code>assist-sim</code>, and <code>myoassist-terrains</code>). A one-line override in <code>pyproject.toml</code> relaxes that pin, so <code>uv</code> resolves the whole stack in one command. Plain <code>pip</code> cannot do this and stops with a resolution error.</p>
    </div>

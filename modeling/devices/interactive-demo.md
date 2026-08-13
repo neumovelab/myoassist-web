@@ -14,9 +14,7 @@ This is a live, in-browser simulation of the OpenSourceLeg Knee-Ankle (OSL-KA) a
 <div style="margin: 16px 0;">
   <iframe src="https://neumovelab.github.io/assistsim_demo/"
           title="MyoAssist OSL-KA interactive demo"
-          style="width: 100%; height: 80vh; border: 1px solid #ddd; border-radius: 8px;"
+          class="demo-frame"
+          style="width: 100%; height: 80vh; border-radius: 8px;"
           loading="lazy" allow="fullscreen"></iframe>
 </div>
-
-For more room, open the demo in a full window:
-[neumovelab.github.io/assistsim_demo](https://neumovelab.github.io/assistsim_demo/).

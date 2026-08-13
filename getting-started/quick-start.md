@@ -9,8 +9,7 @@ layout: home
 
 After you install MyoAssist (see [Getting Started](./)), run one of these minimal
 scripts to confirm your setup builds and steps a composed environment. Neither one
-trains a policy. They only create an environment and run it, so you see something
-move in a minute.
+trains a policy, they only create an environment and run it.
 
 ## Minimal RL environment
 
@@ -30,12 +29,11 @@ mjpython rl_train/run_sim_minimal.py
 ## Minimal reflex controller (CO)
 
 This builds a composed reflex environment, runs a random controller, and prints how
-long the model stays upright. The walking duration changes each run, because the
+long the model stays upright. The walking duration will likely change each run, because the
 control parameters are random.
 
 ```bash
-cd ctrl_optim
-python run_ctrl_minimal.py
+python ctrl_optim/run_ctrl_minimal.py
 ```
 
 ## Next steps

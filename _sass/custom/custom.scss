@@ -389,3 +389,124 @@ a:hover {
     display: table;
     width: 100%;
 }
+
+/* Theme-toggle icon: a touch smaller than the other aux-nav buttons. */
+#theme-toggle svg {
+    width: 1.15rem !important;
+    height: 1.15rem !important;
+}
+
+/* =========================================================================
+   Dark mode
+   custom.scss is compiled once per color scheme (last import of
+   just-the-docs.scss.liquid), so `$color-scheme` and the palette variables
+   below hold the ACTIVE scheme's values. The light build is unchanged: every
+   dark rule sits behind `@if $color-scheme == dark`, and the themeable classes
+   reproduce the old light look in their `@else` branch. The toggle swaps the
+   whole compiled stylesheet (see _includes/head_custom.html), so all theme
+   chrome that reads scheme variables is already correct in the dark build; the
+   overrides here only neutralize the hardcoded light `!important` rules above.
+   ========================================================================= */
+
+/* Themeable info panels (the "Why ..." boxes and the Interactive Demo box). */
+.info-box {
+    padding: 20px;
+    border-radius: 8px;
+    margin: 16px 0;
+    @if $color-scheme == dark {
+        background-color: lighten($body-background-color, 6%);
+        border: 1px solid $border-color;
+        color: $body-text-color;
+    } @else {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+    }
+}
+
+.info-box h4 {
+    margin-top: 0;
+}
+
+/* Themeable figure caption. */
+.fig-caption {
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+    @if $color-scheme == dark {
+        color: $grey-dk-000;
+    } @else {
+        color: #575757;
+    }
+}
+
+/* Themeable embedded demo frame border. */
+.demo-frame {
+    @if $color-scheme == dark {
+        border: 1px solid $border-color;
+    } @else {
+        border: 1px solid #ddd;
+    }
+}
+
+@if $color-scheme == dark {
+    $ma-teal-dk: #4fb6c0; // lightened MyoAssist teal, readable on dark
+
+    /* Links (overrides the `a { color: #155257 !important }` light rule; this
+       also recolors the sidebar badge links and the contribution octicons,
+       which are <a> elements). */
+    a {
+        color: $ma-teal-dk !important;
+        text-decoration-color: $grey-dk-100 !important;
+    }
+    a:hover {
+        color: lighten($ma-teal-dk, 10%) !important;
+        text-decoration-color: $grey-dk-000 !important;
+    }
+
+    .nav-list-expander svg,
+    .main-content .anchor-heading svg,
+    .search-result-icon,
+    .site-button {
+        color: $ma-teal-dk !important;
+    }
+
+    .search-label .search-icon {
+        color: $grey-dk-000 !important;
+    }
+    .search-input:focus + .search-label .search-icon {
+        color: $ma-teal-dk !important;
+    }
+
+    .site-button:hover {
+        color: lighten($ma-teal-dk, 10%) !important;
+        background-image: linear-gradient(-90deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%) !important;
+    }
+
+    /* Aux-nav "MyoAssist Repositories" dropdown menu. */
+    .aux-nav-dropdown-menu {
+        background-color: $grey-dk-250;
+        border: 1px solid $border-color;
+    }
+    .aux-nav-dropdown-menu a:hover {
+        background-image: linear-gradient(-90deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+    }
+
+    /* Device catalog cards + tile captions. */
+    .device-card {
+        border: 1px solid $border-color;
+        background: $grey-dk-250;
+    }
+    .device-card .device-img {
+        background: $grey-dk-250;
+    }
+    .device-card .device-type,
+    .tile-cap {
+        color: $grey-dk-000;
+    }
+
+    /* Sidebar GitHub badge (nav_footer_custom.html): overrides its inline
+       color + border-top color so the version text and separator flip too. */
+    .repo-badge {
+        color: $ma-teal-dk !important;
+        border-top-color: $border-color !important;
+    }
+}
