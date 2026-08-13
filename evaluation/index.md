@@ -57,7 +57,7 @@ registry keys. See [Defining an Environment](../getting-started/defining-an-envi
 </div>
 <div style="flex: 0 0 auto; text-align: center;">
   <img src="../assets/eval_output.png" alt="Example composite evaluation figure" style="width: 20rem; max-width: 100%; height: auto;">
-  <div style="font-size: 0.85rem; color: #575757; margin-top: 0.4rem;"><i>Example composite figure</i></div>
+  <div class="fig-caption"><i>Example composite figure</i></div>
 </div>
 </div>
 

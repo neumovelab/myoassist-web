@@ -8,7 +8,7 @@ layout: home
 
 # Add a Device
 
-This page tells you how to write a new device. The pipeline finds the device
+This page walks you through how to build a new device configuration and model. The pipeline finds the device
 automatically if the device obeys the directory layout below. For the mesh
 preparation that comes first, see [Modeling Tips](modeling-tips). For the full
 config schema, see [Device Configuration](device-configuration).

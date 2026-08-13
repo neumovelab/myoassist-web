@@ -10,12 +10,11 @@ layout: home
 In MyoAssist, an **environment** is a human musculoskeletal (MSK) model, an assistive
 **device**, and a **terrain**, composed into one MuJoCo model. The same definition
 drives both pipelines: reflex **Controller Optimization (CO)** and **Reinforcement
-Learning (RL)**. You describe an environment once and run it either way.
+Learning (RL)**.
 
 ## The environment spec
 
-An environment has three fields. Each field is a **raw registry key**, not a
-free-form path:
+An environment has three fields. Each field is a **raw registry key**:
 
 ```json
 { "msk": "myolegs22", "device": "Humotech_L1", "terrain": { "terrain": "slope", "deg": 8 } }
@@ -34,20 +33,43 @@ and which pairs are compatible.
 
 | Key | Description |
 |-----|-------------|
-| `myolegs22` | 22-muscle **2D** (sagittal-plane) lower limb |
-| `myolegs26` | 26-muscle **3D** lower limb |
+| `myolegs22` | **2D** (sagittal-plane) |
+| `myolegs26`, `myolegs80`, `myofullbody` | **3D** |
 
 The muscle count and the 2D or 3D control mode come from `msk`. You do not set them
 separately.
 
-### Devices
+### Discovering and validating
 
-Devices include ankle and knee exoskeletons (for example `DephyExoBoot_L1`,
-`Humotech_L1`, `OpenExo_L1`, `UTAnkleExo_L2`, `HMEDI_L1`), robotic prosthetic legs
-(for example `OpenSourceLeg_A_L1`, `OpenSourceLeg_KA_L1`), and a passive
-`Tutorial_L1` for demos and baselines. `python -m assist_sim list` prints the
+`python -m assist_sim list` prints the
 authoritative installed set. `python -m assist_sim validate <msk> <device>` checks
 one pair.
+
+```bash
+python -m assist_sim list                       # every installed MSK / device + compatibility
+python -m assist_sim validate myolegs22 Humotech_L1
+```
+
+`EnvSpec.validate()` does the same check in code. It raises a `ValueError` that lists
+the valid options when a key is unknown or the MSK and device pair is incompatible.
+
+> **Note:**  
+>  
+> Environment validation **must** use the correct raw registry keys or the returned result will be inacurate.  
+>  
+> **Example:**  
+> ```bash
+> python -m assist_sim validate myolegs22 Dephy_L1
+> INVALID: myolegs22 x Dephy_L1
+>
+> python -m assist_sim validate myolegs22 DephyExoboot_L1
+> INVALID: myolegs22 x DephyExoboot_L1
+>
+> python -m assist_sim validate myolegs22 DephyExoBoot_L1
+> OK: myolegs22 x DephyExoBoot_L1
+>    human:  myolegs22 (composed MjSpec, 38 bodies)
+>    config: ...\Lib\site-packages\assist_sim\models\DephyExoBoot\L1config.yaml
+> ```
 
 ### Terrain
 
@@ -85,9 +107,9 @@ The terrain sets the course grade. A `slope` terrain is the incline, and the
 evaluation camera, cost, and readouts derive the angle from it. There is no separate
 slope flag.
 
-> **Reflex CO is for steady-state locomotion.** A constant slope is fine. Do not use
-> the reflex controller to optimize over variable terrain (rough, stairs, mixed
-> tiles). Use variable terrain with RL, or for visualization.
+> **Reflex CO is for steady-state locomotion.** An constant terrain is manageable, however the CO pipeline and 
+> reflex controller will not optimize over highly variable terrain (rough, stairs, mixed
+> tiles). Use variable terrain with RL.
 
 ## Using an environment spec
 
@@ -101,9 +123,6 @@ python -m ctrl_optim.optim.train --msk myolegs22 --device Humotech_L1 \
 # or a shared env-spec file
 python -m ctrl_optim.optim.train --env-spec docs/examples/env_exo_slope.json --sim_time 20 -eff --ExoOn 1 ...
 ```
-
-There is no `--model`, `--musc_model`, or `--tgt_slope`. The `--msk` and `--device`
-flags define the model, and the terrain defines the grade.
 
 ### Reinforcement Learning
 
@@ -125,16 +144,6 @@ spec.validate()          # checks keys against the registry; raises with valid o
 xml = spec.compose()     # returns a loadable MuJoCo MJCF string
 spec.compose(export_path="my_env.xml")   # also writes a standalone, loadable file
 ```
-
-## Discovering and validating
-
-```bash
-python -m assist_sim list                       # every installed MSK / device + compatibility
-python -m assist_sim validate myolegs22 Humotech_L1
-```
-
-`EnvSpec.validate()` does the same check in code. It raises a `ValueError` that lists
-the valid options when a key is unknown or the MSK and device pair is incompatible.
 
 ## Ready-to-use examples
 

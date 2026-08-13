@@ -2,41 +2,26 @@
 title: Assistive Devices
 parent: Simulation Environments
 has_children: true
-nav_order: 2
+nav_order: 1
 layout: home
 ---
 
 # Assistive Devices
 
-A **device** is the assistive hardware that composes with a human MSK model to form
-an environment. A device can be an exoskeleton, a powered or passive prosthetic leg, or any other assistive device. Devices come from [`assist_sim`](https://github.com/neumovelab/assist_sim).
-You select one with the `device` field of the
+A device is the assistive hardware that composes with a human MSK model to form
+an environment. A device can be an exoskeleton, a powered or passive prosthetic leg, or any other assistive device. Devices come from [`assist_sim`](https://github.com/neumovelab/assist_sim),
+and are selected with the `device` field of the
 [environment spec](../../getting-started/defining-an-environment).
+
+See [Device Catalog](catalog) for every currently available device.
 
 <div style="text-align: center;">
   <img src="../../assets/devices/carousel_all_lowerlimb_labeled.gif" alt="Lower-limb assistive devices composed on the model">
 </div>
 
-<div style="padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; margin: 20px 0; text-align: center;">
+<div class="info-box" style="margin: 20px 0; text-align: center;">
   <a href="interactive-demo" style="font-size: 1.5rem; font-weight: 600;">Interactive Demo</a>
 </div>
-
-See [Device Catalog](catalog) for every currently available device.
-
-## Where devices fit
-
-Four packages work together to build a simulation:
-
-- **`myo_sim`** provides the human MSK models and their meshes.
-- **`assist_sim`** holds the device configurations and the combination pipeline. It
-  composes one MSK and one device into a single runnable model.
-- **`myoassist.terrains`** provides the scene (ground and heightfields). The
-  `assist_sim` output is model-only, with no ground.
-- **`myoassist`** consumes the composed model for Controller Optimization and
-  Reinforcement Learning.
-
-`assist_sim` composes the model. It does not provide MSK models, terrain, or a
-training loop.
 
 ## Device keys
 

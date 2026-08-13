@@ -2,7 +2,7 @@
 title: Modeling Tips
 parent: Assistive Devices
 grand_parent: Simulation Environments
-nav_order: 5
+nav_order: 7
 layout: home
 ---
 

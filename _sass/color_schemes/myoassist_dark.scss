@@ -1,0 +1,28 @@
+// MyoAssist branded dark scheme.
+//
+// This mirrors just-the-docs' own `dark` palette but swaps the accent to a
+// lightened MyoAssist teal (the #155257 brand teal is too dark to read on a
+// dark background). It compiles to `assets/css/just-the-docs-myoassist_dark.css`
+// via the sibling entry in `assets/css/`, and the theme toggle swaps to it at
+// runtime (see `_includes/head_custom.html`).
+//
+// It applies as a delta on top of the light scheme (which is imported first with
+// `!default`), so every variable it does not set keeps the light-scheme default.
+$color-scheme: dark;
+$body-background-color: $grey-dk-300;
+$body-heading-color: $grey-lt-000;
+$body-text-color: $grey-lt-300;
+$link-color: #4fb6c0; // lightened MyoAssist teal
+$nav-child-link-color: $grey-dk-000;
+$sidebar-color: $grey-dk-300;
+$base-button-color: $grey-dk-250;
+$btn-primary-color: $blue-200;
+$code-background-color: #31343f; // OneDarkJekyll default for syntax-one-dark-vivid
+$code-linenumber-color: #dee2f7; // OneDarkJekyll .nf for syntax-one-dark-vivid
+$feedback-color: darken($sidebar-color, 3%);
+$table-background-color: $grey-dk-250;
+$search-background-color: $grey-dk-250;
+$search-result-preview-color: $grey-dk-000;
+$border-color: $grey-dk-200;
+
+@import "./vendor/OneDarkJekyll/syntax"; // one-dark-vivid atom syntax theme

@@ -8,12 +8,9 @@ layout: home
 # Simulation Environments
 
 A simulation environment is a composed MuJoCo model: a human musculoskeletal (MSK)
-model, an assistive **device**, and a **terrain**. You describe it once with a
-`{msk, device, terrain}` spec, and the same definition drives both the reflex
+model, an assistive **device**, and a **terrain** and the same definition drives both the reflex
 Controller Optimization and the Reinforcement Learning pipelines. See
 [Defining an Environment](../getting-started/defining-an-environment).
-
-<!-- TODO(media): compose-pipeline figure (myo_sim MSK + assist_sim device + terrain). -->
 
 <div style="text-align: center;">
   <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 0 auto;">
@@ -31,14 +28,24 @@ Controller Optimization and the Reinforcement Learning pipelines. See
 
 ## How an environment is composed
 
-Three sibling packages supply the parts, and MyoAssist composes them into one model:
+Three sibling packages supply the parts, and MyoAssist composes them into one useable model:
 
-- **`myo_sim`** provides the human MSK model.
-- **`assist_sim`** provides the device and combines it with the MSK.
-- **`myoassist.terrains`** provides the terrain scene.
+- **`myo_sim`** provides the human MSK models and their meshes.
+- **`assist_sim`** holds the device configurations and the combination pipeline. It
+  composes one MSK and one device into a single runnable model.
+- **`myoassist.terrains`** provides the scene (ground, heightfields, and associated velocities). The
+  `assist_sim` output is model-only, with no ground.
+- **`myoassist`** consumes the composed model for Controller Optimization and
+  Reinforcement Learning.
 
 The result is a single MuJoCo model that the Controller Optimization and Reinforcement
 Learning pipelines step.
+
+<div style="text-align: center;">
+<img src="../../assets/devices/pipeline.png" alt="Environment composition pipeline" width="400"/>
+<div><i>Environment composition pipeline.</i></div>
+</div>
+
 
 ## In this section
 

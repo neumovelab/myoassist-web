@@ -9,8 +9,7 @@ layout: home
 # Device Catalog
 
 This page shows the gait-assistive devices and the upper-body and seated-mobility
-environments. For the human MSK models, see [MSK Models](../msk-models). Every device
-composes with every MSK model. For the authoritative, installed set, run
+environments. Every (currently provided) device composes with every MSK model. For the authoritative, installed set, run
 `python -m assist_sim list`.
 
 ## Gait-assistive devices
@@ -25,7 +24,7 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
     <div class="device-meta">
       <h3><code>OpenSourceLeg_A_L1</code> <img class="device-logo" src="../../assets/devices/osl_logo.png" alt="Open-Source Leg"></h3>
-      <p class="device-type">Transtibial prosthetic</p>
+      <p class="device-type">Powered transtibial prosthetic</p>
       <p>Open-Source Leg, ankle configuration.</p>
     </div>
   </div>
@@ -36,7 +35,7 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
     <div class="device-meta">
       <h3><code>OpenSourceLeg_KA_L1</code> <img class="device-logo" src="../../assets/devices/osl_logo.png" alt="Open-Source Leg"></h3>
-      <p class="device-type">Transfemoral prosthetic</p>
+      <p class="device-type">=Powered transfemoral prosthetic</p>
       <p>Open-Source Leg, knee-ankle configuration.</p>
     </div>
   </div>
@@ -47,8 +46,8 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
     <div class="device-meta">
       <h3><code>KFoot_L1</code> <img class="device-logo" src="../../assets/devices/neu_logo.png" alt="Northeastern"></h3>
-      <p class="device-type">Transtibial prosthetic</p>
-      <p>Passive transtibial prosthetic with a spring-damper ankle.</p>
+      <p class="device-type">Passive ranstibial prosthetic</p>
+      <p>Passive transtibial prosthetic with an asymmetrical stiffness ankle.</p>
     </div>
   </div>
   <div class="device-card">
@@ -59,7 +58,7 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     <div class="device-meta">
       <h3><code>NEUankle_L1</code> <img class="device-logo" src="../../assets/devices/neu_logo.png" alt="Northeastern"></h3>
       <p class="device-type">Powered transtibial prosthetic</p>
-      <p>Powered transtibial prosthetic with an actively driven ankle.</p>
+      <p>Powered transtibial prosthetic ankle.</p>
     </div>
   </div>
   <div class="device-card">
@@ -70,7 +69,7 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     <div class="device-meta">
       <h3><code>STRIDE_L2</code> <img class="device-logo" src="../../assets/devices/neu_logo.png" alt="Northeastern"></h3>
       <p class="device-type">Cable-driven ankle exo</p>
-      <p>Bilateral ankle exo with a closed six-bar linkage and Bowden cables.</p>
+      <p>Bilateral cable-driven ankle exo with a closed six-bar linkage hinge.</p>
     </div>
   </div>
   <div class="device-card">
@@ -81,7 +80,7 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     <div class="device-meta">
       <h3><code>DephyExoBoot_L1</code> <img class="device-logo" src="../../assets/devices/dephy_logo.png" alt="Dephy"></h3>
       <p class="device-type">Ankle exoskeleton</p>
-      <p>Bilateral ankle exoskeleton (Dephy ExoBoot).</p>
+      <p>Commercially-available bilateral ankle exoskeleton.</p>
     </div>
   </div>
   <div class="device-card">
@@ -92,7 +91,7 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     <div class="device-meta">
       <h3><code>Humotech_L1</code> <img class="device-logo" src="../../assets/devices/humotech_logo.png" alt="Humotech"></h3>
       <p class="device-type">Ankle exo with cables</p>
-      <p>Bilateral ankle exo with plantarflexion and dorsiflexion cables.</p>
+      <p>Commercially-available bowden-cable driven bilateral exo emulator.</p>
     </div>
   </div>
   <div class="device-card">
@@ -103,7 +102,7 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     <div class="device-meta">
       <h3><code>OpenExo_L1</code> <img class="device-logo logo-sm" src="../../assets/devices/openexo_logo.png" alt="OpenExo"></h3>
       <p class="device-type">Ankle exoskeleton</p>
-      <p>Bilateral ankle exoskeleton (OpenExo).</p>
+      <p>Bilateral ankle exoskeleton.</p>
     </div>
   </div>
   <div class="device-card">
@@ -114,7 +113,7 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     <div class="device-meta">
       <h3><code>UTAnkleExo_L2</code> <img class="device-logo" src="../../assets/devices/utwente_logo.png" alt="University of Twente"></h3>
       <p class="device-type">Parallel-linkage ankle exo</p>
-      <p>Bilateral parallel-linkage ankle exoskeleton.</p>
+      <p>Cable-driven bilateral ankle exoskeleton.</p>
     </div>
   </div>
   <div class="device-card">
@@ -125,7 +124,7 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     <div class="device-meta">
       <h3><code>Anatomics_L1</code> <img class="device-logo logo-sm" src="../../assets/devices/ucla_logo.png" alt="UCLA"></h3>
       <p class="device-type">Ankle exoskeleton</p>
-      <p>Bilateral instrumented soles with a passive right shank and foot frame.</p>
+      <p>Passive right ankle ROM constraint exo.</p>
     </div>
   </div>
   <div class="device-card">
@@ -136,7 +135,7 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     <div class="device-meta">
       <h3><code>HMEDI_L1</code> <img class="device-logo" src="../../assets/devices/hmedi_logo.png" alt="HMEDI"></h3>
       <p class="device-type">Hip-flexion cable exo</p>
-      <p>Bilateral hip-flexion cable exoskeleton with a torso piece.</p>
+      <p>Bilateral hip-flexion cable exo.</p>
     </div>
   </div>
   <div class="device-card">
@@ -147,13 +146,13 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     <div class="device-meta">
       <h3><code>Hippo_L1</code> <img class="device-logo" src="../../assets/devices/neu_logo.png" alt="Northeastern"></h3>
       <p class="device-type">Hip-flexion exoskeleton</p>
-      <p>Bilateral hip-flexion exoskeleton with fixed-gain hip actuators.</p>
+      <p>Bilateral hip exo.</p>
     </div>
   </div>
 </div>
 
-`Tutorial_L1` is a stripped-down teaching device for onboarding and baselines (no
-render). `OSL_A` and `OSL_KA` are registered aliases for the OpenSourceLeg keys.
+`Tutorial_L1` is a simplified example device for onboarding and baselines (not
+rendered).
 
 ## Upper-body and seated-mobility environments
 

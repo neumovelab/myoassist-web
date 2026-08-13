@@ -38,7 +38,7 @@ sensors:                 # add sensors
 sensor_removals:         # remove sensors
 ```
 
-Only `device` and `attachments` are required.
+Only `device` and `attachments` are *required*.
 
 ## `device`
 
@@ -100,7 +100,7 @@ constraints then tie it to the leg.
 
 ## Prosthetic amputation workflow
 
-A prosthetic device removes distal bones and keeps the muscles that remain. The order
+A prosthetic device removes distal anatomy and keeps the muscles that remain. The order
 matters:
 
 1. `tendon_modifications`: re-anchor each kept muscle's wraps onto the residual bone.
@@ -139,21 +139,13 @@ gives the full field detail and authoring rules for each section.
 ## Upper-body & Seated-mobility environments {#upper-body}
 
 The upper-body and seated-mobility environments are the non-gait members of the
-device set. Each one pairs a `myo_sim` human with one item of collaborator
-hardware: a wheelchair, a back-exosuit, or a bionic manipulation setup. The set
-also includes one standalone collaborator robot, the MPL. See the three cards at
-the bottom of the [Device Catalog](catalog).
+device set. See the three cards at the bottom of the [Device Catalog](catalog).
 
 These environments differ from the [gait-assistive devices](catalog). They are
-**not registry devices**, and they are **not modular**. A dedicated builder
+**not registry devices**, and are less modular. A dedicated builder
 function in `assist_sim.upper_body` makes each one. You do not use
-`load_combined`.
-
-### How they differ from the gait-assistive devices
-
-The gait-assistive devices are modular. You combine any registry MSK model with
-any device, and `load_combined` resolves the pair. The upper-body environments
-have the opposite shape. Each one is a single, fully composed model.
+`load_combined`. The `MPL` environment compiles using `MyoArm`, and the `Wheelchair` environment compiles using a left or right `MyoArm`
+and rigid or muscle-driven `MyoTorso`.
 
 | | Gait-assistive devices | Upper-body & seated-mobility |
 |---|---|---|
@@ -197,8 +189,8 @@ from its XML file.
 ### Common properties
 
 The three composed environments (Wheelchair, AuxivoLiftsuit, bionic-bimanual)
-share the same conventions. **MPL is the exception.** MPL is a self-contained
-collaborator robot with no `myo_sim` human, and `assist_sim` loads it directly.
+share the same conventions. **MPL is the exception**, as it is a self-contained
+environment with no `myo_sim` msk, and `assist_sim` loads it directly.
 
 - **The human comes from `myo_sim`.** `assist_sim` composes the anatomical body
   from `myo_sim` at build time. It does not hold the anatomical meshes.
@@ -218,6 +210,20 @@ collaborator robot with no `myo_sim` human, and `assist_sim` loads it directly.
   scene.
 
 ### The environments
+
+#### AuxivoLiftsuit
+
+A passive back-exosuit in the style of the Auxivo Liftsuit. The human wears it over
+the **muscled** `myotorso`, which has spine joints and trunk muscles.
+`build_auxivo_liftsuit()` attaches the exosuit hardware to the torso, then couples
+it with two body welds and four spring tendons. This environment supplies no
+keyframes.
+
+```python
+from assist_sim.upper_body import build_auxivo_liftsuit
+
+model, data = build_auxivo_liftsuit()
+```
 
 #### Wheelchair
 
@@ -252,20 +258,6 @@ MPL carries its own basic scene (floor, skybox, lights) and supplies no keyframe
 from assist_sim.upper_body import build_mpl
 
 model, data = build_mpl()
-```
-
-#### AuxivoLiftsuit
-
-A passive back-exosuit in the style of the Auxivo Liftsuit. The human wears it over
-the **muscled** `myotorso`, which has spine joints and trunk muscles.
-`build_auxivo_liftsuit()` attaches the exosuit hardware to the torso, then couples
-it with two body welds and four spring tendons. This environment supplies no
-keyframes.
-
-```python
-from assist_sim.upper_body import build_auxivo_liftsuit
-
-model, data = build_auxivo_liftsuit()
 ```
 
 #### bionic-bimanual
