@@ -35,7 +35,7 @@ configs (`A_L1config.yaml`, `KA_L1config.yaml`). OpenSourceLeg is an example.
 The device XML is a standalone MuJoCo XML file. It contains only the physical
 description of the device. `MjSpec.from_file` must load it on its own. Its bodies
 do not connect to a world here, because the pipeline attaches them to the
-musculoskeletal (MSK) model at attach time.
+musculoskeletal (MSK) model.
 
 The minimum content is:
 

@@ -396,6 +396,17 @@ a:hover {
     height: 1.15rem !important;
 }
 
+/* Nav-bar logo: a per-scheme asset (the file name matches the mode it is used on,
+   so _light.png is the darker mark for the light background and vice versa).
+   Overrides the single logo the theme sets from site.logo. */
+.site-logo {
+    @if $color-scheme == dark {
+        background-image: url("/assets/myoassist_logo_dark.png");
+    } @else {
+        background-image: url("/assets/myoassist_logo_light.png");
+    }
+}
+
 /* =========================================================================
    Dark mode
    custom.scss is compiled once per color scheme (last import of
