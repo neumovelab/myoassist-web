@@ -8,10 +8,10 @@ layout: home
 
 # Exporting & Loading Models
 
-Sometimes you need a file on disk, not only an `MjModel` object in memory.
-Examples are a file to share, a file to open in `simulate.exe`, and a file for a
-tool that needs a path. This page covers the export options and the reload
-options.
+Sometimes you need a file on disk instead of an `MjModel` object in memory.
+You might need to share a model, a file to open in `simulate.exe`, and a file for a
+tool that needs a path. This page covers the export and reload
+options provided.
 
 ## Export from Python
 
@@ -93,8 +93,7 @@ because the MPL is already a standalone XML file on disk.
 
 ## Content of the exported XML
 
-The export carries the model plus a minimal visual block. It is not a scene, and
-it is not bare either. The export **contains**:
+The export carries the model plus a minimal visual block. The export **contains**:
 
 - The combined body hierarchy: the MSK model and the device, with the device
   prefix.
@@ -115,7 +114,8 @@ The exported XML does **not** contain:
 - The scene textures and materials that no geom refers to.
 
 An exported model therefore has no ground. Downstream tools (`myoassist`,
-`myoassist.terrains`) put the ground and the lighting on top.
+`myoassist.terrains`) put the ground and the lighting on top. Loading the model in the MuJoCo visualizer
+and running the physics engine will drop the model into the void; be sure to hit pause and/or reload!
 
 ## Reload an exported XML
 

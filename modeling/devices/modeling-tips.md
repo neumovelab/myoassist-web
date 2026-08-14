@@ -58,7 +58,7 @@ scaled and placed in the model frame on the model's hand (right).
 
 <div style="text-align: center;">
 <img src="../../assets/ducks.png" alt="A part at world scale versus model scale" width="600"/>
-<div><i>Defined in the world frame at life size, versus in the body frame at model scale.</i></div>
+<div><i>Defined in the world frame in mm, versus in the body frame in m.</i></div>
 </div>
 
 ## Inspect in the MuJoCo visualizer

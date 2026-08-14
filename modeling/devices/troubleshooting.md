@@ -183,7 +183,9 @@ file.
 
 ## How to ask for help
 
-If you cannot solve the problem, collect this information:
+If you cannot solve the problem, see the
+[GitHub Issues](../../contribution/#1-github-issues) section on the Contributing page, 
+collect this information:
 
 - The exact `load_combined_model` or `load_combined` call that you made.
 - The full error message, with the "did you mean" suggestion.

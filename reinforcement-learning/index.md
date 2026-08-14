@@ -7,13 +7,13 @@ layout: home
 
 # Reinforcement Learning
 
-MyoAssist’s reinforcement learning (RL) pipeline is built on top of **[Stable-Baselines3 (SB3) PPO](https://stable-baselines3.readthedocs.io/en/master/index.html)** and a set of custom **[MuJoCo](https://mujoco.org/)** environments that simulate human–exoskeleton interaction. This page gives you a bird’s-eye view of how everything fits together and where to find more information.
-
-Reinforcement learning (RL) is a machine learning paradigm where an agent learns to make decisions by interacting with an environment and receiving feedback in the form of rewards. In the context of MyoAssist, RL is used to train control policies for human–exoskeleton systems within MuJoCo simulation environments.
+MyoAssist’s reinforcement learning (RL) pipeline is built on top of **[Stable-Baselines3 (SB3) PPO](https://stable-baselines3.readthedocs.io/en/master/index.html)** and a set of custom **[MuJoCo](https://mujoco.org/)** environments that simulate human–exoskeleton interaction. This page gives you an overview of how everything fits together and where to find more information.
 
 <p align="center">
   <img src="../assets/rl_framework.png" alt="MyoAssist reinforcement learning framework" style="width: 34rem; max-width: 100%; height: auto;">
 </p>
+
+Reinforcement learning (RL) is a machine learning paradigm where an agent learns to make decisions by interacting with an environment and receiving feedback in the form of rewards. In the context of MyoAssist, RL is used to train control policies for human–exoskeleton systems within MuJoCo simulation environments.
 
 **Observation Space:**  
 In our environments, the agent receives observations that include:
@@ -29,12 +29,6 @@ The agent outputs actions that control:
 - Exoskeleton control values (for the exoskeleton actor network)
 
 
-
-
----
-
-
-
 <!-- ## Core Building Blocks
 
 | Layer | File / Doc | Description |
@@ -44,8 +38,6 @@ The agent outputs actions that control:
 | **Callback** | [`learning_callback.py`](../../rl_train/utils/learning_callback.py) | Handles logging, checkpoints, videos and curriculum switches. |
 | **Analyzer** | [`analyzer/`](../../rl_train/analyzer/) · [Network Index Handler](network-index-handler.md) | Post-hoc evaluation: plots, gait metrics and network indexing analysis. |
 | **Configuration** | [`train_configs/*.json`](../../rl_train/train/train_configs/) · [Configuration Guide](configuration.md) | Fully define terrain, reward weights, network indexing and SB3 hyper-parameters. | -->
-
----
 
 ## Training Workflow
 

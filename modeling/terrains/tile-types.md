@@ -34,7 +34,7 @@ cleanly.
 <div class="tile-row">
 <div class="tile-fig">
 <img src="../../assets/terrains/stairs.png" alt="stairs tile render">
-<div class="tile-cap">A staircase that rises to a central peak, then mirrors down. It supports an <code>inverted</code> pit variant.</div>
+<div class="tile-cap">A staircase that rises to a central peak, then mirrors down. It supports an <code>inverted</code> variant.</div>
 </div>
 <div class="tile-tbl" markdown="1">
 
