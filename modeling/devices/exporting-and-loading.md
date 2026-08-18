@@ -145,7 +145,7 @@ to a different location, do one of these three tasks:
 Option 3 is the simplest. During the export, the pipeline makes the mesh paths
 relative to the `export_xml=` target.
 
-## Caching (turn it on for training)
+## Caching
 
 The cache is optional and off by default. Set `cache_dir=` to use it. All three entry
 points accept it:
