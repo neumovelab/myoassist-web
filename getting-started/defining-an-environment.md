@@ -31,13 +31,19 @@ and which pairs are compatible.
 
 ### MSK models
 
-| Key | Description |
-|-----|-------------|
-| `myolegs22` | **2D** (sagittal-plane) |
-| `myolegs26`, `myolegs80`, `myofullbody` | **3D** |
+| Key | Muscles | Description |
+|-----|---------|-------------|
+| `myolegs22` | 22 | **2D** (sagittal-plane) |
+| `myolegs26` | 26 | **3D** |
+| `myolegs` | 80 | **3D**. The key of the 80-muscle model is `myolegs`, not `myolegs80`. |
+| `myofullbody` | 416 | **3D**, full body with arms and torso muscles |
 
 The muscle count and the 2D or 3D control mode come from `msk`. You do not set them
 separately.
+
+For a 3D key, the CO pipeline replaces the free root with named sagittal DOFs, because the
+reflex controller reads the pelvis state from them. This is automatic. See
+[Root frame](../modeling/msk-models#root-frame).
 
 ### Discovering and validating
 

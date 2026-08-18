@@ -72,6 +72,9 @@ python -m assist_sim msk myolegs26 -o baseline.xml
 `load_msk` accepts `cache_dir=` on the same terms as `load_combined`. Use it to
 give a bare MSK model to a downstream tool.
 
+A base model carries no keyframe unless it is `myolegs22`, because the five canonical poses
+are added during a device combination. See [Keyframes](../msk-models#keyframes).
+
 ## Upper-body environments
 
 The [upper-body and seated-mobility environments](device-configuration#upper-body) do not use
@@ -142,10 +145,10 @@ to a different location, do one of these three tasks:
 Option 3 is the simplest. During the export, the pipeline makes the mesh paths
 relative to the `export_xml=` target.
 
-## Caching (faster repeat loads)
+## Caching (turn it on for training)
 
-The cache is optional. Set `cache_dir=` to use it. All three entry points accept
-it:
+The cache is optional and off by default. Set `cache_dir=` to use it. All three entry
+points accept it:
 
 ```python
 model, data = load_combined("myolegs26", "DephyExoBoot_L1", cache_dir="./.assist_sim_cache")
@@ -153,10 +156,68 @@ model, data = load_msk("myolegs26", cache_dir="./.assist_sim_cache")
 model, data = load_combined_model(human_xml=..., device_config=..., cache_dir="./.assist_sim_cache")
 ```
 
-The first call runs the full pipeline. It writes a cached XML file and a
-`meta.json` file, keyed on the inputs. The next call with the same inputs is a
-cache hit and loads the cached XML directly, which is much faster. If you change
-any input file, the next call misses the cache and compiles again.
+The first call runs the full pipeline. It writes a cached XML file and a `meta.json` file,
+keyed on the inputs. The next call with the same inputs is a hit. A hit does no compose and
+no combination. It reloads the cached XML instead. If you change an input file, the next
+call misses the cache and builds the model again.
+
+### Training is very slow without it
+
+**A training run composes the model many more times than one time.** `myoassist` builds one
+model for each `SubprocVecEnv` worker, and one model for each CMA-ES candidate. A
+controller-optimization run at the default `--popsize 32 --maxiter 1000` composes
+approximately 32,000 models.
+
+Without the cache, each environment costs 13 to 15 times more than the static model files
+of MyoAssist 0.1. With the cache, the cost is the same as before:
+
+| Cost for each environment, `myolegs22` | |
+|---|--:|
+| MyoAssist 0.1, static XML file on disk | 0.037 s |
+| Composed, no cache | 0.691 s |
+| Composed, with cache | 0.045 s |
+
+From `myoassist`, one environment variable turns the cache on. It covers the RL path and
+the controller-optimization path, because both paths compose through the same function:
+
+```bash
+export MYOASSIST_CACHE_DIR=~/.cache/myoassist
+```
+
+`compose_env_model(..., cache_dir=...)` also takes the directory directly, and the argument
+has priority over the variable. That cache holds the merged model, which is the human
+model, the device and the terrain together.
+
+### Do not cache `myofullbody`
+
+A hit costs one XML parse, and the parse is the slow part. Thus the benefit becomes smaller
+as the model becomes larger:
+
+| MSK | Miss | Hit | Result |
+|---|--:|--:|---|
+| `myolegs22` | 0.64 s | 0.08 s | 8.2x faster |
+| `myolegs26` | 0.52 s | 0.19 s | 2.8x faster |
+| `myolegs` | 0.59 s | 0.27 s | 2.2x faster |
+| `myofullbody` | 0.99 s | 1.11 s | **0.9x, which is slower** |
+
+The times come from one machine, and each one is the best of five runs. Use the ratios, not
+the times.
+
+`myofullbody` writes 0.6 MB of MJCF, with 418 actuators and 108 meshes. To parse that file
+costs more than to compose the model again. **Do not set a cache directory for
+`myofullbody`.** For the three leg models, set it.
+
+### When the cache misses
+
+The cache misses, and builds the model again, if:
+
+- You change a device config, a device XML, or any other input file.
+- You change the source of `assist_sim` or `myo_sim`. From `myoassist`, a change to
+  `myoassist_terrains` or to the compose module also causes a miss. The key holds one token
+  for each package. The token is the release version plus the time of the most recent change
+  to the Python files of that package. The version alone is not sufficient, because an
+  editable install keeps the version of the day you installed it.
+- You change `planar_root`. The two settings have different keys.
 
 To clear the cache, remove the directory:
 
@@ -164,8 +225,9 @@ To clear the cache, remove the directory:
 rm -r .assist_sim_cache/
 ```
 
-There is no global cache and no size limit. The cache is a local optimization for
-one user.
+There is no global cache and no size limit. The cache is a local speed improvement for one
+user. Many processes can share one cache directory: each writer publishes its entry with an
+atomic rename, and an entry that does not load counts as a miss.
 
 ## See also
 

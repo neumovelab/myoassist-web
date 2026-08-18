@@ -13,6 +13,16 @@ This guide explains how to run optimizations for the reflex controller with the 
 
 The optimization framework uses a unified approach with `run_optim.py` as the main entry point.
 
+Turn the model cache on before a long run. CMA-ES composes one model for each candidate, so a
+run at `--popsize 32 --maxiter 1000` composes approximately 32,000 models. Without the cache
+each one costs 13 to 15 times more:
+
+```bash
+export MYOASSIST_CACHE_DIR=~/.cache/myoassist
+```
+
+See [Caching](../modeling/devices/exporting-and-loading#caching-turn-it-on-for-training).
+
 ### Using `run_optim.py`
 
 The `run_optim.py` script provides a cross-platform way to run optimizations:

@@ -36,6 +36,12 @@ control parameters are random.
 python ctrl_optim/run_ctrl_minimal.py
 ```
 
+## Before you train
+
+Set `MYOASSIST_CACHE_DIR` first. The model is composed at run time, so a training run
+without the cache is much slower. See
+[Step 5 of the installation](./#step-5-turn-the-model-cache-on-before-you-train).
+
 ## Next steps
 
 - **[Defining an Environment](defining-an-environment)**: choose the MSK model,

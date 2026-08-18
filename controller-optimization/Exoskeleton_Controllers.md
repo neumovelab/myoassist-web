@@ -24,7 +24,7 @@ device supplies the exoskeleton actuators. You do not hand-edit a bundled `.xml`
 For prosthetic and amputee devices, and for the amputee reflex mode, see
 **[Amputee and Prosthetic Control](Amputee_Prosthetic_Control)**.
 
-Each exoskeleton is an actuator in that composed MuJoCo model. There are multiple actuator types available within MuJoCo (**[Modeling](../modeling/Modeling)**). This actuator is what allows the framework to apply torque to the model.
+Each exoskeleton is an actuator in that composed MuJoCo model. There are multiple actuator types available within MuJoCo (**[Simulation Environments](../modeling/)**). This actuator is what allows the framework to apply torque to the model.
 
 The actuators look like this:
 ```xml

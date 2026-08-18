@@ -86,6 +86,38 @@ Every section supports the per-MSK form except `actuators` and the legacy
 `tendon_modifications`, `actuator_overrides`, `body_overrides`,
 `mesh_replacements`, `contact`, and `sensors`.
 
+## Replace or merge
+
+An MSK block **replaces** the `default` block of the same section. The one exception is
+`keyframe_overrides`, which **merges** joint by joint.
+
+| Section | An MSK block does this | Result |
+|---------|------------------------|--------|
+| `keyframe_overrides` | merges onto `default` | The MSK block changes only the joints it names. Every other joint comes from `default`. |
+| all other sections | replaces `default` | The MSK block must be complete. `default` gives nothing to it. |
+
+Thus a replace section is all or nothing. If you give a `myolegs` block for
+`body_removals`, write **every** removal for `myolegs` in it. The pipeline does not add the
+`default` removals to it.
+
+`keyframe_overrides` merges, because it is already a patch and not a definition. Usually one
+MSK lineage needs a different value for one joint of one pose. The knee of the 80-muscle
+`myolegs` and of `myofullbody` flexes in the positive direction, and the knee of `myolegs26`
+and `myolegs22` flexes in the negative direction. Thus a lunge pose that is correct for one
+lineage is out of range on the other. A merge keeps the correction to the joint that
+differs:
+
+```yaml
+keyframe_overrides:
+  default:
+    lunge: {pelvis_ty: 0.675, knee_angle_l: -1.25}
+  myolegs:
+    lunge: {knee_angle_l: 1.25}     # pelvis_ty still comes from default
+```
+
+An MSK block can add a joint or change a joint. It cannot remove a joint that `default`
+gives. To get a different set of joints, write a new pose name.
+
 ## Worked example: OSL_KA transfemoral re-anchoring
 
 `tendon_modifications` is the re-anchor step (myodesis). It is the one section that

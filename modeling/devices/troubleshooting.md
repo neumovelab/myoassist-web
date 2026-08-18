@@ -36,11 +36,15 @@ uv pip install -e .
 pip install myo-sim
 ```
 
-### `ImportError: MSK model '...' requires ... mujoco>=3.3.4`
+### `ImportError: MSK model '...' requires ... mujoco>=3.4`
 
-The pipeline does the model surgery in memory with `MjSpec.delete`. MuJoCo 3.3.4 is
-the first version that has `MjSpec.delete`. Your environment has an older MuJoCo
-version. To upgrade, run `pip install "mujoco>=3.3.4"`.
+The pipeline does the model surgery in memory with `MjSpec.delete`. Your environment has an
+older MuJoCo version. To upgrade, run `pip install "mujoco>=3.4,<3.12"`.
+
+`assist_sim` supports `mujoco>=3.4,<3.12`. Both ends of that range are tested. Do not use a
+version outside it: the MuJoCo model API changed several times inside 3.x. For example
+`MjsTendon.stiffness` became a 3 element vector at 3.7.0, and `MjData.ten_J` became sparse at
+3.6.0. The pipeline handles both forms, but a version above the range is not tested.
 
 ### `ModuleNotFoundError: No module named 'assist_sim'`
 
@@ -70,6 +74,29 @@ of these two fixes:
 - Select a compatible MSK model. The error message lists them.
 - Or, if `Y` must be compatible, add `Y` to the list, or remove the
   `compatible_msk:` field from the device YAML.
+
+### `ValueError: ... has unknown key(s): '...'`
+
+The config loader rejects a key that it does not know. It gives the near matches and the full
+list of valid keys:
+
+```
+L1config.yaml has unknown key(s): 'joint_overides' (did you mean 'joint_overrides',
+'body_overrides', 'actuator_overrides'?). Valid keys: [...]
+```
+
+Correct the spelling. The loader checks the top-level sections, the keys of each item, and the
+MSK names in a per-MSK block. A typed key that no section reads is a silent no-op, which is
+why the loader stops instead.
+
+Three related rejections come from the same check:
+
+- An `actuators` entry needs both `name` and `joint`, and its `type` must be `general` or
+  `motor`.
+- A `keyframe_overrides` pose name must exist in the model. See
+  [Keyframes](../msk-models#keyframes) for the five pose names.
+- An MSK name in a per-MSK block must be a registry key. Run `python -m assist_sim list` for
+  the valid keys.
 
 ### `ValueError: tendon_modifications references unknown tendon '...'`
 
@@ -164,6 +191,24 @@ file.
 
 ## Cache
 
+### Training is slow
+
+The model is composed at run time. Each parallel worker and each optimization candidate builds
+its own model, so a training run without the cache costs 13 to 15 times more for each
+environment. Turn the cache on:
+
+```bash
+export MYOASSIST_CACHE_DIR=~/.cache/myoassist
+```
+
+See [Caching](exporting-and-loading#caching-turn-it-on-for-training).
+
+### The cache made it slower
+
+A cache hit costs one XML parse, so a very large model gains nothing. `myofullbody` is slower
+with the cache than without it. Do not set a cache directory for `myofullbody`. For the three
+leg models, set it.
+
 ### Stale combined output after a config edit
 
 The cache key uses the mtime of each input file. Some editors restore the mtime
@@ -180,6 +225,11 @@ rm -r .assist_sim_cache/
 source `meshdir`. If your downstream tool does not find a mesh, check the tool. The
 mesh paths in the export are valid *only* relative to the directory of the export
 file.
+
+One case gives absolute paths instead: if the export directory is on a different drive from
+the meshes, there is no relative path between the two, so the export writes the absolute path.
+The file loads correctly, but you cannot move that directory to another machine. To get
+relative paths, export to the same drive as the package.
 
 ## How to ask for help
 

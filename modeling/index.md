@@ -42,7 +42,7 @@ The result is a single MuJoCo model that the Controller Optimization and Reinfor
 Learning pipelines step.
 
 <div style="text-align: center;">
-<img src="../../assets/devices/pipeline.png" alt="Environment composition pipeline" width="400"/>
+<img src="../assets/devices/pipeline.png" alt="Environment composition pipeline" width="400"/>
 <div><i>Environment composition pipeline.</i></div>
 </div>
 
