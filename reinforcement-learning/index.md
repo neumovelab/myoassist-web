@@ -36,10 +36,10 @@ The agent outputs actions that control:
    ```bash
    python rl_train/run_train.py --config_file_path rl_train/train/train_configs/my_config.json
    ```
-3. **Monitor progress** – logs & results in `results/train_session_*`.
+3. **Monitor progress** – logs & results in `rl_train/results/train_session_*`.
 4. **Evaluate policy** –
    ```bash
-   python rl_train/run_policy_eval.py results/train_session_<timestamp>
+   python rl_train/run_policy_eval.py rl_train/results/train_session_<timestamp>
    ```
 5. **Analyze results** – see [Evaluation](../evaluation/) for the shared eval outputs.
 
@@ -131,7 +131,7 @@ python rl_train/run_train.py --config_file_path rl_train/train/train_configs/imi
 - Training for only a few short timesteps
 - Uses 1 environment (minimal resource usage)
 - Enables rendering to see the simulation
-- Logs results after every rollout (4 steps) for immediate feedback
+- Logs results after every rollout (256 steps, `test.json`) for immediate feedback
 
 ### 3. Check Results
 

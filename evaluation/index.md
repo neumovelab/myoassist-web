@@ -86,6 +86,58 @@ the timesteps, the camera, and other values. Refer to the
 [RL Configuration](../reinforcement-learning/02_configuration) page. To also write the
 legacy per-panel plots, use `--legacy-plots`.
 
+## Exoskeleton policy scoring
+
+Two tools in `tools/` read the rollout JSON from an `analyze_results_NN/` folder. They run
+no simulation of their own. Both compute every gait-cycle quantity in that leg's own cycle.
+
+### `score_exo_policy.py`
+
+Scores a trained exo policy on three axes and prints a ranked report. Use it to order runs
+that all walk, which the composite figure cannot separate.
+
+- **stability**: cycle-to-cycle scatter, peak count, and slew of the torque profile.
+- **symmetry**: left-right difference in peak magnitude and phase.
+- **plausibility**: agreement with walking literature values. The ankle plantarflexion
+  moment peaks near 50 % of the gait cycle, a powered ankle exo delivers a peak of
+  0.15-0.80 N*m/kg, and stance occupies about 60 % of the cycle.
+
+Each subscore and their mean (`total`) run from 0 to 1.
+
+```bash
+python tools/score_exo_policy.py rl_train/results/train_session_*/analyze_results_00
+```
+
+| Flag | Meaning | Default |
+|------|---------|---------|
+| `--joint {ankle,hip}` | joint the device assists | `ankle` |
+| `--mass` | body mass for N*m/kg normalization | `90.96` |
+| `--json-out` | also write every score to this JSON file | none |
+| `--skip-unscorable` | continue past rollouts with too few foot strikes to segment | off |
+| `--by-name` | order the report by directory name instead of by score | off |
+
+Only the ankle path is validated against composed models. The hip window is provisional, so
+scoring a hip device prints a warning.
+
+Two constraints on the ranking:
+
+- Evaluate with enough steps. The configs ship `num_timesteps` 200, about 5 strides, which
+  is too few for a per-phase quantity. Use `--steps 1000` for about 30.
+- Rank with this tool, not with the `train/mirror_loss` metric. A policy can lower that loss
+  by driving both exo outputs toward zero.
+
+### `plot_kinematics_exo.py`
+
+Writes one figure holding the hip, knee, and ankle angle of each leg against the mocap
+reference, with that leg's exo torque underneath.
+
+```bash
+python tools/plot_kinematics_exo.py <run_dir> [<run_dir> ...] -o out.png
+```
+
+`--reference` sets the reference file, `rl_train/reference_data/segmented.npz` by default.
+`--mass` matches `score_exo_policy.py`.
+
 ## Controller Optimization: `run_eval.py`
 
 `run_eval` evaluates an optimized reflex controller. It reads a `_Best.txt` or

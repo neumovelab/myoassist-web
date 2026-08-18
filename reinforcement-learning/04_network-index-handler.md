@@ -140,7 +140,7 @@ Actor networks require both observation and action indexing because they map obs
     },
     {
       "type": "range", 
-      "range": [8, 16],
+      "range": [8, 17],
       "comment": "Joint velocity data"
     }
   ],
@@ -171,7 +171,7 @@ Critic networks only predict a single value (the value function) and do not outp
   "observation": [
     {
       "type": "range",
-      "range": [0, 50],
+      "range": [0, 44],
       "comment": "Full state evaluation"
     }
   ]
@@ -192,7 +192,7 @@ Critic networks only predict a single value (the value function) and do not outp
 - Efficient data sharing between networks
 
 **Parameters**:
-- `range`: `[start(inclusive), end(exclusive)]` - Inclusive range of indices to extract
+- `range`: `[start(inclusive), end(exclusive)]` - Half-open range of indices to extract
 - `comment`: Description of the extracted data
 
 **Example**:
