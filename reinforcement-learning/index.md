@@ -145,11 +145,15 @@ rl_train/results/train_session_[date-time]/
   <img src="../assets/train_session_result.png" alt="Training session result example" width="50%">
 </p>
 
+Concurrent runs never share a directory. Training claims `train_session_[date-time]`, and steps to `train_session_[date-time]_1`, `_2`, and so on when the second-resolution timestamp is already taken.
+
 **What you'll find:**
-- `analyze_results_[timesteps]_[evaluate_number]`: Training analysis results
+- `analyze_results_[timesteps]_[evaluate_number]`: analysis written during training, by the analyzer that the learning callback runs every `logger_params.evaluate_frequency` rollouts
 - `session_config.json`: Configuration used for this training
 - `train_log.json`: Training log data
 - `trained_models/`: Trained models(`.zip`) saved at each log interval - can be used for evaluation or transfer learning
+
+`run_policy_eval.py` writes `analyze_results_[NN]` instead, without the timestep prefix.
 
 ## Full Training (When Ready)
 
@@ -188,6 +192,15 @@ python rl_train/run_policy_eval.py [path/to/trainsession/folder]
 ```
 
 > Point `run_policy_eval.py` at any `train_session_*` directory that you produced.
+
+| Flag | Meaning |
+|------|---------|
+| `--steps N` | Override `num_timesteps` for every rollout. The configs ship 200 steps, about 5 strides. Works on already-trained sessions. |
+| `--regen` | Regenerate the evaluated gait data even if it already exists. |
+| `--no-show` | Skip the pop-out composite window. |
+| `--varying` | Replace `evaluate_param_list` with a single SINUSOIDAL 0.8-1.4 m/s rollout and emit the speed-tracking composite. |
+| `--cmap {rainbow,teal,bluered}` | Speed color map for varying-speed composites. |
+| `--legacy-plots` | Also write the legacy per-panel PNGs. |
 
 
 After training, an `analyze_results` folder will be created inside your `train_session` directory.  

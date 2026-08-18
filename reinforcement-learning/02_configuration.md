@@ -72,7 +72,8 @@ TrainSessionConfigBase
 
 | Parameter | Description | Example |
 |-----------|-------------|---------|
-| `logging_frequency` | Logging frequency | 8 |
+| `logging_frequency` | Rollouts between a checkpoint plus a `train_log.json` write | 8 |
+| `evaluate_frequency` | Rollouts between analyzer runs, which write `analyze_results_*` and the replay video | 64 |
 
 ### Environment Parameters
 
@@ -104,6 +105,8 @@ TrainSessionConfigBase
 | `reference_data_path` | Path to reference motion data | "rl_train/reference_data/short_reference_gait.npz" |
 | `reference_data_keys` | Joint keys for reference data | ["ankle_angle_l", "hip_flexion_l"] |
 | `prev_trained_policy_path` | Path to previous trained policy | null |
+| `hidden_geom_groups` | Geom groups hidden from rendering. Which group holds clutter is an authoring convention of the model, so it is set here. Rendering only. | [] |
+| `joint_limit_sensor_keys` | Joint-limit sensor names feeding `joint_constraint_force_penalty`; empty uses `MyoAssistLegBase.JOINT_LIMIT_SENSOR_NAMES` | [] |
 
 ### Environment Parameters - Reward Keys and Weights
 
@@ -113,7 +116,8 @@ TrainSessionConfigBase
 | `qvel_imitation_rewards` | Joint velocity imitation rewards | {"pelvis_ty": 0.1, "hip_flexion_l": 0.2} |
 | `end_effector_imitation_reward` | End effector imitation reward | 0.0 |
 | `forward_reward` | Forward movement reward | 1.0 |
-| `muscle_activation_penalty` | Muscle activation penalty | 0.1 |
+| `muscle_activation_penalty` | Muscle activation penalty, squared | 0.1 |
+| `exo_activation_penalty` | Device effort penalty, in the same units as `muscle_activation_penalty`. The muscle mean is over 22 actuators and the device mean over 2, so the per-actuator price is `muscle_activation_penalty`/22 against `exo_activation_penalty`/2. | 0.0 |
 | `muscle_activation_diff_penalty` | Muscle activation difference penalty | 0.1 |
 | `footstep_delta_time` | Footstep delta time | 0.0 |
 | `average_velocity_per_step` | Average velocity per step | 0.0 |
@@ -143,6 +147,10 @@ TrainSessionConfigBase
 | `sde_sample_freq` | SDE sample frequency | -1 |
 | `target_kl` | Target KL divergence | 0.01 |
 | `device` | Device for training | "cpu" |
+| `mirror_coef` | Weight on the left/right mirror-symmetry penalty (`rl_train/train/mirror_ppo.py`). 0 disables it and PPO behaves as plain PPO. | 0.0 |
+
+`MirrorPPO` is selected only when training starts from scratch. A run that loads
+`prev_trained_policy_path` uses `stable_baselines3.PPO`.
 
 ### Policy Parameters
 
@@ -154,9 +162,12 @@ TrainSessionConfigBase
 
 | Parameter | Description | Example |
 |-----------|-------------|---------|
-| `net_arch` | Network architecture for human actor, exo actor, and common critic | {"human_actor": [64, 64], "exo_actor": [8, 8], "common_critic": [64, 64]} |
+| `net_arch` | Network architecture per network. Use `exo_actor` for one exo network, or `exo_actor_r` plus `exo_actor_l` for one weight-shared per-side network (see [Network Index Handler](04_network-index-handler)). | {"human_actor": [64, 64], "exo_actor": [8, 8], "common_critic": [64, 64]} |
 | `net_indexing_info` | Network indexing information for observation and action ranges | See [Network Index Handler](04_network-index-handler) |
 | `log_std_init` | Initial log standard deviation | 0.0 |
+| `reset_shared_net_after_load` | Reinitialize the shared feature extractor after loading `prev_trained_policy_path` | false |
+| `reset_policy_net_after_load` | Reinitialize the policy network after loading `prev_trained_policy_path` | false |
+| `reset_value_net_after_load` | Reinitialize the value network after loading `prev_trained_policy_path` | false |
 
 ### Evaluate Parameters
 
@@ -172,6 +183,7 @@ These parameters are provided as a list of dictionaries, where each dictionary r
 | `cam_type` | Camera type | "follow" |
 | `cam_distance` | Camera distance | 2.5 |
 | `visualize_activation` | Visualize muscle activation | true |
+| `realtime_plotting_info` | Optional list of signals to plot alongside the replay video, one subplot per entry | [] |
 
 **Example Configuration:**
 <details>

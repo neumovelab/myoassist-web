@@ -23,7 +23,8 @@ The shared code in `myoassist_utils/eval_utils.py` makes the outputs for both.
 
 Each evaluation makes these files:
 
-- **`gait_evaluated_data.json`**: the full rollout in the `GaitData` schema. This
+- **`gait_evaluated_data.json`**: the full rollout in the `GaitData` schema. The analyzer that
+  runs during training names it `gait_evaluated_data_[NN].json` instead. This
   includes the joint `qpos` and `qvel`, the actuator force and ctrl, the sensor data,
   and the target velocity. CO also writes this RL schema, so the RL analyzers can read
   CO output.

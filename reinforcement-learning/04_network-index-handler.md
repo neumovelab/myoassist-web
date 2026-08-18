@@ -93,6 +93,24 @@ The number of activations corresponds to the number of muscles.
 - Outputs exoskeleton assistance commands
 - Maps to exoskeleton action indices in the action space
 
+### Per-Side Exo Networks
+
+Declaring `exo_actor_r` and `exo_actor_l` in place of `exo_actor` builds **one** network and
+applies it to each leg with that leg's own inputs first, so `Exo_L(s) == Exo_R(mirror(s))`
+holds by construction. Both names refer to the same module, so the optimizer sees one copy of
+the weights.
+
+The configuration must satisfy these constraints, each of which is asserted:
+
+- Declare both names or neither.
+- Do not declare `exo_actor` alongside them; the exo action slots would be written twice.
+- Both sides must read the same observation index set, in mirrored order. This is why the
+  `index` type exists: `range` cannot reorder.
+- Both sides must emit the same number of commands and, if both appear in `net_arch`, have
+  equal widths.
+
+All eight `device_sweep/` configs use this form.
+
 ### Common Critic Network
 
 **Purpose**: Evaluates overall system performance
@@ -229,6 +247,70 @@ Critic networks only predict a single value (the value function) and do not outp
   "comment": "Exoskeleton left and right actuators"
 }
 ```
+
+### Index
+
+**Type**: `"index"`
+
+**Purpose**: Read the listed observation indices, in the listed order
+
+**Use Cases**:
+- Feeding a network non-contiguous observation components
+- Reordering inputs, which `range` cannot do because it takes a contiguous block in its existing order
+
+**Parameters**:
+- `index`: Observation indices, read in the order given
+- `comment`: Description of the extracted data
+
+**Example** (`device_sweep/imitation_22_Hippo_L1_h128_e32_sidenet_mirror0p1_actpen10.json`):
+```json
+{
+  "type": "index",
+  "index": [3, 2, 11, 10, 39, 40, 41, 42],
+  "comment": "hip_flexion angle, angular velocity and foot contact, right leg first then contralateral"
+}
+```
+
+### Index Mapping
+
+**Type**: `"index_mapping"`
+
+**Purpose**: Write the network output at the listed indices into the same action indices
+
+**Parameters**:
+- `index`: Indices, used for both the network output and the action slots
+- `comment`: Description of the action mapping
+
+One list indexes both sides, so the network output must be at least as wide as the largest
+index. Use `range_mapping` when the network output range and the action range differ.
+
+### Constant
+
+**Type**: `"constant"`
+
+**Purpose**: Pin an action range to a fixed value
+
+No network output is consumed, so a `constant` entry adds nothing to that network's action
+size.
+
+**Parameters**:
+- `range_action`: `[start(inclusive), end(exclusive)]` - Action range to pin
+- `default_value`: Value written to every slot in the range
+- `comment`: Description
+
+**Example** (`imitation_tutorial_22_separated_net_exo_off.json`, which holds the exo at a
+constant command):
+```json
+{
+  "type": "constant",
+  "range_action": [22, 24],
+  "default_value": 1.0,
+  "comment": "override exo"
+}
+```
+
+That config keeps its `range_mapping` entry for the same range. Action entries are applied in
+order, so the `constant` is written last and overrides it.
 
 ## Example
 
