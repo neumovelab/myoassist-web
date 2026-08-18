@@ -92,7 +92,7 @@ Rejected, with a message naming the problem:
   along with any typo in its path.
 - **Per-type `palette` entries under `"uniform"`**, which cannot apply to one shared
   color.
-- **`palette_preset: "custom"` missing a colour** for a placed tile type.
+- **`palette_preset: "custom"` missing a color** for a placed tile type.
 - **Randomizing a list-valued parameter** such as `size_range`. A `[lo, hi]` spec
   would be read as a range and replace the list with a single number.
 - **Reversed numeric ranges** in `param_ranges`.

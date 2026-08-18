@@ -31,7 +31,7 @@ config forms, so a uniform config never carries `grid` or `tiles`:
 | `"sinusoidal"` | Rolling waves | One heightfield, a sinusoid along `+x` |
 
 `flat` and `slope` are planes, so they extend as far as the model can walk. `random`
-and `sinusoidal` are heightfields covering `extent x extent` metres, with a smooth
+and `sinusoidal` are heightfields covering `extent x extent` meters, with a smooth
 **safe zone** flattened around the origin so a model does not spawn on a bump or in a
 pit.
 
@@ -45,13 +45,13 @@ apply to the chosen type is ignored.
 | `terrain` | required | all | `"flat"`, `"slope"`, `"random"` or `"sinusoidal"`. |
 | `terrain_name` | `"uniform_<terrain>"` | all | Output name. Must be a bare file name, since it becomes `terrain/<terrain_name>.xml`. |
 | `deg` | `0.0` | `slope` | Grade in degrees, `-90 < deg < 90`. Positive rises in `+x`, the walking direction. |
-| `amplitude` | `0.1` | `random`, `sinusoidal` | Surface relief in metres. Must be greater than 0. |
-| `period` | `1.0` | `sinusoidal` | Wavelength along `+x` in metres. Must be greater than 0. |
+| `amplitude` | `0.1` | `random`, `sinusoidal` | Surface relief in meters. Must be greater than 0. |
+| `period` | `1.0` | `sinusoidal` | Wavelength along `+x` in meters. Must be greater than 0. |
 | `seed` | `0` | `random` | RNG seed, so a rough surface is reproducible. |
-| `extent` | `20.0` | `random`, `sinusoidal` | Full side length of the surface in metres. |
+| `extent` | `20.0` | `random`, `sinusoidal` | Full side length of the surface in meters. |
 | `resolution` | `256` | `random`, `sinusoidal` | Heightfield grid resolution, same in both axes. Minimum 8. |
-| `safe_zone_radius` | `3.0` | `random`, `sinusoidal` | Radius in metres over which the surface is flattened toward 0 around the origin. `0` disables it. |
-| `base_depth` | `1.0` | `random`, `sinusoidal` | Solid thickness below the surface in metres. |
+| `safe_zone_radius` | `3.0` | `random`, `sinusoidal` | Radius in meters over which the surface is flattened toward 0 around the origin. `0` disables it. |
+| `base_depth` | `1.0` | `random`, `sinusoidal` | Solid thickness below the surface in meters. |
 | `palette_preset` | `"uniform"` | all | `"diverse"`, `"uniform"` or `"custom"`. |
 | `palette` | `{}` | all | Surface rgba, under the key `"uniform"`, `"terrain"`, or the terrain type name. |
 | `texture` | none | all | A texture block, as described in [Configuration](configuration). |

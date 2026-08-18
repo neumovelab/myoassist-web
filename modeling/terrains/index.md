@@ -58,7 +58,7 @@ falling in is what the tile is for.
 
 The contract is measured rather than assumed. The framework ray-casts the compiled
 model at points around every tile, and around every `inverted` variant, so a tile that
-stops honouring it fails a test instead of quietly leaving a step against a connector.
+stops honoring it fails a test instead of quietly leaving a step against a connector.
 
 ## Palette
 
