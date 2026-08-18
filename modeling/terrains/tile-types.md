@@ -8,10 +8,16 @@ layout: home
 
 # Tile Types
 
-These are the tile types you can place in a terrain `grid`. All angles are in radians
-unless noted. All sizes and heights are in meters. Every tile keeps a flat top at its
-`base_height` around its perimeter (the boundary contract), so tiles always join
-cleanly.
+These are the tile types you can place in a terrain `grid`. All sizes and heights are
+in meters. Angles are in degrees, where a parameter name says so (`angle_deg`).
+
+Every tile keeps a flat top at its `base_height` around its perimeter, so tiles join
+cleanly. `gap` is the one exception: its trench mouth reaches the tile edge, which is
+the point of the tile. The framework measures this contract for every tile, and for
+every `inverted` variant, by ray-casting the compiled model.
+
+Each tile also reports its own surface height, which is what the velocity map uses and
+what [`surface_height_at`](configuration#asking-where-the-ground-is) answers.
 
 ## `flat`
 
@@ -41,9 +47,9 @@ cleanly.
 | Parameter | Default | Range / type | Description |
 |-----------|---------|--------------|-------------|
 | `step_height` | `0.15` | float, `(0.08, 0.25)` | Riser height per step. |
-| `step_width` | `None` | float or `None` | Tread depth. `None` makes the tile auto-fit all `n_steps`. |
+| `step_width` | `None` | float or `None` | Tread depth. `None` auto-fits all `n_steps`, leaving one tread of flat landing at each end of the tile. |
 | `n_steps` | `6` | int, `(3, 12)` | Number of risers from base to peak. |
-| `axis` | `"y"` | `"x"` or `"y"` | Axis the staircase runs along. |
+| `axis` | `"y"` | `"x"` or `"y"` | Axis the staircase progresses along, so you cross the steps travelling along it. |
 | `peak_width` | `0.4` | float, `(0.2, 0.5)` | Width of the flat plateau at the top. |
 | `return_mode` | `"mirror"` | str | How the descending half is built. |
 | `cross_ratio` | `0.9` | float | Fraction of the perpendicular axis covered by tread. |
@@ -108,14 +114,14 @@ cleanly.
 | Parameter | Default | Range / type | Description |
 |-----------|---------|--------------|-------------|
 | `seed` | `0` | int, `(0, 1e6)` | RNG seed for the heightmap. |
-| `vertical_relief` | `0.8` | float, `(0.1, 1.5)` | Total `[min, max]` heightmap range, scaled by `hfield_size_z`. |
+| `vertical_relief` | `0.8` | float, `(0.1, 1.5)` | Peak-to-trough excursion of the surface in meters. |
 | `grid_resolution` | `256` | int | Heightmap resolution in pixels per side. |
 | `num_pits` | `18` | int, `(0, 30)` | Number of gaussian pit features blended in. |
 | `num_hills` | `24` | int, `(0, 30)` | Number of gaussian hill features blended in. |
 | `terrace_levels` | `5` | int, `(1, 9)` | Plateau quantization levels. |
 | `pit_threshold` | `0.33` | float | Selector cutoff that switches a macro region to a pit. |
 | `plateau_threshold` | `0.68` | float | Selector cutoff that switches a macro region to a plateau. |
-| `edge_taper_frac` | `0.1` | float | Fractional band over which heights taper to 0 at the tile edge (keeps the flat-at-base contract). |
+| `edge_taper_frac` | `0.1` | float | Fractional band over which the surface returns to `base_height` at the tile edge. |
 | `relief_mode` | `"centered"` | `"centered"`, `"up"`, or `"down"` | Whether features go above and below the base, only up, or only down. |
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
 
@@ -133,10 +139,10 @@ cleanly.
 
 | Parameter | Default | Range / type | Description |
 |-----------|---------|--------------|-------------|
-| `density` | `0.4` | float, `(0.1, 1.0)` | Approximate fraction of tile area covered by obstacles. |
+| `density` | `0.4` | float, `(0.1, 1.0)` | Obstacles per square meter. The count is `round(density * tile area)`. |
 | `size_range` | `[0.2, 0.5]` | `[lo, hi]` | Min and max obstacle footprint size in meters. |
 | `height_range` | `[0.1, 0.4]` | `[lo, hi]` | Min and max obstacle height in meters. |
-| `edge_margin` | `0.5` | float, `(0.2, 1.0)` | Keep obstacles this far from the tile edge. |
+| `edge_margin` | `0.5` | float, `(0.2, 1.0)` | Keep obstacle geometry this far inside the tile edge. |
 | `seed` | `0` | int | RNG seed. |
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
 
@@ -171,15 +177,15 @@ cleanly.
 <div class="tile-row">
 <div class="tile-fig">
 <img src="../../assets/terrains/boulders.png" alt="boulders tile render">
-<div class="tile-cap">Randomly placed half-sphere boulders.</div>
+<div class="tile-cap">Randomly placed ellipsoid boulders, half-buried in the base slab.</div>
 </div>
 <div class="tile-tbl" markdown="1">
 
 | Parameter | Default | Range / type | Description |
 |-----------|---------|--------------|-------------|
-| `density` | `0.3` | float, `(0.05, 0.8)` | Approximate fraction of tile area covered by boulders. |
-| `size_range` | `[0.2, 0.6]` | `[lo, hi]` | Min and max boulder diameter in meters. |
-| `edge_margin` | `0.5` | float, `(0.2, 1.0)` | Keep boulders this far from the tile edge. |
+| `density` | `0.3` | float, `(0.05, 0.8)` | Boulders per square meter. The count is `round(density * tile area)`. |
+| `size_range` | `[0.2, 0.6]` | `[lo, hi]` | Min and max ellipsoid **radius** in meters, sampled independently per axis. |
+| `edge_margin` | `0.5` | float, `(0.2, 1.0)` | Keep boulder geometry this far inside the tile edge. |
 | `seed` | `0` | int | RNG seed. |
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
 
@@ -198,7 +204,7 @@ cleanly.
 | Parameter | Default | Range / type | Description |
 |-----------|---------|--------------|-------------|
 | `gap_width` | `0.5` | float, `(0.1, 1.0)` | Width of the gap in meters. |
-| `axis` | `"y"` | `"x"` or `"y"` | Axis the gap runs along. |
+| `axis` | `"y"` | `"x"` or `"y"` | Axis the trench runs along, so you cross it travelling *perpendicular* to it. Note this is the opposite convention to `stairs` and `slope`. |
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
 
 </div>

@@ -7,11 +7,21 @@ layout: home
 
 # Running Optimizations
 
-This guide explains how to run optimizations for the neuromuscular reflex controller using the `run_optim.py` script, covering everything from basic configurations to advanced settings.
+This guide explains how to run optimizations for the reflex controller with the `run_optim.py` script. It covers basic and advanced settings.
 
 ## Quick Start
 
 The optimization framework uses a unified approach with `run_optim.py` as the main entry point.
+
+Turn the model cache on before a long run. CMA-ES composes one model for each candidate, so a
+run at `--popsize 32 --maxiter 1000` composes approximately 32,000 models. Without the cache
+each one costs 13 to 15 times more:
+
+```bash
+export MYOASSIST_CACHE_DIR=~/.cache/myoassist
+```
+
+See [Caching](../modeling/devices/exporting-and-loading#caching-turn-it-on-for-training).
 
 ### Using `run_optim.py`
 
@@ -43,6 +53,10 @@ The `optim/training_configs/` directory contains configuration files for differe
 | `exo_4param_kine`     | Similar to `exo_4param`, but uses a kinematics-focused cost function (`-kine`).                           |
 | `exo_npoint`          | Optimizes with an exoskeleton using the modern n-point spline controller.                                 |
 | `exo_npoint_cont`     | An example of a continued optimization, starting from the results of a previous run.                      |
+| `reflex_bilat`        | Bilateral reflex on the 3D 26-muscle model, with independent per-leg blocks.                             |
+| `amp_kfoot`           | Amputee reflex on the passive K-Foot prosthesis (see [Amputee and Prosthetic Control](Amputee_Prosthetic_Control)).  |
+| `kfoot_stiffness`     | Amputee reflex plus prosthetic ankle stiffness optimization.                                             |
+| `anatomics_rom`       | Ankle range-of-motion study with the Anatomics exoskeleton.                                              |
 
 ### Listing Available Configurations
 
@@ -123,20 +137,37 @@ The `train.py` script accepts a wide range of arguments to customize the optimiz
 
 ### Model Configuration
 
-The environment is defined by raw registry keys — see [Defining an Environment](../getting-started/defining-an-environment) for the full reference, and run `python -m assist_sim list` for the valid keys.
+Raw registry keys define the environment. See [Defining an Environment](../getting-started/defining-an-environment) for the full reference. Run `python -m assist_sim list` for the valid keys.
 
-- `--msk`: human MSK model, e.g. `myolegs22` (2D) or `myolegs26` (3D). The muscle count and 2D/3D control mode are derived from this.
-- `--device`: assistive device, e.g. `Tutorial_L1`, `Humotech_L1`, `DephyExoBoot_L1`.
-- `--terrain`: optional terrain — a `myoassist_terrains` JSON path or an inline config such as `'{"terrain":"slope","deg":8}'`. Omitted → flat ground. (A `slope` terrain *is* the course grade; there is no separate `--tgt_slope`.)
-- `--env-spec`: alternatively, a path to a JSON env-spec (`{msk, device, terrain}`) instead of the three flags above.
-- `--delayed`: Use delayed muscle dynamics. (Default: `False`)
+- `--msk`: the human MSK model. Use `myolegs22` for 2D. Use `myolegs26` or the 80-muscle `myolegs` for 3D. The muscle count and the 2D or 3D control mode come from this key.
+- `--device`: the assistive device, for example `Tutorial_L1`, `Humotech_L1`, or `DephyExoBoot_L1`.
+- `--terrain`: an optional terrain. Give a `myoassist_terrains` JSON path or an inline config such as `'{"terrain":"slope","deg":8}'`. Omit it for flat ground. A `slope` terrain sets the course grade, so there is no separate `--tgt_slope`.
+- `--env-spec`: a path to a JSON env-spec (`{msk, device, terrain}`). Use it in place of the three flags above.
+- `--delayed`: set to `1` to use delayed muscle dynamics. The default is off.
+
+### Reflex Mode
+
+`--reflex_mode` sets how the reflex controller maps parameters to the two legs.
+
+- Unset (the default): symmetric. One reflex block drives both legs.
+- `bilat`: bilateral. Each leg gets its own reflex block, so the two legs are independent. This doubles the reflex parameter count.
+- `amp`: amputee. This is `bilat` plus prosthetic tolerance, for a model with a prosthetic device. See [Amputee and Prosthetic Control](Amputee_Prosthetic_Control).
+- `uni`, `ind`: legacy 80-muscle modes.
+
+### Amputee and Prosthetic Devices
+
+To optimize on an amputee model, pair a prosthetic device with `--reflex_mode amp`. To also tune a passive prosthetic ankle, add `--optimize_stiffness`. See [Amputee and Prosthetic Control](Amputee_Prosthetic_Control) for both.
+
+### Ankle Range of Motion
+
+`--ankle_range MIN MAX` limits the ankle travel, in radians. `MIN` is the plantarflexion limit (negative). `MAX` is the dorsiflexion limit (positive). The framework clamps both ankles to this range on every step. Use it as a swept study variable, for example with the Anatomics exoskeleton.
 
 ### Exoskeleton Configuration
-- `--exo_bool`: Enable (`True`) or disable (`False`) the exoskeleton.
-- `--use_4param_spline`: If passed and `exo_bool` is `True`, use the 4-parameter spline controller. If `False`, uses the n-point spline.
-- `--n_points`: Number of control points for the n-point spline (e.g., `4` for a 4-point spline).
-- `--max_torque`: Maximum torque the exoskeleton can apply (in Nm). This parameter also influences the initial torque values for both controllers.
-- `--fixed_exo`: Keep exoskeleton parameters fixed (not optimized).
+- `--ExoOn`: set to `1` to enable the exoskeleton, or `0` to disable it.
+- `--use_4param_spline`: with the exoskeleton on, use the 4-parameter spline controller. Without this flag, the framework uses the n-point spline.
+- `--n_points`: the number of control points for the n-point spline, for example `4`.
+- `--max_torque`: the maximum torque the exoskeleton can apply, in Nm. It also sets the initial torque values for both controllers.
+- `--fixed_exo`: keep the exoskeleton parameters fixed. The optimizer does not tune them.
 
 ### Optimization Target
 - `-eff`, `-vel`, `-kine`, `-combined`, etc.: These flags set the primary objective of the cost function. They are mutually exclusive. Choose one that best fits your goal (e.g., minimizing effort, matching a target velocity, or tracking reference kinematics). For more information see (**[Understanding Cost](Understanding_Cost)**).
@@ -169,19 +200,6 @@ Use this to continue an optimization that was stopped prematurely.
 **Example**:
 ```bash
 --pickle_path results/my_run_date_time/myo_reflex_date_time.pkl
-```
-
-### Additional CMA-ES Termination Criteria
-
-You can fine-tune the optimizer's stopping conditions by passing `CMAOptions` directly via the command line or setting them in the `train.py` file. These are useful for preventing premature termination or for ending a run once a satisfactory solution is found.
-
-- `--cma_options "tolfun:1e-9"`: Sets the tolerance for the change in fitness value. The optimization stops if the change in the best function value over recent generations is less than this tolerance.
-- `--cma_options "tolx:1e-9"`: Sets the tolerance for the change in the parameter vector (`x`). The optimization stops if the change in the solution vector is less than this tolerance.
-- `--cma_options "tolstagnation:100"`: Sets the number of generations to consider for stagnation. The optimization stops if there is no significant improvement in the median fitness over this number of generations.
-
-You can combine multiple options:
-```bash
---cma_options "tolfun:1e-10,tolx:1e-10,tolstagnation:150"
 ```
 
 ## Results and Configuration Saving

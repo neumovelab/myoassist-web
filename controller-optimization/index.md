@@ -13,7 +13,7 @@ layout: home
   <img src="../assets/co_framework.png" alt="MyoAssist controller optimization framework" style="width: 34rem; max-width: 100%; height: auto;">
 </div>
 
-Controller optimization in MyoAssist enables optimization of a reflex-based musculoskeletal model controller combined with exoskeleton controllers. Using CMA-ES (Covariance Matrix Adaptation Evolution Strategy), this framework can produce controllers that achieve diverse performance objectives.
+Controller optimization in MyoAssist tunes a reflex-based musculoskeletal controller together with exoskeleton controllers. It uses CMA-ES (Covariance Matrix Adaptation Evolution Strategy) to produce controllers for diverse performance objectives.
 
 ## Optimization Workflow
 
@@ -51,6 +51,7 @@ Controller optimization in MyoAssist enables optimization of a reflex-based musc
     <p>Customize cost functions and analyze optimization results</p>
     <ul>
       <li><a href="Exoskeleton_Controllers">Exoskeleton Controllers</a></li>
+      <li><a href="Amputee_Prosthetic_Control">Amputee and Prosthetic Control</a></li>
       <li><a href="Understanding_Cost">Cost Functions</a></li>
       <li><a href="Reflex_Control_Overview">Reflex Control</a></li>
     </ul>
@@ -77,7 +78,8 @@ ctrl_optim/
 │   └── preoptimized/            # Pre-optimized controllers
 ├── ctrl/                        # Controller implementations
 │   ├── reflex/                  # Reflex controller modules
-│   └── exo/                     # Exoskeleton controller modules
+│   ├── exo/                     # Exoskeleton controller modules
+│   └── prosthetic/              # Prosthetic ankle controllers
 └── optim/                       # Optimization framework
     ├── cost_functions/          # Cost function implementations
     ├── config/                  # Configuration files
@@ -95,6 +97,6 @@ python run_ctrl_minimal.py
 ```
 
 This script:
-- Creates random control parameters (77 parameters for 2D reflex controller)
+- Creates 77 random control parameters (the 2D reflex total; see [Reflex Control](Reflex_Control_Overview) for the other modes)
 - Runs a 5-second simulation with default settings
 - Reports walking duration

@@ -12,7 +12,7 @@ Welcome to MyoAssist! This section will help you get up and running with the fra
 ## Prerequisites
 
 Before you begin, make sure you have:
-- [Python 3.11](https://www.python.org/downloads/release/python-3119/) or newer (add Python to PATH during installation)
+- [Python 3.11](https://www.python.org/downloads/release/python-3119/) or newer (add Python to PATH during installation). Python 3.11 and 3.12 are the tested versions.
 - [Git](https://git-scm.com/downloads)
 - [uv](https://docs.astral.sh/uv/) (the installer MyoAssist uses; see the virtual-environment steps below)
 - [Visual Studio Code](https://code.visualstudio.com/download) or other IDE
@@ -116,6 +116,24 @@ Passed: 15
 Failed: 0
 Total time: 13.60s
 ```
+
+## Step 5: Turn the model cache on (before you train)
+
+MyoAssist composes the model in memory: it joins the MSK model, the device and the terrain at
+run time. A training run builds one model for each parallel environment and for each
+optimization candidate, so **a run without the cache is 13 to 15 times slower for each
+environment**. One environment variable turns the cache on for both training pipelines:
+
+```bash
+export MYOASSIST_CACHE_DIR=~/.cache/myoassist
+```
+
+In a Windows command prompt, use `setx MYOASSIST_CACHE_DIR %USERPROFILE%\.cache\myoassist`, then open a new terminal. In PowerShell, use `$env:MYOASSIST_CACHE_DIR = "$HOME\.cache\myoassist"`.
+
+Put the line in your shell profile, and you do not have to think about it again. The one
+exception is `myofullbody`, which is too large to gain from the cache. See
+[Caching](../modeling/devices/exporting-and-loading#caching-turn-it-on-for-training) for the
+measured numbers, and for the rules that make the cache miss.
 
 ## Next steps
 

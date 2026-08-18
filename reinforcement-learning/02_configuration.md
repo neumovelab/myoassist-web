@@ -56,7 +56,7 @@ TrainSessionConfigBase
 - [General Parameters](#general-parameters)
 - [Logger Parameters](#logger-parameters)
 - [Environment Parameters](#environment-parameters)
-- [PPO Parameters](#PPO-Parameters)
+- [PPO Parameters](#ppo-parameters)
 - [Policy Parameters](#policy-parameters)
 - [Evaluate Parameters](#evaluate-parameters)
 

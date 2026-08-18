@@ -15,7 +15,7 @@ RuntimeError: `launch_passive` requires that the Python script be run under `mjp
 
 **Solution:**  
 If you see this error on macOS, simply use `mjpython` instead of `python` to run your script.  
-You do not need to install anything extra—just change the command:
+You do not need to install anything extra. Just change the command:
 
 ```bash
 mjpython example.py

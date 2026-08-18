@@ -29,16 +29,6 @@ The agent outputs actions that control:
 - Exoskeleton control values (for the exoskeleton actor network)
 
 
-<!-- ## Core Building Blocks
-
-| Layer | File / Doc | Description |
-|-------|------------|-------------|
-| **Environment** | [`envs/`](../../rl_train/envs/) · [Getting Started](getting_started.md) | MuJoCo-based Gym environments that expose observations, rewards and actions. |
-| **Trainer** | [`run_train.py`](../../rl_train/run_train.py) · [Code Structure](code_structure.md) | Loads a JSON config, constructs vectorised envs and launches SB3 PPO. |
-| **Callback** | [`learning_callback.py`](../../rl_train/utils/learning_callback.py) | Handles logging, checkpoints, videos and curriculum switches. |
-| **Analyzer** | [`analyzer/`](../../rl_train/analyzer/) · [Network Index Handler](network-index-handler.md) | Post-hoc evaluation: plots, gait metrics and network indexing analysis. |
-| **Configuration** | [`train_configs/*.json`](../../rl_train/train/train_configs/) · [Configuration Guide](configuration.md) | Fully define terrain, reward weights, network indexing and SB3 hyper-parameters. | -->
-
 ## Training Workflow
 
 1. **Define a config** – start from an existing JSON preset or create one from scratch.
@@ -76,8 +66,6 @@ The agent outputs actions that control:
 
 ---
 
-
-
 # Getting Started
 
 This guide shows you the fastest way to test the RL system and run training in the MyoAssist RL system.
@@ -109,7 +97,7 @@ mjpython rl_train/run_sim_minimal.py
 ```
 > **Note:**
 If you need MuJoCo visualizer in mac os, simply use `mjpython` instead of `python` to run your script.  
-You do not need to install anything extra—just change the command:
+You do not need to install anything extra. Just change the command:
 
 > **Note:**  
 If you see the error message `ModuleNotFoundError: No module named 'flatten_dict'`, simply run the command again. This will usually resolve the problem automatically.
@@ -120,8 +108,6 @@ If you see the error message `ModuleNotFoundError: No module named 'flatten_dict
 <p align="center">
   <img src="../assets/rl_random_action_tutorial_env.png" alt="result of run_sim_minimal.py" width="50%">
 </p>
-
-
 
 **What this does:**
 - Shows an example of creating a Gym wrapped MuJoCo simulation environment
@@ -155,7 +141,6 @@ After training, check the results folder:
 # Results location
 rl_train/results/train_session_[date-time]/
 ```
-<!-- ![Training session result example](/docs/assets/train_session_result.png) -->
 <p align="center">
   <img src="../assets/train_session_result.png" alt="Training session result example" width="50%">
 </p>
@@ -167,6 +152,16 @@ rl_train/results/train_session_[date-time]/
 - `trained_models/`: Trained models(`.zip`) saved at each log interval - can be used for evaluation or transfer learning
 
 ## Full Training (When Ready)
+
+Turn the model cache on first. Each of the `num_envs` workers composes its own model, so
+training without the cache is much slower:
+
+```bash
+export MYOASSIST_CACHE_DIR=~/.cache/myoassist
+```
+
+The variable covers RL and controller optimization. See
+[Caching](../modeling/devices/exporting-and-loading#caching-turn-it-on-for-training).
 
 Once you've verified everything works, run full training:
 
@@ -226,7 +221,6 @@ or you can specify the `env_params.prev_trained_policy_path` in config(.json) fi
 
 ## Realtime Policy Running
 You can run a trained policy in realtime simulation:
-<!-- ![result of run_sim_minimal.py](/docs/assets/realtime_eval_flat_tutorial.gif) -->
 <p align="center">
   <img src="../assets/realtime_eval_flat_tutorial.gif" alt="result of run_sim_minimal.py" width="50%">
 </p>
@@ -245,7 +239,6 @@ mjpython rl_train/run_train.py --config_file_path [path/to/config.json] --config
 **Parameters:**
 - `[path/to/config.json]`: Path to the JSON file in the train_session folder
 - `[path/to/model_file]`: Path to the model file (.zip) without extension. It is located in the train_models folder
-<!-- ![trained model](/docs/assets/train_models.png) -->
 <p align="center">
   <img src="../assets/train_models.png" alt="trained model" width="50%">
 </p>

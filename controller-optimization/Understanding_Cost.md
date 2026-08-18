@@ -7,7 +7,7 @@ layout: home
 
 # Understanding Cost Functions
 
-The heart of any optimization is its objective function—the "cost" that the optimizer tries to minimize. In this framework, there is a multi-stage cost function progression designed to guide the CMA-ES optimizer from a random set of parameters to a controller that produces stable and realistic locomotion.
+The objective function of an optimization is its "cost". The optimizer tries to minimize it. This framework uses a multi-stage cost. The stages guide the CMA-ES optimizer from random parameters to a controller that walks in a stable and realistic way.
 
 ## A Brief Introduction to CMA-ES
 
@@ -128,4 +128,6 @@ Similar to the kinematics cost, this measures the difference between the model's
 ### Symmetry Cost
 
 Computed at detected left/right stance events using Euclidean differences of knee and ankle positions relative to the pelvis, averaged over the requested number of strides.
+
+An amputee gait is asymmetric by nature, because the prosthetic leg does not move like the intact leg. The symmetry cost and the Stage 2 symmetry constraint still apply, so read their values with that in mind. Raise `--tgt_sym_th` if the constraint is too strict for an amputee run. See [Amputee and Prosthetic Control](Amputee_Prosthetic_Control).
 

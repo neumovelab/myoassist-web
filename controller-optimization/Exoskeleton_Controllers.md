@@ -15,13 +15,16 @@ Each exoskeleton's torque profile is governed by one of two spline-based control
 
 ## 1. Actuator Definition
 
-The exoskeleton is contributed by the **device** in your environment spec — an
-assist_sim device (e.g. `Tutorial_L1`) that is composed into the MuJoCo model
-together with the human MSK and terrain (see
+The **device** in your environment spec supplies the exoskeleton. It is an
+assist_sim device, for example `Tutorial_L1`. The framework composes it into the
+MuJoCo model with the human MSK and the terrain (see
 **[Defining an Environment](../getting-started/defining-an-environment)**). The
-device supplies the exoskeleton actuators; you do not hand-edit a bundled `.xml`.
+device supplies the exoskeleton actuators. You do not hand-edit a bundled `.xml`.
 
-Each exoskeleton is an actuator in that composed MuJoCo model. There are multiple actuator types available within MuJoCo (**[Modeling](../modeling/Modeling)**). This actuator is what allows the framework to apply torque to the model.
+For prosthetic and amputee devices, and for the amputee reflex mode, see
+**[Amputee and Prosthetic Control](Amputee_Prosthetic_Control)**.
+
+Each exoskeleton is an actuator in that composed MuJoCo model. There are multiple actuator types available within MuJoCo (**[Simulation Environments](../modeling/)**). This actuator is what allows the framework to apply torque to the model.
 
 The actuators look like this:
 ```xml

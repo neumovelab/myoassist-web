@@ -14,8 +14,9 @@ through the `terrain` field of the [environment spec](../../getting-started/defi
 A terrain is either one uniform surface (a plane or a single heightfield) or a
 tiled grid of many terrain types.
 
-This section covers the tiled-grid model. For the uniform surfaces and how to set
-`terrain` in a CO or RL run, see
+This section covers both. [Uniform Terrains](uniform) is the single-surface family
+and its full schema; the rest of this page and [Tile Types](tile-types) cover the
+tiled grid. For how to set `terrain` in a CO or RL run, see
 [Defining an Environment](../../getting-started/defining-an-environment).
 
 <div style="text-align: center;">
@@ -49,8 +50,15 @@ floating shelf.
 ## Boundary contract
 
 Every tile presents a flat top at its declared base height around its whole
-perimeter (the `flat-at-base` contract). This lets connectors join cleanly, regardless of whatever
-happens in the middle of the tile.
+perimeter (the `flat-at-base` contract). This lets connectors join cleanly, regardless
+of whatever happens in the middle of the tile.
+
+`gap` is the one deliberate exception: its trench mouth reaches the tile edge, because
+falling in is what the tile is for.
+
+The contract is measured rather than assumed. The framework ray-casts the compiled
+model at points around every tile, and around every `inverted` variant, so a tile that
+stops honoring it fails a test instead of quietly leaving a step against a connector.
 
 ## Palette
 
@@ -59,11 +67,12 @@ There are three palette modes, set by `palette_preset`:
 | Mode | Behavior |
 |------|----------|
 | `diverse` | Each tile type renders in its own default color. Easy to read while you tune a config. |
-| `uniform` | Every tile shares the color of `terrain_mat` from `terrain_style.xml`, plus an optional texture. Good for final renders. |
-| `custom` | Like `diverse`, but with per-type rgba overrides in `palette`. |
+| `uniform` | Every tile shares one color, set by `palette: {"uniform": [r, g, b, a]}`, plus an optional texture. Good for final renders. |
+| `custom` | Like `diverse`, but **requires** a `palette` entry for every placed tile type, so a final-render config checks itself instead of quietly falling back to defaults. |
 
 In `uniform` mode you can bind a single 2D texture to the material through a
-`texture` block, for a concrete, asphalt, or dirt finish.
+`texture` block, for a concrete, asphalt, or dirt finish. A `texture` outside `uniform`
+mode is a config error rather than a silent no-op.
 
 ## Randomization
 

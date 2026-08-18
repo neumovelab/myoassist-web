@@ -23,7 +23,7 @@ python run_ctrl_minimal.py
 
 ### What it does
 
-- Creates random control parameters (77 parameters for 2D reflex controller)
+- Creates 77 random control parameters. This is the 2D reflex total. See [Reflex Control](Reflex_Control_Overview) for the counts of the other modes.
 - Runs a 5-second simulation with default settings
 - Reports walking duration
 - No video generation or file outputs
@@ -41,8 +41,8 @@ The script uses these default settings:
 - **Exoskeleton**: Disabled
 - **Control parameters**: Random normal distribution
 
-The environment is composed from `msk_key` / `device_key` (and an optional
-`terrain`) — see **[Defining an Environment](../getting-started/defining-an-environment)**.
+The environment is composed from `msk_key` / `device_key` and an optional
+`terrain`. See **[Defining an Environment](../getting-started/defining-an-environment)**.
 
 ### Output
 
@@ -100,7 +100,7 @@ for the full env-spec.
 
 ### Environment Initialization
 
-The part of the script handles environment creation based on your configuration:
+This part of the script creates the environment from your configuration:
 
 ```python
 if LOAD_FROM_FILE:
@@ -132,6 +132,8 @@ else:
     env = myoLeg_reflex(sim_time=SIMULATION_TIME, control_params=control_params, **config)
     print_config_summary(config, title="Manual Configuration")
 ```
+
+This manual example is 2D. It sets `mode` to `2D` and builds 77 reflex parameters. To visualize a 3D, bilateral, or amputee controller, use Method 1 and load it from its optimization results. Method 1 reads the saved config and rebuilds the exact environment and parameter layout. See [Reflex Control](Reflex_Control_Overview) for the parameter count of each mode.
 
 ### Simulation and Video Generation
 

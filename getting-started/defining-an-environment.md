@@ -31,13 +31,19 @@ and which pairs are compatible.
 
 ### MSK models
 
-| Key | Description |
-|-----|-------------|
-| `myolegs22` | **2D** (sagittal-plane) |
-| `myolegs26`, `myolegs80`, `myofullbody` | **3D** |
+| Key | Muscles | Description |
+|-----|---------|-------------|
+| `myolegs22` | 22 | **2D** (sagittal-plane) |
+| `myolegs26` | 26 | **3D** |
+| `myolegs` | 80 | **3D**. The key of the 80-muscle model is `myolegs`, not `myolegs80`. |
+| `myofullbody` | 416 | **3D**, full body with arms and torso muscles |
 
 The muscle count and the 2D or 3D control mode come from `msk`. You do not set them
 separately.
+
+For a 3D key, the CO pipeline replaces the free root with named sagittal DOFs, because the
+reflex controller reads the pelvis state from them. This is automatic. See
+[Root frame](../modeling/msk-models#root-frame).
 
 ### Discovering and validating
 
@@ -84,6 +90,12 @@ A **uniform surface** (one plane or one heightfield):
 | `{ "terrain": "slope", "deg": 8 }` | a constant 8° incline (a tilted plane) |
 | `{ "terrain": "random", "amplitude": 0.06 }` | a rough heightfield, up to 6 cm relief |
 | `{ "terrain": "sinusoidal", "amplitude": 0.05, "period": 1.0 }` | rolling waves |
+
+Those are the common cases. The full field set, including `resolution`, `extent`,
+`safe_zone_radius` and `seed`, is in
+[Uniform Terrains](../modeling/terrains/uniform). Read `resolution` and `extent`
+together: they set the heightfield cell size, which is what the roughness actually
+feels like underfoot.
 
 A **tiled grid**: a [terrain config](../modeling/terrains/configuration) with a `grid`
 and per-cell `tiles`. Tile types are `flat`, `slope`, `stairs`,
