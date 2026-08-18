@@ -2,7 +2,7 @@
 title: Velocity Maps
 parent: Terrains
 grand_parent: Simulation Environments
-nav_order: 3
+nav_order: 4
 layout: home
 ---
 
@@ -22,7 +22,9 @@ for locomotion tasks, and as an input to velocity-tracking rewards.
 The subsystem has two modules:
 
 - **`myoassist_terrains.velocity_map`** builds the field from a `TerrainConfig`. It
-  needs no MuJoCo model.
+  needs no MuJoCo model. It requires a **tiled** terrain: sampling is per cell, and a
+  [uniform surface](uniform) has none, so passing one is rejected with a message
+  saying so.
 - **`myoassist_terrains.velocity_arrows`** turns a field into red-to-green arrow
   geoms for an MJCF scene.
 
@@ -51,19 +53,21 @@ samples = generate_velocity_map(
 | Parameter | Meaning |
 |-----------|---------|
 | `start`, `goal` | World `(x, y, z)`. The horizontal direction points from each sample toward `goal`. |
-| `samples_per_tile` | Grid density per tile (`n × n` samples). |
+| `samples_per_tile` | Grid density per tile (`n × n` samples). `1` places its single sample at the tile centre. |
 | `base_speed` | Speed on flat terrain, before per-tile and grade scaling. |
-| `speed_scale` | Override the per-tile-type multiplier (default `DEFAULT_SPEED_SCALE`: flat `1.0`, gap `0.25`). |
+| `speed_scale` | Override the per-tile-type multiplier. The defaults come from the tiles themselves, each of which declares its own, so a custom tile registered with `register_tile(..., speed_scale=...)` is covered automatically (flat `1.0` down to gap `0.25`). |
 | `mode` | `"goal"` (straight to the goal) or `"tile"` (blend in a radial component). |
 | `tile_radial_mode` | For `mode="tile"`: `"inward"`, `"outward"`, or `"mixed"`. |
 | `smooth_speeds` | Spatially smooth neighboring sample speeds. |
 | `tile_speed_jitter`, `tile_jitter_seed` | Deterministic per-tile speed variation in `[1-j, 1+j]`, so identical tile types still read distinctly. |
 | `height_offset` | Lift samples above the surface for arrow placement. |
 
-Two surface-height helpers back the field and are useful on their own.
-`estimate_surface_height(tile, local_x, local_y, tile_size)` gives the per-tile-type
-walkable height at a local coordinate. `surface_height_at(config, tiles, x, y)` gives
-a world-coordinate lookup across the resolved grid.
+Surface heights come from the tiles themselves. Each tile reports its own, in the same
+module as the code that places its geometry, so the arrows sit on the surface the
+terrain actually has. For your own lookups use
+[`surface_height_at(config, x, y)`](configuration#asking-where-the-ground-is), which
+also handles uniform terrain and reports the height of the connector strips between
+cells.
 
 ## Rendering arrows
 

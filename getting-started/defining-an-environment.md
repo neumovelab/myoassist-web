@@ -91,6 +91,12 @@ A **uniform surface** (one plane or one heightfield):
 | `{ "terrain": "random", "amplitude": 0.06 }` | a rough heightfield, up to 6 cm relief |
 | `{ "terrain": "sinusoidal", "amplitude": 0.05, "period": 1.0 }` | rolling waves |
 
+Those are the common cases. The full field set, including `resolution`, `extent`,
+`safe_zone_radius` and `seed`, is in
+[Uniform Terrains](../modeling/terrains/uniform). Read `resolution` and `extent`
+together: they set the heightfield cell size, which is what the roughness actually
+feels like underfoot.
+
 A **tiled grid**: a [terrain config](../modeling/terrains/configuration) with a `grid`
 and per-cell `tiles`. Tile types are `flat`, `slope`, `stairs`,
 `pyramid_stairs`, `rough`, `boulders`, `stepping_stones`, `discrete_obstacles`, and
