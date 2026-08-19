@@ -104,7 +104,7 @@ over the same passive torso scaffold as `myolegs26`.
 </div>
 <div class="msk-figure-text" markdown="1">
 
-`myofullbody` is the most complete human model: torso muscles, arms, and legs (129 base
+`myofullbody` is the most complete human model: torso muscles, arms, and legs (123 base
 DOFs). Use it for whole-body studies, or when a device or task involves the trunk or
 arms.
 
