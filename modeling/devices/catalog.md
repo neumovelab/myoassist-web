@@ -35,7 +35,7 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
     <div class="device-meta">
       <h3><code>OpenSourceLeg_KA_L1</code> <img class="device-logo" src="../../assets/devices/osl_logo.png" alt="Open-Source Leg"></h3>
-      <p class="device-type">=Powered transfemoral prosthetic</p>
+      <p class="device-type">Powered transfemoral prosthetic</p>
       <p>Open-Source Leg, knee-ankle configuration.</p>
     </div>
   </div>
@@ -46,7 +46,7 @@ Lower-limb exoskeletons and prosthetic legs, each shown composed with a myoLeg m
     </div>
     <div class="device-meta">
       <h3><code>KFoot_L1</code> <img class="device-logo" src="../../assets/devices/neu_logo.png" alt="Northeastern"></h3>
-      <p class="device-type">Passive ranstibial prosthetic</p>
+      <p class="device-type">Passive transtibial prosthetic</p>
       <p>Passive transtibial prosthetic with an asymmetrical stiffness ankle.</p>
     </div>
   </div>
@@ -203,4 +203,10 @@ resolve in the installed `myo_sim`.
 ```python
 from assist_sim import get_available_combinations
 print(get_available_combinations())
+```
+
+To check that one pair resolves before you build it, run:
+
+```bash
+python -m assist_sim validate MSK DEVICE
 ```

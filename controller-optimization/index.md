@@ -82,7 +82,7 @@ ctrl_optim/
 │   └── prosthetic/              # Prosthetic ankle controllers
 └── optim/                       # Optimization framework
     ├── cost_functions/          # Cost function implementations
-    ├── config/                  # Configuration files
+    ├── config/                  # Argument parsing and environment code
     └── training_configs/        # Training configurations
 ```
 

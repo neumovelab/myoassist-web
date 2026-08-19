@@ -48,7 +48,7 @@ The environment is composed from `msk_key` / `device_key` and an optional
 
 The script prints the walking duration to the console:
 ```
-Walking duration: 0.35 seconds
+Walking duration: 0.350 seconds
 ```
 
 ## Running `run_ctrl.py`

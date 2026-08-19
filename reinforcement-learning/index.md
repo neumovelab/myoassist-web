@@ -7,13 +7,13 @@ layout: home
 
 # Reinforcement Learning
 
-MyoAssist’s reinforcement learning (RL) pipeline is built on top of **[Stable-Baselines3 (SB3) PPO](https://stable-baselines3.readthedocs.io/en/master/index.html)** and a set of custom **[MuJoCo](https://mujoco.org/)** environments that simulate human–exoskeleton interaction. This page gives you an overview of how everything fits together and where to find more information.
+MyoAssist’s reinforcement learning (RL) pipeline uses **[Stable-Baselines3 (SB3) PPO](https://stable-baselines3.readthedocs.io/en/master/index.html)** and custom **[MuJoCo](https://mujoco.org/)** environments. These environments simulate human–exoskeleton interaction. This page gives an overview of how the parts fit together and where to find more information.
 
 <p align="center">
   <img src="../assets/rl_framework.png" alt="MyoAssist reinforcement learning framework" style="width: 34rem; max-width: 100%; height: auto;">
 </p>
 
-Reinforcement learning (RL) is a machine learning paradigm where an agent learns to make decisions by interacting with an environment and receiving feedback in the form of rewards. In the context of MyoAssist, RL is used to train control policies for human–exoskeleton systems within MuJoCo simulation environments.
+Reinforcement learning (RL) is a machine learning method. An agent learns to make decisions. It interacts with an environment and receives rewards as feedback. In MyoAssist, RL trains control policies for human–exoskeleton systems in MuJoCo simulation environments.
 
 **Observation Space:**  
 In our environments, the agent receives observations that include:
@@ -21,7 +21,7 @@ In our environments, the agent receives observations that include:
 - Joint velocities
 - Muscle activations
 - Sensory data (such as ground contact, force sensors, etc.)
-- etc
+- Target velocity (the last observation component)
 
 **Action Space:**  
 The agent outputs actions that control:
@@ -31,26 +31,26 @@ The agent outputs actions that control:
 
 ## Training Workflow
 
-1. **Define a config** – start from an existing JSON preset or create one from scratch.
+1. **Define a config**: start from an existing JSON preset, or create one from scratch.
 2. **Launch training**
    ```bash
    python rl_train/run_train.py --config_file_path rl_train/train/train_configs/my_config.json
    ```
-3. **Monitor progress** – logs & results in `results/train_session_*`.
-4. **Evaluate policy** –
+3. **Monitor progress**: logs and results go to `rl_train/results/train_session_*`.
+4. **Evaluate policy**:
    ```bash
-   python rl_train/run_policy_eval.py results/train_session_<timestamp>
+   python rl_train/run_policy_eval.py rl_train/results/train_session_<timestamp>
    ```
-5. **Analyze results** – see [Evaluation](../evaluation/) for the shared eval outputs.
+5. **Analyze results**: see [Evaluation](../evaluation/) for the shared eval outputs.
 
 ---
 
 ## Key Features
 
-- **Multi-Actor Support** – Separate networks for human muscles and exoskeleton actuators (see [Network Index Handler](04_network-index-handler)).
-- **Variable Terrain** – Train on flat, sloped, rough, or tiled terrain, defined by [Terrains](../modeling/terrains/).
-- **Reference Motion Imitation** – Optional imitation reward using ground-truth gait trajectories.
-- **Realtime Evaluation** – Run policies in realtime with `--flag_realtime_evaluate`.
+- **Multi-Actor Support**: Separate networks for human muscles and exoskeleton actuators (see [Network Index Handler](04_network-index-handler)).
+- **Variable Terrain**: Train on flat, sloped, rough, or tiled terrain, defined by [Terrains](../modeling/terrains/).
+- **Reference Motion Imitation**: Optional imitation reward using ground-truth gait trajectories.
+- **Realtime Evaluation**: Run policies in realtime with `--flag_realtime_evaluate`.
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 24px;">
   <div style="flex: 1; text-align: center;">
@@ -131,7 +131,7 @@ python rl_train/run_train.py --config_file_path rl_train/train/train_configs/imi
 - Training for only a few short timesteps
 - Uses 1 environment (minimal resource usage)
 - Enables rendering to see the simulation
-- Logs results after every rollout (4 steps) for immediate feedback
+- Logs results after every rollout (256 steps, `test.json`) for immediate feedback
 
 ### 3. Check Results
 
@@ -145,11 +145,15 @@ rl_train/results/train_session_[date-time]/
   <img src="../assets/train_session_result.png" alt="Training session result example" width="50%">
 </p>
 
+Concurrent runs never share a directory. Training claims `train_session_[date-time]`, and steps to `train_session_[date-time]_1`, `_2`, and so on when the second-resolution timestamp is already taken.
+
 **What you'll find:**
-- `analyze_results_[timesteps]_[evaluate_number]`: Training analysis results
+- `analyze_results_[timesteps]_[evaluate_number]`: analysis written during training, by the analyzer that the learning callback runs every `logger_params.evaluate_frequency` rollouts
 - `session_config.json`: Configuration used for this training
 - `train_log.json`: Training log data
 - `trained_models/`: Trained models(`.zip`) saved at each log interval - can be used for evaluation or transfer learning
+
+`run_policy_eval.py` writes `analyze_results_[NN]` instead, without the timestep prefix.
 
 ## Full Training (When Ready)
 
@@ -161,7 +165,7 @@ export MYOASSIST_CACHE_DIR=~/.cache/myoassist
 ```
 
 The variable covers RL and controller optimization. See
-[Caching](../modeling/devices/exporting-and-loading#caching-turn-it-on-for-training).
+[Caching](../modeling/devices/exporting-and-loading#caching).
 
 Once you've verified everything works, run full training:
 
@@ -188,6 +192,15 @@ python rl_train/run_policy_eval.py [path/to/trainsession/folder]
 ```
 
 > Point `run_policy_eval.py` at any `train_session_*` directory that you produced.
+
+| Flag | Meaning |
+|------|---------|
+| `--steps N` | Override `num_timesteps` for every rollout. The configs ship 200 steps, about 5 strides. Works on already-trained sessions. |
+| `--regen` | Regenerate the evaluated gait data even if it already exists. |
+| `--no-show` | Skip the pop-out composite window. |
+| `--varying` | Replace `evaluate_param_list` with a single SINUSOIDAL 0.8-1.4 m/s rollout and emit the speed-tracking composite. |
+| `--cmap {rainbow,teal,bluered}` | Speed color map for varying-speed composites. |
+| `--legacy-plots` | Also write the legacy per-panel PNGs. |
 
 
 After training, an `analyze_results` folder will be created inside your `train_session` directory.  

@@ -109,8 +109,10 @@ Verify how the model touches its environment. Use the `Contact Point` and
   contacts.
 - **Devices on the feet.** A shoe or a foot device changes the ground clearance. Set
   the model's initial height (`pelvis_ty`) with a `keyframe_overrides` entry so the
-  model does not start inside the terrain. Reposition the foot touch sensors
-  (`r_foot_touch`, `r_toes_touch`) to match the new geometry with a `sensors` entry.
+  model does not start inside the terrain. Re-declare the foot touch sensors
+  (`r_foot`, `r_toes`) against sites that match the new geometry with a `sensors`
+  entry. Those sensors read the touch sites `r_foot_touch` and `r_toes_touch` by
+  default.
 
 <div style="text-align: center;">
 <img src="../../assets/contacts.png" alt="Incorrect versus corrected contacts and forces" width="600"/>

@@ -23,7 +23,8 @@ The shared code in `myoassist_utils/eval_utils.py` makes the outputs for both.
 
 Each evaluation makes these files:
 
-- **`gait_evaluated_data.json`**: the full rollout in the `GaitData` schema. This
+- **`gait_evaluated_data.json`**: the full rollout in the `GaitData` schema. The analyzer that
+  runs during training names it `gait_evaluated_data_[NN].json` instead. This
   includes the joint `qpos` and `qvel`, the actuator force and ctrl, the sensor data,
   and the target velocity. CO also writes this RL schema, so the RL analyzers can read
   CO output.
@@ -83,8 +84,72 @@ rl_train/results/train_session_[date-time]/analyze_results_[NN]/
 
 The `evaluate_param_list` sets which rollouts to evaluate. It sets the velocity mode,
 the timesteps, the camera, and other values. Refer to the
-[RL Configuration](../reinforcement-learning/02_configuration) page. To also write the
-legacy per-panel plots, use `--legacy-plots`.
+[RL Configuration](../reinforcement-learning/02_configuration) page.
+
+These flags change what `run_policy_eval.py` runs and writes:
+
+| Flag | Meaning |
+|------|---------|
+| `--legacy-plots` | Also write the legacy per-panel PNGs. |
+| `--no-show` | Skip the pop-out composite window. |
+| `--regen` | Regenerate the evaluated gait data even if it already exists. |
+| `--steps N` | Override `num_timesteps` for every rollout. The configs ship 200, about 5 strides, which is too few for a per-phase quantity; use 1000 for about 30. |
+| `--varying` | Replace the list with one sinusoidal varying-speed rollout (0.8-1.4 m/s) and write the speed-tracking composite. |
+| `--cmap {rainbow,teal,bluered}` | Speed color map for the varying-speed composites. |
+
+## Exoskeleton policy scoring
+
+Two tools in `tools/` read the rollout JSON from an `analyze_results_NN/` folder. They run
+no simulation of their own. Both compute every gait-cycle quantity in that leg's own cycle.
+
+### `score_exo_policy.py`
+
+Scores a trained exo policy on three axes and prints a ranked report. Use it to order runs
+that all walk, which the composite figure cannot separate.
+
+- **stability**: cycle-to-cycle scatter, peak count, and slew of the torque profile.
+- **symmetry**: left-right difference in peak magnitude and phase.
+- **plausibility**: agreement with walking literature values. The ankle plantarflexion
+  moment peaks near 50 % of the gait cycle, a powered ankle exo delivers a peak of
+  0.15-0.80 N*m/kg, and stance occupies about 60 % of the cycle.
+
+Each subscore and their mean (`total`) run from 0 to 1.
+
+```bash
+python tools/score_exo_policy.py rl_train/results/train_session_*/analyze_results_00
+```
+
+| Flag | Meaning | Default |
+|------|---------|---------|
+| `--joint {ankle,hip}` | joint the device assists | `ankle` |
+| `--mass` | body mass for N*m/kg normalization | `90.96` |
+| `--json-out` | also write every score to this JSON file | none |
+| `--skip-unscorable` | continue past rollouts with too few foot strikes to segment | off |
+| `--by-name` | order the report by directory name instead of by score | off |
+
+Only the ankle path is validated against composed models. The hip window is provisional, so
+scoring a hip device prints a warning.
+
+Two constraints on the ranking:
+
+- Evaluate with enough steps. The configs ship `num_timesteps` 200, about 5 strides, which
+  is too few for a per-phase quantity. `score_exo_policy.py` has no `--steps` flag: it reads
+  the rollout JSON that `run_policy_eval.py` already wrote. Generate a longer rollout first
+  with `run_policy_eval.py --steps 1000`, which gives about 30 strides.
+- Rank with this tool, not with the `train/mirror_loss` metric. A policy can lower that loss
+  by driving both exo outputs toward zero.
+
+### `plot_kinematics_exo.py`
+
+Writes one figure holding the hip, knee, and ankle angle of each leg against the mocap
+reference, with that leg's exo torque underneath.
+
+```bash
+python tools/plot_kinematics_exo.py <run_dir> [<run_dir> ...] -o out.png
+```
+
+`--reference` sets the reference file, `rl_train/reference_data/segmented.npz` by default.
+`--mass` matches `score_exo_policy.py`.
 
 ## Controller Optimization: `run_eval.py`
 
@@ -130,7 +195,7 @@ values in it. You can omit a field that has a default. The pipeline reads these 
 | `exo_bool` | exoskeleton on | `true` |
 | `fixed_exo` | hold exo params fixed | `false` |
 | `use_4param_spline` | 4-param or n-point exo spline | `true` |
-| `max_torque` | max exo torque | `1.0` |
+| `max_torque` | max exo torque. The shipped `example_config.json` sets `100.0`, so a copy of the example uses `100.0`, not this default. | `1.0` |
 | `n_points` | n-point spline points (when not 4-param) | `4` |
 | `msk_key` | human MSK registry key | `"myolegs22"` |
 | `device_key` | assist_sim device registry key | `"Tutorial_L1"` |
@@ -139,7 +204,7 @@ values in it. You can omit a field that has a default. The pipeline reads these 
 | `render_width` / `render_height` | render resolution | `1920` x `960` |
 | `show_actuators` | draw actuators in the render | `true` |
 | `export_video` | also write `replay.mp4` | `false` |
-| `video_fps` | replay frame rate | `100` |
+| `video_fps` | replay frame rate. `run_eval.py` does not read this key from the config, so it is effectively fixed at 100. | `100` |
 
 The terrain sets the course grade. A `slope` `terrain` gives the incline. There is no
 separate slope flag.

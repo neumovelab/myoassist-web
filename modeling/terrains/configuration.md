@@ -33,8 +33,10 @@ path to a file. The full schema is below.
     "match_mode": "min"  // "min" | "max" | "mean"
   },
 
-  // Optional. "diverse" (per-tile colors), "uniform" (single color from
-  // terrain_style.xml), or "custom" (per-type overrides in `palette`).
+  // Optional. "diverse" (per-tile colors), "uniform" (one shared color), or
+  // "custom" (per-type overrides in `palette`). Under "uniform" the color comes
+  // from palette["uniform"] or palette["terrain"], else a default gray
+  // (0.78, 0.78, 0.78, 1.0).
   "palette_preset": "diverse",
 
   // Optional. Keys are tile type names (or "connector"). "custom" requires an
@@ -46,8 +48,10 @@ path to a file. The full schema is below.
   },
 
   // Optional, and "uniform" mode only. Bind a 2D texture to the shared material.
+  // A bare string is shorthand for just the file: "texture": "CONCRETE.png".
   "texture": {
-    "file": "CONCRETE.png",            // relative to the project root
+    "file": "CONCRETE.png",            // resolved against the build output dir's
+                                       // parent, then the output dir
     "name": "terrain_concrete",
     "repeat": [0.5, 0.5],
     "texuniform": true

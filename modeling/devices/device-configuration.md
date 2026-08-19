@@ -46,7 +46,8 @@ Only `device` and `attachments` are *required*.
 device:
   name: "DephyExoBoot_L1"
   model_xml: "L1model.xml"
-  compatible_msk: ["myolegs22", "myolegs26"]   # optional
+  # compatible_msk: ["myolegs22", "myolegs26"]   # optional; the shipped
+  # DephyExoBoot omits this field, so it composes with every MSK model.
 ```
 
 | Field | Required | Meaning |
@@ -93,10 +94,17 @@ constraints then tie it to the leg.
 | `tendon_modifications` | Re-anchor a kept muscle onto the bone that remains (the myodesis step): move its wrap sites and geoms onto the residual bone. This runs before the removals, or the cascade removes the muscle. |
 | `actuator_overrides` | Set a re-anchored muscle's `lengthrange`. A re-anchor changes the muscle's operating range. |
 | `mesh_replacements` / `geom_removals` | Swap a geom's mesh for one from the device XML, or remove a named geom (for example the residual stump mesh). |
-| `body_overrides` | Override a body's mass and inertia. Used to reduce a residual limb after an amputation, so the stump does not carry the whole segment's mass. |
+| `body_overrides` | Override a body's `mass`, its inertia (`diaginertia`, or `fullinertia` as the len-6 form), and its inertial frame (`ipos`, `iquat`). Used to reduce a residual limb after an amputation, so the stump does not carry the whole segment's mass. |
 | `actuator_removals` / `tendon_removals` | Remove named actuators or tendons (for example muscles that cross an amputation level). |
 | `contact` | Add contact pairs and excludes to the combined model. |
 | `sensors` / `sensor_removals` | Add or remove sensors (for example restore a foot touch sensor onto a prosthetic sole). |
+
+The `sensors` section is not limited to `touch`. It also supports the other MuJoCo
+sensor types, for example `jointlimitfrc`, `framepos`, and `force`. Each entry
+names one target with the matching key (`site`, `joint`, `actuator`, `tendon`,
+`body`, or `geom`). The
+[assist_sim config reference](https://github.com/neumovelab/assist_sim/blob/main/docs/device-config-reference.md)
+lists every type and the target each one needs.
 
 ## Prosthetic amputation workflow
 
@@ -144,8 +152,12 @@ device set. See the three cards at the bottom of the [Device Catalog](catalog).
 These environments differ from the [gait-assistive devices](catalog). They are
 **not registry devices**, and are less modular. A dedicated builder
 function in `assist_sim.upper_body` makes each one. You do not use
-`load_combined`. The `MPL` environment compiles using `MyoArm`, and the `Wheelchair` environment compiles using a left or right `MyoArm`
-and rigid or muscle-driven `MyoTorso`.
+`load_combined`. The `MPL` is the prosthetic device, not a host model. The
+standalone `MPL` environment loads it on its own, with no `myo_sim` human. In the
+bionic-bimanual task, the `MPL` device mounts on a `MyoArm` host. The `Wheelchair`
+environment composes a `MyoArm` on a rigid or muscle-driven `MyoTorso`.
+`build_wheelchair` uses bimanual arms (`both`) by default, and also accepts
+`left` or `right`.
 
 | | Gait-assistive devices | Upper-body & seated-mobility |
 |---|---|---|

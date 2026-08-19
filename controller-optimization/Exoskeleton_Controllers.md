@@ -57,7 +57,7 @@ This is a version of a widely used controller defined by four parameters that de
     3.  `peak_time`: The point in the stance phase where the peak torque occurs (as a % of stance).
     4.  `fall_time`: The time it takes to ramp down to zero torque after the peak (as a % of stance).
 
-- **Fixed Controller (`--fixed_exo`)**: This command-line option allows the 4-parameter controller to be used with a fixed, predefined set of initial parameters instead of being optimized. This is useful for evaluating a known, static assistance profile.
+- **Fixed Controller (`--fixed_exo`)**: This command-line option holds the 4-parameter controller at a fixed, predefined set of initial parameters instead of optimizing them. This is useful for evaluating a known, static assistance profile. It applies to the 4-parameter controller only. With the n-point spline it does nothing.
 
 <p align="center">
   <img src="../assets/4param.png" alt="4-Parameter Controller Diagram" width="350"/>
@@ -96,7 +96,7 @@ This is a more flexible controller that defines the torque profile using a varia
 ### Simulation Interfacing
 - **Interface (`reflex_interface.py`)**: The `myoLeg_reflex` class is the core integrator. It instantiates the chosen exoskeleton controller (`FourParamSplineController` or `NPointSplineController`) based on the command-line arguments.
 - **Torque Application**: During each step of the simulation, the interface calls the controller's `.update()` method to get the current torque value and applies it to the correct ankle joint actuator.
-- **Spline Validity Check**: The interface includes a crucial safety check, `check_spline_validity()`. This function is called before evaluating the cost. It ensures that the timing parameters for the spline are monotonically increasing (i.e., `time_1 < time_2 < ... < time_n`). If the order is invalid, the simulation is assigned a high penalty cost, preventing the optimizer from exploring unstable regions.
+- **Spline Validity Check**: The interface includes a safety check, `check_spline_validity()`. It runs before the cost evaluation. For the n-point controller, it checks that each torque value is within `[0.01, 1]` and each timing value is within `[0, 1]`; the binning and sort keep the timing in order. For the 4-parameter controller, it checks the peak, rise, and fall bounds. If a check fails, the simulation gets a high penalty cost. This keeps the optimizer out of unstable regions.
 
 ## 4. Continued Optimization and Bootstrapping
 

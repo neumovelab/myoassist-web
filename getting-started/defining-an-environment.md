@@ -61,7 +61,7 @@ the valid options when a key is unknown or the MSK and device pair is incompatib
 
 > **Note:**  
 >  
-> Environment validation **must** use the correct raw registry keys or the returned result will be inacurate.  
+> Environment validation **must** use the correct raw registry keys or the returned result will be inaccurate.  
 >  
 > **Example:**  
 > ```bash
@@ -119,9 +119,9 @@ The terrain sets the course grade. A `slope` terrain is the incline, and the
 evaluation camera, cost, and readouts derive the angle from it. There is no separate
 slope flag.
 
-> **Reflex CO is for steady-state locomotion.** An constant terrain is manageable, however the CO pipeline and 
-> reflex controller will not optimize over highly variable terrain (rough, stairs, mixed
-> tiles). Use variable terrain with RL.
+> **Reflex CO is for steady-state locomotion.** A constant terrain is manageable. The CO
+> pipeline and reflex controller do not optimize over highly variable terrain (rough, stairs,
+> mixed tiles). Use variable terrain with RL.
 
 ## Using an environment spec
 

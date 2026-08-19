@@ -17,7 +17,7 @@ Before you begin, make sure you have:
 - [uv](https://docs.astral.sh/uv/) (the installer MyoAssist uses; see the virtual-environment steps below)
 - [Visual Studio Code](https://code.visualstudio.com/download) or other IDE
 
-MuJoCo 3.4 or newer installs automatically with the package.
+MuJoCo installs automatically with the package. The MyoAssist install pins `mujoco>=3.4,<3.5`. The standalone sibling packages (`assist_sim`, `myoassist-terrains`) may build on a different or wider MuJoCo range; check those repositories if you install a sibling on its own.
 
 ## Installation
 
@@ -111,13 +111,13 @@ You should see output similar to this:
 ```bash
 Test Summary
 ----------------------------------------
-Total tests: 15
-Passed: 15
+Total tests: 16
+Passed: 16
 Failed: 0
 Total time: 13.60s
 ```
 
-## Step 5: Turn the model cache on (before you train)
+### Step 5: Turn the model cache on (before you train)
 
 MyoAssist composes the model in memory: it joins the MSK model, the device and the terrain at
 run time. A training run builds one model for each parallel environment and for each
@@ -132,7 +132,7 @@ In a Windows command prompt, use `setx MYOASSIST_CACHE_DIR %USERPROFILE%\.cache\
 
 Put the line in your shell profile, and you do not have to think about it again. The one
 exception is `myofullbody`, which is too large to gain from the cache. See
-[Caching](../modeling/devices/exporting-and-loading#caching-turn-it-on-for-training) for the
+[Caching](../modeling/devices/exporting-and-loading#caching) for the
 measured numbers, and for the rules that make the cache miss.
 
 ## Next steps
