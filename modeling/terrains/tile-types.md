@@ -51,7 +51,7 @@ what [`surface_height_at`](configuration#asking-where-the-ground-is) answers.
 | `n_steps` | `6` | int, `(3, 12)` | Number of risers from base to peak. |
 | `axis` | `"y"` | `"x"` or `"y"` | Axis the staircase progresses along, so you cross the steps travelling along it. |
 | `peak_width` | `0.4` | float, `(0.2, 0.5)` | Width of the flat plateau at the top. |
-| `return_mode` | `"mirror"` | str | How the descending half is built. |
+| `return_mode` | `"mirror"` | str | How the descending half is built. `"mirror"` is the only implemented value; any other value raises an error. |
 | `cross_ratio` | `0.9` | float | Fraction of the perpendicular axis covered by tread. |
 | `inverted` | `False` | bool | If `True`, stairs descend into a pit and mirror back up. |
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |
@@ -72,7 +72,7 @@ what [`surface_height_at`](configuration#asking-where-the-ground-is) answers.
 |-----------|---------|--------------|-------------|
 | `angle_deg` | `12.0` | float, `(5.0, 25.0)` | Incline angle in degrees. |
 | `axis` | `"y"` | `"x"` or `"y"` | Axis the slope rises along. |
-| `direction` | `"mirror"` | str | How the falling half is built. |
+| `direction` | `"mirror"` | str | How the falling half is built. `"mirror"` is the only implemented value; any other value raises an error. |
 | `plateau_ratio` | `0.1` | float, `(0.05, 0.3)` | Fraction of tile length given to the flat peak. |
 | `cross_ratio` | `0.9` | float | Fraction of the perpendicular axis covered by the ramp. |
 | `inverted` | `False` | bool | If `True`, the ramp descends into a pit and rises back. |
@@ -115,12 +115,12 @@ what [`surface_height_at`](configuration#asking-where-the-ground-is) answers.
 |-----------|---------|--------------|-------------|
 | `seed` | `0` | int, `(0, 1e6)` | RNG seed for the heightmap. |
 | `vertical_relief` | `0.8` | float, `(0.1, 1.5)` | Peak-to-trough excursion of the surface in meters. |
-| `grid_resolution` | `256` | int | Heightmap resolution in pixels per side. |
+| `grid_resolution` | `256` | int, `>= 8` | Heightmap resolution in pixels per side. The minimum is 8. |
 | `num_pits` | `18` | int, `(0, 30)` | Number of gaussian pit features blended in. |
 | `num_hills` | `24` | int, `(0, 30)` | Number of gaussian hill features blended in. |
 | `terrace_levels` | `5` | int, `(1, 9)` | Plateau quantization levels. |
 | `pit_threshold` | `0.33` | float | Selector cutoff that switches a macro region to a pit. |
-| `plateau_threshold` | `0.68` | float | Selector cutoff that switches a macro region to a plateau. |
+| `plateau_threshold` | `0.68` | float | Selector cutoff above which a macro region becomes rough. The plateau band sits below it, between `pit_threshold` and this value. |
 | `edge_taper_frac` | `0.1` | float | Fractional band over which the surface returns to `base_height` at the tile edge. |
 | `relief_mode` | `"centered"` | `"centered"`, `"up"`, or `"down"` | Whether features go above and below the base, only up, or only down. |
 | `base_height` | `0.0` | float | z-coordinate of the tile's flat-edge base. |

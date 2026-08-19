@@ -7,13 +7,13 @@ layout: home
 
 # Reinforcement Learning
 
-MyoAssist’s reinforcement learning (RL) pipeline is built on top of **[Stable-Baselines3 (SB3) PPO](https://stable-baselines3.readthedocs.io/en/master/index.html)** and a set of custom **[MuJoCo](https://mujoco.org/)** environments that simulate human–exoskeleton interaction. This page gives you an overview of how everything fits together and where to find more information.
+MyoAssist’s reinforcement learning (RL) pipeline uses **[Stable-Baselines3 (SB3) PPO](https://stable-baselines3.readthedocs.io/en/master/index.html)** and custom **[MuJoCo](https://mujoco.org/)** environments. These environments simulate human–exoskeleton interaction. This page gives an overview of how the parts fit together and where to find more information.
 
 <p align="center">
   <img src="../assets/rl_framework.png" alt="MyoAssist reinforcement learning framework" style="width: 34rem; max-width: 100%; height: auto;">
 </p>
 
-Reinforcement learning (RL) is a machine learning paradigm where an agent learns to make decisions by interacting with an environment and receiving feedback in the form of rewards. In the context of MyoAssist, RL is used to train control policies for human–exoskeleton systems within MuJoCo simulation environments.
+Reinforcement learning (RL) is a machine learning method. An agent learns to make decisions. It interacts with an environment and receives rewards as feedback. In MyoAssist, RL trains control policies for human–exoskeleton systems in MuJoCo simulation environments.
 
 **Observation Space:**  
 In our environments, the agent receives observations that include:
@@ -21,7 +21,7 @@ In our environments, the agent receives observations that include:
 - Joint velocities
 - Muscle activations
 - Sensory data (such as ground contact, force sensors, etc.)
-- etc
+- Target velocity (the last observation component)
 
 **Action Space:**  
 The agent outputs actions that control:
@@ -31,26 +31,26 @@ The agent outputs actions that control:
 
 ## Training Workflow
 
-1. **Define a config** – start from an existing JSON preset or create one from scratch.
+1. **Define a config**: start from an existing JSON preset, or create one from scratch.
 2. **Launch training**
    ```bash
    python rl_train/run_train.py --config_file_path rl_train/train/train_configs/my_config.json
    ```
-3. **Monitor progress** – logs & results in `rl_train/results/train_session_*`.
-4. **Evaluate policy** –
+3. **Monitor progress**: logs and results go to `rl_train/results/train_session_*`.
+4. **Evaluate policy**:
    ```bash
    python rl_train/run_policy_eval.py rl_train/results/train_session_<timestamp>
    ```
-5. **Analyze results** – see [Evaluation](../evaluation/) for the shared eval outputs.
+5. **Analyze results**: see [Evaluation](../evaluation/) for the shared eval outputs.
 
 ---
 
 ## Key Features
 
-- **Multi-Actor Support** – Separate networks for human muscles and exoskeleton actuators (see [Network Index Handler](04_network-index-handler)).
-- **Variable Terrain** – Train on flat, sloped, rough, or tiled terrain, defined by [Terrains](../modeling/terrains/).
-- **Reference Motion Imitation** – Optional imitation reward using ground-truth gait trajectories.
-- **Realtime Evaluation** – Run policies in realtime with `--flag_realtime_evaluate`.
+- **Multi-Actor Support**: Separate networks for human muscles and exoskeleton actuators (see [Network Index Handler](04_network-index-handler)).
+- **Variable Terrain**: Train on flat, sloped, rough, or tiled terrain, defined by [Terrains](../modeling/terrains/).
+- **Reference Motion Imitation**: Optional imitation reward using ground-truth gait trajectories.
+- **Realtime Evaluation**: Run policies in realtime with `--flag_realtime_evaluate`.
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 24px;">
   <div style="flex: 1; text-align: center;">
@@ -165,7 +165,7 @@ export MYOASSIST_CACHE_DIR=~/.cache/myoassist
 ```
 
 The variable covers RL and controller optimization. See
-[Caching](../modeling/devices/exporting-and-loading#caching-turn-it-on-for-training).
+[Caching](../modeling/devices/exporting-and-loading#caching).
 
 Once you've verified everything works, run full training:
 

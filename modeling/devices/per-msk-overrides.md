@@ -157,13 +157,13 @@ tendon_modifications:
       wraps:
         - replace_geom: "SM_at_condyles_wrap_r"   # the wrap cylinder moves too
           new_body: "femur_r"
-          pos: [0.01464, -0.270, 0.00916]
+          pos: [0.02272, -0.27000, 0.01850]
         - replace_site: "SM_at_condyles_site_semimem_r"
           new_body: "femur_r"
-          pos: [0.01259, -0.270, 0.01207]
+          pos: [0.01769, -0.27000, 0.00720]
         - replace_site: "semimem-P2_r"
           new_body: "femur_r"
-          pos: [0.01259, -0.28301, 0.01207]
+          pos: [0.01857, -0.28301, 0.00658]
     # ...bflh_r, semiten_r, grac_r, sart_r, tfl_r, addmagIsch_r, recfem_r
   myofullbody: *r80_reanchor            # its leg is identical to myolegs's
 ```

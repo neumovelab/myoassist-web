@@ -21,7 +21,7 @@ each one costs 13 to 15 times more:
 export MYOASSIST_CACHE_DIR=~/.cache/myoassist
 ```
 
-See [Caching](../modeling/devices/exporting-and-loading#caching-turn-it-on-for-training).
+See [Caching](../modeling/devices/exporting-and-loading#caching).
 
 ### Using `run_optim.py`
 
@@ -42,7 +42,7 @@ python run_optim.py tutorial
 
 ### Available Configurations
 
-The `optim/training_configs/` directory contains configuration files for different optimization scenarios. Each configuration has both `.bat` and `.sh` versions, but `run_optim.py` automatically selects the appropriate file type for your OS. Some example configurations are below.
+The `optim/training_configs/` directory contains configuration files for different optimization scenarios. Every configuration has a Windows `.bat` file. Six also have a Unix `.sh` file: `tutorial`, `debug`, `amp_kfoot`, `kfoot_stiffness`, `reflex_bilat`, and `anatomics_rom`. The other five (`baseline`, `exo_4param`, `exo_4param_kine`, `exo_npoint`, and `exo_npoint_cont`) are `.bat`-only, so they do not run on Unix. `run_optim.py` selects the file type for your OS. Some example configurations are below.
 
 | Configuration         | Description                                                                                             |
 |-----------------------|---------------------------------------------------------------------------------------------------------|
@@ -50,7 +50,7 @@ The `optim/training_configs/` directory contains configuration files for differe
 | `debug`               | A small, quick run with few iterations, designed for testing and debugging the optimization pipeline.   |
 | `tutorial`            | A tutorial configuration for learning the framework.                                                     |
 | `exo_4param`          | Optimizes the controller with an exoskeleton using the 4-parameter spline for its torque profile. |
-| `exo_4param_kine`     | Similar to `exo_4param`, but uses a kinematics-focused cost function (`-kine`).                           |
+| `exo_4param_kine`     | The same as `exo_4param`; both use the `-kine` cost. It differs only in its `--save_path`.               |
 | `exo_npoint`          | Optimizes with an exoskeleton using the modern n-point spline controller.                                 |
 | `exo_npoint_cont`     | An example of a continued optimization, starting from the results of a previous run.                      |
 | `reflex_bilat`        | Bilateral reflex on the 3D 26-muscle model, with independent per-leg blocks.                             |
@@ -70,11 +70,13 @@ This will display a list of all available configuration files in the `optim/trai
 
 ## Configuration File Structure
 
-The configuration files in `optim/training_configs/` contain the command-line arguments for the `train.py` script. Both `.bat` and `.sh` files contain the same parameters, just with different syntax for line continuation.
+The configuration files in `optim/training_configs/` hold the command-line arguments for the `train.py` script. `run_optim.py` runs the file from `ctrl_optim/optim/`. The `.bat` and `.sh` files hold the same arguments, with different line-continuation syntax.
+
+The shipped `tutorial` configuration is a continued run. It loads prepared parameters with `--param_path ../results/optim_results/tutorial_prep`.
 
 **Example `tutorial.bat`:**
 ```batch
-python -m ctrl_optim.optim.train ^
+python train.py ^
     --msk myolegs22 ^
     --device Tutorial_L1 ^
     --sim_time 20 ^
@@ -87,7 +89,7 @@ python -m ctrl_optim.optim.train ^
     --trunk_err_type ref_diff ^
     --tgt_sym_th 0.1 ^
     --tgt_grf_th 1.5 ^
-    -kine ^
+    -eff ^
     --ExoOn 1 ^
     --use_4param_spline ^
     --max_torque 100.0 ^
@@ -95,12 +97,13 @@ python -m ctrl_optim.optim.train ^
     --maxiter 50 ^
     --threads 8 ^
     --sigma_gain 10 ^
+    --param_path ../results/optim_results/tutorial_prep ^
     --save_path tutorial
 ```
 
 **Equivalent `tutorial.sh`:**
 ```bash
-python -m ctrl_optim.optim.train \
+exec "$PYTHON_CMD" -m ctrl_optim.optim.train \
     --msk myolegs22 \
     --device Tutorial_L1 \
     --sim_time 20 \
@@ -113,7 +116,7 @@ python -m ctrl_optim.optim.train \
     --trunk_err_type ref_diff \
     --tgt_sym_th 0.1 \
     --tgt_grf_th 1.5 \
-    -kine \
+    -eff \
     --ExoOn 1 \
     --use_4param_spline \
     --max_torque 100.0 \
@@ -121,6 +124,7 @@ python -m ctrl_optim.optim.train \
     --maxiter 50 \
     --threads 8 \
     --sigma_gain 10 \
+    --param_path ../results/optim_results/tutorial_prep \
     --save_path tutorial
 ```
 
@@ -145,14 +149,24 @@ Raw registry keys define the environment. See [Defining an Environment](../getti
 - `--env-spec`: a path to a JSON env-spec (`{msk, device, terrain}`). Use it in place of the three flags above.
 - `--delayed`: set to `1` to use delayed muscle dynamics. The default is off.
 
+### Run and Simulation Settings
+
+Every shipped configuration sets these.
+
+- `--optim_mode`: the run mode. The framework implements `single` (one optimization) and `evaluate` (score existing parameters). Other values in the help text are not implemented.
+- `--save_path`: the name or path for the results folder.
+- `--sim_time`: the maximum simulation time per evaluation, in seconds.
+- `--num_strides`: the minimum number of strides used to compute the cost.
+- `--pose_key`: the initial keypose of the model, for example `walk_left`.
+
 ### Reflex Mode
 
 `--reflex_mode` sets how the reflex controller maps parameters to the two legs.
 
-- Unset (the default): symmetric. One reflex block drives both legs.
+- `uni` or unset (the default): symmetric. One reflex block drives both legs. `uni` is the common symmetric setting. Every shipped 2D configuration and the tutorial use `--reflex_mode uni` with `myolegs22`.
 - `bilat`: bilateral. Each leg gets its own reflex block, so the two legs are independent. This doubles the reflex parameter count.
 - `amp`: amputee. This is `bilat` plus prosthetic tolerance, for a model with a prosthetic device. See [Amputee and Prosthetic Control](Amputee_Prosthetic_Control).
-- `uni`, `ind`: legacy 80-muscle modes.
+- `ind`: another accepted value. The framework maps it as symmetric, the same as `uni`.
 
 ### Amputee and Prosthetic Devices
 
@@ -166,11 +180,14 @@ To optimize on an amputee model, pair a prosthetic device with `--reflex_mode am
 - `--ExoOn`: set to `1` to enable the exoskeleton, or `0` to disable it.
 - `--use_4param_spline`: with the exoskeleton on, use the 4-parameter spline controller. Without this flag, the framework uses the n-point spline.
 - `--n_points`: the number of control points for the n-point spline, for example `4`.
-- `--max_torque`: the maximum torque the exoskeleton can apply, in Nm. It also sets the initial torque values for both controllers.
-- `--fixed_exo`: keep the exoskeleton parameters fixed. The optimizer does not tune them.
+- `--max_torque`: the maximum torque the exoskeleton can apply, in Nm. It also sets the initial torque values for both controllers. The default is `10.0`.
+- `--fixed_exo`: keep the exoskeleton parameters fixed, so the optimizer does not tune them. This affects the 4-parameter controller only. With the n-point spline it does nothing.
 
 ### Optimization Target
-- `-eff`, `-vel`, `-kine`, `-combined`, etc.: These flags set the primary objective of the cost function. They are mutually exclusive. Choose one that best fits your goal (e.g., minimizing effort, matching a target velocity, or tracking reference kinematics). For more information see (**[Understanding Cost](Understanding_Cost)**).
+- `-eff`, `-vel`, `-kine`, etc.: These flags set the primary objective of the cost function. They are mutually exclusive. Choose the one that best fits your goal, for example minimizing effort, matching a target velocity, or tracking reference kinematics. For more information see (**[Understanding Cost](Understanding_Cost)**).
+- `--tgt_vel`: the target walking velocity, in m/s.
+- `--tgt_sym_th`: the symmetry threshold used in the cost.
+- `--tgt_grf_th`: the normalized ground-reaction-force threshold used in the cost.
 
 ### Optimizer Settings
 - `--popsize`: The population size for the CMA-ES optimizer (number of solutions per generation).
@@ -185,7 +202,7 @@ You can start a new optimization from the results of a previous one or resume an
 #### `--param_path`: Start with Existing Parameters
 Use this to start a new optimization (e.g., with a different cost function or model) using the best parameters from a previous run as the starting point.
 - **Argument**: `--param_path <path_to_results_folder>`
-- **Behavior**: The script looks for a `_Best.txt` or `_BestLast.txt` file inside the specified folder and loads it as the initial guess for the new optimization. The optimizer's internal state (covariance matrix, step size) is reset.
+- **Behavior**: The script looks for a `*_BestLast.txt` file inside the specified folder and loads it as the initial guess for the new optimization. A folder with only a `_Best.txt` file does not work. The optimizer's internal state (covariance matrix, step size) is reset.
 
 **Example**:
 ```bash
@@ -244,4 +261,4 @@ Each optimization run produces several output files:
    chmod +x optim/training_configs/*.sh
    ```
 
-This makes the framework truly cross-platform without requiring different commands for different operating systems. 
+`run_optim.py` uses one command on every OS. This works for the configurations that ship both a `.bat` and a `.sh` file. The five `.bat`-only configurations run on Windows only. To use one on Unix, first copy its arguments into a `.sh` file. 

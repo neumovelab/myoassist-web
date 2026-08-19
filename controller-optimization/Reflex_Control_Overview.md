@@ -213,7 +213,6 @@ The reflex controller is integrated into the MyoAssist environment:
 
 - **2D control**: 51 reflex parameters per leg, sagittal plane only
 - **3D control**: 63 reflex parameters per leg, includes frontal plane
-- **Delayed mode**: Includes biological delays (default, requires 1ms timestep)
+- **Delayed mode**: Includes biological delays (requires 1ms timestep)
 - **Non-delayed mode**: Simplified for faster computation
 - **Debug mode**: Provides module-level output monitoring
-```

@@ -9,9 +9,10 @@ layout: home
 # Troubleshooting
 
 This page lists common errors and their fixes. If you find an error that is not in
-this list, read the error message first. Every error message carries a
-`did you mean ...` suggestion and the name of the YAML section that holds the
-incorrect reference.
+this list, read the error message first. An unknown-key or unknown-name error
+carries a `did you mean ...` suggestion and the name of the YAML section that holds
+the incorrect reference. A shape or required-field error does not carry a
+suggestion; it states what the field needs instead.
 
 ## Install / import
 
@@ -63,8 +64,9 @@ The MSK key has a spelling error. The error message includes a
 
 ### `ValueError: Unknown device 'OSL'`
 
-The device key has a spelling error. Try `OpenSourceLeg_A_L1` or the alias `OSL_A`.
-The command `python -m assist_sim list` shows every key.
+The device key has a spelling error. Try `OpenSourceLeg_A_L1` or its alias
+`OSL_A_L1`. The knee-ankle version is `OpenSourceLeg_KA_L1` or the alias
+`OSL_KA_L1`. The command `python -m assist_sim list` shows every key.
 
 ### `ValueError: Device 'X' is not compatible with MSK 'Y'`
 
@@ -201,7 +203,7 @@ environment. Turn the cache on:
 export MYOASSIST_CACHE_DIR=~/.cache/myoassist
 ```
 
-See [Caching](exporting-and-loading#caching-turn-it-on-for-training).
+See [Caching](exporting-and-loading#caching).
 
 ### The cache made it slower
 

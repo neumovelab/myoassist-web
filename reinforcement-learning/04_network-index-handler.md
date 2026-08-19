@@ -104,8 +104,10 @@ The configuration must satisfy these constraints, each of which is asserted:
 
 - Declare both names or neither.
 - Do not declare `exo_actor` alongside them; the exo action slots would be written twice.
-- Both sides must read the same observation index set, in mirrored order. This is why the
-  `index` type exists: `range` cannot reorder.
+- Both sides must read the same observation index set. The check here compares the sorted
+  index sets for equality. The mirrored order (so `Exo_L(s) == Exo_R(mirror(s))`) is arranged
+  by the config generator, not by this check. This is why the `index` type exists: `range`
+  cannot reorder.
 - Both sides must emit the same number of commands and, if both appear in `net_arch`, have
   equal widths.
 

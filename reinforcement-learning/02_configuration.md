@@ -29,14 +29,24 @@ This example overrides two configuration parameters via the command line:
 - Sets the total training timesteps to 1000
 - Sets the number of parallel training environments to 16
 
+### Environment Variables
+
+Some settings come from environment variables, not the JSON config:
+
+- `MYOASSIST_CACHE_DIR` - Directory for the model cache. Turn it on before full training (see [Caching](../modeling/devices/exporting-and-loading#caching)).
+- `MYOASSIST_NUM_THREADS` - Caps the threads each worker uses. The default is 8.
+
 ## Configuration Structure
 
 ### Default Configuration Files
 
 Configuration files are located in `rl_train/train/train_configs/`:
 
-- `imitation_tutorial_22_separated_net_partial_obs.json` - Imitation learning using the "TUTORIAL" model, which provides only ankle angle and velocity to the exo
-- `imitation_tutorial_22_separated_net_full_obs.json` - Full Exo observation imitation
+- `imitation_tutorial_22_separated_net_partial_obs.json` - Imitation learning with the `myolegs22` MSK and the Tutorial device. Partial observation gives the exo only ankle angle and velocity.
+- `imitation_tutorial_22_separated_net_full_obs.json` - Same setup with full exo observation.
+- `imitation_tutorial_22_separated_net_exo_off*.json` - Same setup with the exo held at a constant command (exo off).
+- `test.json` - Minimal config for the quick training test (see [Reinforcement Learning](index#2-quick-training-test)).
+- `device_sweep/` - Eight configs, one per device, for the per-device sweep.
 
 ### Configuration Hierarchy
 
@@ -102,7 +112,7 @@ TrainSessionConfigBase
 | `terrain` | Terrain spec (path or inline config); defined by [Terrains](../modeling/terrains/) | null |
 | `custom_max_episode_steps` | Maximum episode steps | 1000 |
 | `model_path` | Optional literal MJCF path (escape hatch); leave null to compose from `msk_key`/`device_key` | null |
-| `reference_data_path` | Path to reference motion data | "rl_train/reference_data/short_reference_gait.npz" |
+| `reference_data_path` | Path to reference motion data (accepts `.npz` or `.json`) | "rl_train/reference_data/short_reference_gait.npz" |
 | `reference_data_keys` | Joint keys for reference data | ["ankle_angle_l", "hip_flexion_l"] |
 | `prev_trained_policy_path` | Path to previous trained policy | null |
 | `hidden_geom_groups` | Geom groups hidden from rendering. Which group holds clutter is an authoring convention of the model, so it is set here. Rendering only. | [] |
@@ -118,7 +128,7 @@ TrainSessionConfigBase
 | `forward_reward` | Forward movement reward | 1.0 |
 | `muscle_activation_penalty` | Muscle activation penalty, squared | 0.1 |
 | `exo_activation_penalty` | Device effort penalty, in the same units as `muscle_activation_penalty`. The muscle mean is over 22 actuators and the device mean over 2, so the per-actuator price is `muscle_activation_penalty`/22 against `exo_activation_penalty`/2. | 0.0 |
-| `muscle_activation_diff_penalty` | Muscle activation difference penalty | 0.1 |
+| `muscle_activation_diff_penalty` | Smoothness reward, not a penalty despite the name. It adds `dt*mean(exp(-4*(prev-curr)^2))`, which is largest when activations change little between steps. | 0.1 |
 | `footstep_delta_time` | Footstep delta time | 0.0 |
 | `average_velocity_per_step` | Average velocity per step | 0.0 |
 | `muscle_activation_penalty_per_step` | Muscle activation penalty per step | 0.0 |
@@ -165,7 +175,7 @@ TrainSessionConfigBase
 | `net_arch` | Network architecture per network. Use `exo_actor` for one exo network, or `exo_actor_r` plus `exo_actor_l` for one weight-shared per-side network (see [Network Index Handler](04_network-index-handler)). | {"human_actor": [64, 64], "exo_actor": [8, 8], "common_critic": [64, 64]} |
 | `net_indexing_info` | Network indexing information for observation and action ranges | See [Network Index Handler](04_network-index-handler) |
 | `log_std_init` | Initial log standard deviation | 0.0 |
-| `reset_shared_net_after_load` | Reinitialize the shared feature extractor after loading `prev_trained_policy_path` | false |
+| `reset_shared_net_after_load` | No-op. The custom policies have no shared feature-extractor trunk, so `reset_network` ignores this flag. | false |
 | `reset_policy_net_after_load` | Reinitialize the policy network after loading `prev_trained_policy_path` | false |
 | `reset_value_net_after_load` | Reinitialize the value network after loading `prev_trained_policy_path` | false |
 

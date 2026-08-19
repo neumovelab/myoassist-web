@@ -8,17 +8,19 @@ layout: home
 # Musculoskeletal Models
 
 The human musculoskeletal (MSK) model is the `msk` of an
-[environment spec](../getting-started/defining-an-environment) and come from
+[environment spec](../getting-started/defining-an-environment) and comes from
 [`myo_sim`](https://github.com/MyoHub/myo_sim). Each leg model is composed at
-runtime, so an MSK key resolves by a call to `myo_sim.load_spec(<model>)`. The
-`assist_sim` key matches the `myo_sim` model name.
+runtime, so an MSK key resolves by a call to `myo_sim.load_spec(<model>)`. For
+`myolegs26`, `myolegs`, and `myofullbody`, the `assist_sim` key matches the
+`myo_sim` model name. `myolegs22` is the exception: it loads the `myo_sim`
+`myolegs26` model and then reduces it to 22 muscles.
 
 | Key | Base nq | Description |
 |-----|---------|-------------|
 | `myolegs26` | 47 | 26-muscle, passive torso and legs. |
 | `myolegs22` | 39 | Planar 22-muscle. A sagittal-plane reduction of `myolegs26`. |
 | `myolegs` | 35 | 80-muscle, passive torso. |
-| `myofullbody` | 129 | Full body: torso muscles, arms, and legs. |
+| `myofullbody` | 123 | Full body: torso muscles, arms, and legs. |
 
 The muscle count and the 2D or 3D control mode come from the `msk` key. You do not set
 them separately.
@@ -62,7 +64,7 @@ of the four keys. Use `load_combined` to get the poses.
 </div>
 </div>
 
-### myolegs22 (planar reduction)
+## myolegs22 (planar reduction)
 
 `myolegs22` is a planar, sagittal-plane reduction of `myolegs26`.
 
@@ -91,7 +93,9 @@ over the same passive torso scaffold as `myolegs26`.
   override that targets `pelvis_ty` is skipped. See [Root frame](#root-frame).
 - **No keyframe in the base model.** On its own it loads at `qpos0`, and floats a small
   distance above the ground. A device combination adds the five poses.
-- Requires `mujoco>=3.4,<3.12`, the same as every other MSK key.
+- Requires `mujoco>=3.4,<3.5`, the same as every other MSK key. The standalone sibling
+  packages (`assist_sim`, `myoassist-terrains`) may build on a wider MuJoCo range; check
+  those repositories if you install a sibling on its own.
 
 </div>
 </div>
@@ -108,7 +112,7 @@ over the same passive torso scaffold as `myolegs26`.
 DOFs). Use it for whole-body studies, or when a device or task involves the trunk or
 arms.
 
-- Requires `mujoco>=3.4,<3.12`, the same as every other MSK key.
+- Requires `mujoco>=3.4,<3.5`, the same as every other MSK key.
 - Every device also composes with it, because it shares the same torso attachment
   scaffold. See the [Device Catalog](devices/catalog).
 - **Free root, no keyframe in the base model.** The same as `myolegs26`. A device

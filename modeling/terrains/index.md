@@ -81,3 +81,23 @@ type from `randomization.weights`, then draws that tile's parameters from
 `randomization.param_ranges[type]` or from the tile's built-in `PARAM_RANGES`.
 Explicit `tiles` and `randomization` can coexist. Explicit placements win, and the
 rest of the grid is sampled. See [Configuration](configuration) for the full schema.
+
+Categorical parameters also randomize by default, even with no `param_ranges` entry.
+`stairs` and `slope` randomize `axis` and `inverted`, `pyramid_stairs` randomizes
+`inverted`, and `gap` randomizes `axis`. Set the parameter in `param_ranges` to fix
+it, or list its choices there to control the sampling.
+
+## Standalone CLI
+
+The terrains package also ships a `myoassist-terrains` command for standalone use,
+outside a MyoAssist run:
+
+```bash
+myoassist-terrains build path/to/config.json [--activate]   # build a terrain XML
+myoassist-terrains set-active <terrain_name>                 # switch the active terrain
+myoassist-terrains list                                      # list the terrain library
+myoassist-terrains preview <terrain_name>                    # preview one terrain
+```
+
+For the full CLI reference, see `docs/cli.md` in the
+[`myoassist.terrains`](https://github.com/neumovelab/myoassist.terrains) repository.
