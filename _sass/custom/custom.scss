@@ -396,15 +396,19 @@ a:hover {
     height: 1.15rem !important;
 }
 
-/* Home-page hero: the MyoAssist mark holds, then cross-fades to the looping
-   simulation grid. The grid carries its own slate background, which the stage
-   matches, so the mark here does not follow the site color scheme: it is always
-   the light mark that reads on that slate. */
+/* Home-page hero: the MyoAssist mark and the looping simulation grid cross-fade
+   into each other on a repeating 10 s cycle. Only the mark layer animates. Its
+   background matches the page, and it uses the same per-scheme mark as the nav
+   bar, so the mark reads as part of the page in both light and dark mode and
+   then dissolves into the grid. The keyframes hold each state before they turn
+   over, so the two fades never run back to back. */
 .hero-stage {
     position: relative;
     width: min(760px, 100%);
     margin: 0 auto;
     aspect-ratio: 3 / 2;
+    /* The grid carries its own slate background. The stage matches it so no edge
+       shows through the grid, or before the GIF loads. */
     background: #4a586b;
     border-radius: 8px;
     overflow: hidden;
@@ -416,38 +420,41 @@ a:hover {
     height: 100%;
     object-fit: cover;
 }
+/* The mark is a background image, not an <img>, because custom.scss is compiled
+   once per scheme. This is the same approach as .site-logo below. The file name
+   matches the mode it is used on, so _light.png is the darker mark. */
 .hero-stage .hero-logo {
-    display: grid;
-    place-items: center;
-    background: #4a586b;
-    animation: hero-logo-out 0.3s 0.9s forwards;
+    background-color: $body-background-color;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 55% auto;
+    @if $color-scheme == dark {
+        background-image: url("/assets/myoassist_logo_dark.png");
+    } @else {
+        background-image: url("/assets/myoassist_logo_light.png");
+    }
+    /* The negative delay enters the cycle 1.5 s in, so a new visitor still sees
+       the mark for 0.9 s before the first fade. Later cycles get the full hold.
+       The base timing is linear, so only the two fade segments are eased. */
+    animation: hero-cross-fade 12s linear -1.5s infinite;
 }
-.hero-stage .hero-logo img {
-    width: 55%;
-    height: auto;
-    object-fit: contain;
-}
-.hero-stage .hero-media {
-    opacity: 0;
-    animation: hero-media-in 0.3s 0.9s forwards;
-}
-@keyframes hero-logo-out {
-    to { opacity: 0; }
-}
-@keyframes hero-media-in {
-    to { opacity: 1; }
+/* Hold the mark 2.4 s, fade to the grid over 1.44 s, hold the grid 6.72 s (about
+   two loops of the 2.97 s GIF), then fade back to the mark over 1.44 s. Each
+   fade segment gets its own ease-in-out, which eases the departure from a hold
+   and the arrival at the next one. */
+@keyframes hero-cross-fade {
+      0% { opacity: 1; }
+     20% { opacity: 1; animation-timing-function: ease-in-out; }
+     32% { opacity: 0; }
+     88% { opacity: 0; animation-timing-function: ease-in-out; }
+    100% { opacity: 1; }
 }
 
-/* No cross-fade when the visitor asks for less motion: show the grid outright.
-   Both rules are needed, since .hero-media starts at opacity 0. */
+/* No cross-fade when the visitor asks for less motion: show the grid outright. */
 @media (prefers-reduced-motion: reduce) {
     .hero-stage .hero-logo {
         animation: none;
         opacity: 0;
-    }
-    .hero-stage .hero-media {
-        animation: none;
-        opacity: 1;
     }
 }
 
