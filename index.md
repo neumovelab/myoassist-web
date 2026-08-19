@@ -10,7 +10,7 @@ nav_order: 1
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 24px;">
   <div style="flex: 1; text-align: center;">
-    <img src="assets/partial_flat_short.gif" alt="Flat replay" style="max-width: 100%; height: auto;">
+    <img src="assets/sweep_grid_2x3.gif" alt="Trained walking policies for six assistive devices on the same musculoskeletal model" style="max-width: 100%; height: auto;">
     <!-- <div>Flat Terrain</div> -->
   </div>
 </div>
