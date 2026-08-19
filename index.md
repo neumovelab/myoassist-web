@@ -8,11 +8,9 @@ nav_order: 1
 
 **An open-source Python toolkit for simulating and optimizing assistive devices in neuromechanical simulations**
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 24px;">
-  <div style="flex: 1; text-align: center;">
-    <img src="assets/sweep_grid_2x3.gif" alt="Trained walking policies for six assistive devices on the same musculoskeletal model" style="max-width: 100%; height: auto;">
-    <!-- <div>Flat Terrain</div> -->
-  </div>
+<div class="hero-stage">
+  <img class="hero-media" src="assets/sweep_grid_2x3.gif" alt="Trained walking policies for six assistive devices on the same musculoskeletal model">
+  <div class="hero-logo"><img src="assets/myoassist_logo_dark.png" alt=""></div>
 </div>
 
 MyoAssist is a package within [**MyoSuite**](https://sites.google.com/view/myosuite), a collection of musculoskeletal environments built on [**MuJoCo**](https://mujoco.org/) for reinforcement learning and control research. It is developed and maintained by the [**NeuMove Lab**](https://neumove.org/) at Northeastern University. We aim to bridge neuroscience, biomechanics, robotics, and machine learning to advance the design of assistive devices and deepen our understanding of human movement.

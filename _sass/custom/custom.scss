@@ -396,6 +396,61 @@ a:hover {
     height: 1.15rem !important;
 }
 
+/* Home-page hero: the MyoAssist mark holds, then cross-fades to the looping
+   simulation grid. The grid carries its own slate background, which the stage
+   matches, so the mark here does not follow the site color scheme: it is always
+   the light mark that reads on that slate. */
+.hero-stage {
+    position: relative;
+    width: min(760px, 100%);
+    margin: 0 auto;
+    aspect-ratio: 3 / 2;
+    background: #4a586b;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.hero-stage > * {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.hero-stage .hero-logo {
+    display: grid;
+    place-items: center;
+    background: #4a586b;
+    animation: hero-logo-out 0.3s 0.9s forwards;
+}
+.hero-stage .hero-logo img {
+    width: 55%;
+    height: auto;
+    object-fit: contain;
+}
+.hero-stage .hero-media {
+    opacity: 0;
+    animation: hero-media-in 0.3s 0.9s forwards;
+}
+@keyframes hero-logo-out {
+    to { opacity: 0; }
+}
+@keyframes hero-media-in {
+    to { opacity: 1; }
+}
+
+/* No cross-fade when the visitor asks for less motion: show the grid outright.
+   Both rules are needed, since .hero-media starts at opacity 0. */
+@media (prefers-reduced-motion: reduce) {
+    .hero-stage .hero-logo {
+        animation: none;
+        opacity: 0;
+    }
+    .hero-stage .hero-media {
+        animation: none;
+        opacity: 1;
+    }
+}
+
 /* Nav-bar logo: a per-scheme asset (the file name matches the mode it is used on,
    so _light.png is the darker mark for the light background and vice versa).
    Overrides the single logo the theme sets from site.logo. */
